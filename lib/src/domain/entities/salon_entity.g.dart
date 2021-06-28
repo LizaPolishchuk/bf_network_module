@@ -22,16 +22,14 @@ class SalonAdapter extends TypeAdapter<Salon> {
       fields[2] as String?,
       fields[3] as String?,
       fields[4] as String?,
-      (fields[5] as List?)?.cast<Master>(),
-      (fields[6] as List?)?.cast<Service>(),
-      fields[7] as String?,
+      fields[5] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Salon obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(6)
       ..writeByte(2)
       ..write(obj.photo)
       ..writeByte(3)
@@ -39,10 +37,6 @@ class SalonAdapter extends TypeAdapter<Salon> {
       ..writeByte(4)
       ..write(obj.ownerId)
       ..writeByte(5)
-      ..write(obj.mastersList)
-      ..writeByte(6)
-      ..write(obj.servicesList)
-      ..writeByte(7)
       ..write(obj.description)
       ..writeByte(0)
       ..write(obj.id)
@@ -72,12 +66,6 @@ Salon _$SalonFromJson(Map<String, dynamic> json) {
     json['photo'] as String?,
     json['photoPath'] as String?,
     json['ownerId'] as String?,
-    (json['mastersList'] as List<dynamic>?)
-        ?.map((e) => Master.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    (json['servicesList'] as List<dynamic>?)
-        ?.map((e) => Service.fromJson(e as Map<String, dynamic>))
-        .toList(),
     json['description'] as String?,
   );
 }
@@ -88,7 +76,5 @@ Map<String, dynamic> _$SalonToJson(Salon instance) => <String, dynamic>{
       'photo': instance.photo,
       'photoPath': instance.photoPath,
       'ownerId': instance.ownerId,
-      'mastersList': instance.mastersList,
-      'servicesList': instance.servicesList,
       'description': instance.description,
     };

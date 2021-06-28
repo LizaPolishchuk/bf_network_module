@@ -1,10 +1,8 @@
 import 'package:hive/hive.dart';
-import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 
 import 'base_entity.dart';
-import 'master_entity.dart';
-import 'service_entity.dart';
 
 part 'salon_entity.g.dart';
 
