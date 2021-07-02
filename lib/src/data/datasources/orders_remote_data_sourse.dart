@@ -31,7 +31,7 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
     Query query = ordersCollection.where("clientId", isEqualTo: currentUserId);
     QuerySnapshot snapshot = await query.get();
 
-    return snapshot.docs.map((doc) => OrderEntity.fromJson(doc.data())).toList();
+    return snapshot.docs.map((doc) => OrderEntity.fromJson(doc.data() as Map<String, dynamic>)).toList();
   }
 
   @override
@@ -53,7 +53,7 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
     Query query = ordersCollection.where(queryField, isEqualTo: id);
     QuerySnapshot snapshot = await query.get();
 
-    return snapshot.docs.map((doc) => OrderEntity.fromJson(doc.data())).toList();
+    return snapshot.docs.map((doc) => OrderEntity.fromJson(doc.data() as Map<String, dynamic>)).toList();
   }
 
   @override

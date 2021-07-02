@@ -34,7 +34,7 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
     print('getMastersList: ${snapshot.docs.length}');
 
     List<Master> mastersList = snapshot.docs.map((doc) =>
-        Master.fromJson(doc.data() ))
+        Master.fromJson(doc.data() as Map<String, dynamic>))
         .toList();
     localStorage.setMastersList(mastersList);
 

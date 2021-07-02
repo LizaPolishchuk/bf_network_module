@@ -50,10 +50,10 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
         QueryDocumentSnapshot snap = (await query.get()).docs.first;
 
         Query queryMasters = mastersCollection.where("salonIdList",
-            arrayContains: snapshot.docs.first.data()["id"]);
+            arrayContains: (snapshot.docs.first.data() as Map<String, dynamic>) ["id"]);
         List<Master> mastersList = (await queryMasters.get())
             .docs
-            .map((doc) => Master.fromJson(doc.data()))
+            .map((doc) => Master.fromJson(doc.data() as Map<String, dynamic>))
             .toList();
         print('mastersList: ${mastersList.length}');
 
@@ -64,7 +64,7 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
             .toList();
         print('services: ${services.length}');
 
-        Salon salonEntity = Salon.fromJson(snap.data());
+        Salon salonEntity = Salon.fromJson(snap.data() as Map<String, dynamic>);
 
         await saveSalonToLocalStorage(salonEntity, services);
 
@@ -73,7 +73,7 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
     } else {
       snapshot = await salonsCollection.get();
       return snapshot.docs
-          .map((doc) => Salon.fromJson(doc.data()))
+          .map((doc) => Salon.fromJson(doc.data() as Map<String, dynamic>))
           .toList();
     }
   }
@@ -132,7 +132,7 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
     QuerySnapshot snapshot = await query.get();
 
     List<Master> mastersList =
-        snapshot.docs.map((doc) => Master.fromJson(doc.data())).toList();
+        snapshot.docs.map((doc) => Master.fromJson(doc.data() as Map<String, dynamic>)).toList();
     print('mastersList: ${mastersList.length}');
 
     List<Service> services = servicesCollection.docs
@@ -140,7 +140,7 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
         .toList();
     print('services: ${services.length}');
 
-    Salon salonEntity = Salon.fromJson(snap.data() ?? {});
+    Salon salonEntity = Salon.fromJson(snap.data() as Map<String, dynamic>);
 
     await saveSalonToLocalStorage(salonEntity, services);
 
@@ -155,7 +155,7 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
         await salonDocument.reference.collection("services").get();
 
     List<Service> services = snapshot.docs.map((doc) {
-      return Service.fromJson(doc.data());
+      return Service.fromJson(doc.data() as Map<String, dynamic>);
     }).toList();
 
     await localStorage.setServicesList(services);

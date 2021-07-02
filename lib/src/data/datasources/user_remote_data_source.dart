@@ -47,7 +47,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<UserEntity> getUser(String userId) async {
     final snap = await personsCollection.doc(userId).get();
 
-    UserEntity user = UserEntity.fromMap(snap.data() ?? {});
+    UserEntity user = UserEntity.fromMap(snap.data() as Map<String, dynamic>);
 
     return user;
   }
