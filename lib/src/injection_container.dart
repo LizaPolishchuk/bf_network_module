@@ -3,7 +3,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/caches/local_starage.dart';
 import 'data/datasources/auth_remote_data_source.dart';
@@ -80,8 +79,8 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => RemoveMasterUseCase(getIt()));
 
   ///External
-  final sharedPreferences = await SharedPreferences.getInstance();
-  getIt.registerLazySingleton(() => sharedPreferences);
+  // final sharedPreferences = await SharedPreferences.getInstance();
+  // getIt.registerLazySingleton(() => sharedPreferences);
 
   getIt.registerLazySingleton(() => LocalStorage());
 

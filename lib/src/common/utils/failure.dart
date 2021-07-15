@@ -1,4 +1,3 @@
-
 class Failure {
   final int? code;
   final String? codeStr;
