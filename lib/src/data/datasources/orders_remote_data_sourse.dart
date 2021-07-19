@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
 
 import '../../injection_container.dart';
-import 'local_data_source.dart';
 
 const ORDERS_COLLECTION = 'orders';
 
@@ -17,17 +17,17 @@ abstract class OrdersRemoteDataSource {
 
 class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
   late CollectionReference ordersCollection;
-  late LocalDataSource localDataSource;
+  late LocalStorage localStorage;
 
   OrdersRemoteDataSourceImpl() {
-    localDataSource = getIt<LocalDataSource>();
+    localStorage = getIt<LocalStorage>();
     ordersCollection =
         FirebaseFirestore.instance.collection(ORDERS_COLLECTION);
   }
 
   @override
   Future<List<OrderEntity>> getCurrentUserOrdersList() async {
-    String currentUserId = await localDataSource.getUserId() ?? "";
+    String currentUserId = await localStorage.getUserId() ?? "";
     Query query = ordersCollection.where("clientId", isEqualTo: currentUserId);
     QuerySnapshot snapshot = await query.get();
 

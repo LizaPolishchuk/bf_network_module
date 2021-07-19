@@ -1,11 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' as FirebaseAuth;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/auth_remote_data_source.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/local_data_source.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/masters_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/orders_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/salons_remote_data_source.dart';
@@ -18,7 +16,6 @@ import 'package:salons_app_flutter_module/src/domain/entities/user_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/repositories/repository.dart';
 
 class RepositoryImpl implements Repository {
-  LocalDataSource localDataSource;
   LocalStorage localStorage;
   SalonsRemoteDataSource salonsRemoteDataSource;
   AuthRemoteDataSource authRemoteDataSource;
@@ -27,7 +24,6 @@ class RepositoryImpl implements Repository {
   MastersRemoteDataSource mastersRemoteDataSource;
 
   RepositoryImpl(
-      this.localDataSource,
       this.localStorage,
       this.salonsRemoteDataSource,
       this.authRemoteDataSource,
@@ -48,7 +44,7 @@ class RepositoryImpl implements Repository {
               firebaseUser.photoURL);
           userRemoteDataSource.createUser(user);
         }
-        localDataSource.saveUserId(firebaseUser.uid);
+        localStorage.setUserId(firebaseUser.uid);
 //        localDataSource.saveUserAvatar(firebaseUser.photoUrl);
         return Right(firebaseUser.uid);
       } else {
@@ -73,7 +69,7 @@ class RepositoryImpl implements Repository {
               firebaseUser.photoURL);
           userRemoteDataSource.createUser(user);
         }
-        localDataSource.saveUserId(firebaseUser.uid);
+        localStorage.setUserId(firebaseUser.uid);
         return Right(firebaseUser.uid);
       } else {
         return Left(Failure());
@@ -105,7 +101,7 @@ class RepositoryImpl implements Repository {
               firebaseUser.photoURL);
           userRemoteDataSource.createUser(user);
         }
-        localDataSource.saveUserId(firebaseUser.uid);
+        localStorage.setUserId(firebaseUser.uid);
         return Right(firebaseUser.uid);
       } else {
         return Left(Failure());
@@ -127,10 +123,8 @@ class RepositoryImpl implements Repository {
           UserEntity user = new UserEntity(firebaseUser.uid, firebaseUser.displayName ?? "",
               firebaseUser.photoURL);
           userRemoteDataSource.createUser(user);
-//          localDataSource.saveUser(user);
         }
-        localDataSource.saveUserId(firebaseUser.uid);
-//        localDataSource.saveUserAvatar(firebaseUser.photoUrl);
+        localStorage.setUserId(firebaseUser.uid);
         return Right(firebaseUser.uid);
       } else {
         return Left(Failure());
@@ -151,10 +145,10 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<Either<Failure, List<Salon>>> getSalonsList(
-      String userId) async {
+      String salonId) async {
     try {
-      List<Salon> salons = await salonsRemoteDataSource.getSalonsList(userId);
-      if (userId.isNotEmpty) localDataSource.saveSalonId(salons.first.id);
+      List<Salon> salons = await salonsRemoteDataSource.getSalonsList(salonId);
+      if (salonId.isNotEmpty) localStorage.setSalonId(salons.first.id);
       return Right(salons);
     } catch(error) {
       return Left(Failure(message: "Get salons list error"));

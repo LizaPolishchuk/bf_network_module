@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/local_data_source.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
 
 import '../../injection_container.dart';
@@ -17,11 +16,9 @@ abstract class MastersRemoteDataSource {
 
 class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
   late CollectionReference mastersCollection;
-  late LocalDataSource localDataSource;
   LocalStorage localStorage;
 
   MastersRemoteDataSourceImpl(this.localStorage) {
-    localDataSource = getIt<LocalDataSource>();
     mastersCollection =
         FirebaseFirestore.instance.collection(MASTERS_COLLECTION);
   }

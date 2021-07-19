@@ -46,6 +46,10 @@ class LocalStorage {
 
   Future setSalonId(String salonId) => _setValue(_salonId, salonId);
 
+  getUserId() => _getValue(_userId);
+
+  Future setUserId(String userId) => _setValue(_userId, userId);
+
   getMastersList() => _getValue(_masters);
 
   Future setMastersList(List<Master> masters) => _setValue(_masters, masters);

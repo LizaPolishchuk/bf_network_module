@@ -6,7 +6,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'data/caches/local_starage.dart';
 import 'data/datasources/auth_remote_data_source.dart';
-import 'data/datasources/local_data_source.dart';
 import 'data/datasources/masters_remote_data_sourse.dart';
 import 'data/datasources/orders_remote_data_sourse.dart';
 import 'data/datasources/salons_remote_data_source.dart';
@@ -40,11 +39,9 @@ final getIt = GetIt.instance;
 Future<void> init() async {
 
   ///Repository
-  getIt.registerLazySingleton<Repository>(() => RepositoryImpl(getIt(),getIt(), getIt(), getIt(), getIt(), getIt(), getIt(),));
+  getIt.registerLazySingleton<Repository>(() => RepositoryImpl(getIt(),getIt(), getIt(), getIt(), getIt(), getIt(),));
 
   ///Data sources
-  getIt.registerLazySingleton<LocalDataSource>(
-      () => LocalDataSourceImpl(getIt()));
   getIt.registerLazySingleton<SalonsRemoteDataSource>(
       () => SalonsRemoteDataSourceImpl(getIt()));
   getIt.registerLazySingleton<UserRemoteDataSource>(
