@@ -31,7 +31,9 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
     Query query = ordersCollection.where("clientId", isEqualTo: currentUserId);
     QuerySnapshot snapshot = await query.get();
 
-    return snapshot.docs.map((doc) => OrderEntity.fromJson(doc.data() as Map<String, dynamic>)).toList();
+    return snapshot.docs.map((doc) =>
+        OrderEntity.fromJson(doc.data() as Map<String, dynamic>)
+    ).toList();
   }
 
   @override

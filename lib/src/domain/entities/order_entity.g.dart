@@ -29,7 +29,7 @@ class OrderEntityAdapter extends TypeAdapter<OrderEntity> {
       fields[9] as String,
       fields[10] as DateTime,
       fields[11] as double,
-      fields[12] as bool,
+      isPinned: fields[12] as bool,
     );
   }
 
@@ -94,7 +94,6 @@ OrderEntity _$OrderEntityFromJson(Map<String, dynamic> json) {
     json['serviceName'] as String,
     DateTime.parse(json['date'] as String),
     (json['price'] as num).toDouble(),
-    json['isPinned'] as bool,
   );
 }
 
@@ -112,5 +111,4 @@ Map<String, dynamic> _$OrderEntityToJson(OrderEntity instance) =>
       'serviceName': instance.serviceName,
       'date': instance.date.toIso8601String(),
       'price': instance.price,
-      'isPinned': instance.isPinned,
     };
