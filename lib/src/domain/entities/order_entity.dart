@@ -32,6 +32,10 @@ class OrderEntity {
   String serviceName;
   @HiveField(10)
   DateTime date;
+  @HiveField(11)
+  double price;
+  @HiveField(12)
+  bool isPinned = false;
 
   OrderEntity(
       this.id,
@@ -44,7 +48,9 @@ class OrderEntity {
       this.masterAvatar,
       this.serviceId,
       this.serviceName,
-      this.date);
+      this.date,
+      this.price,
+      this.isPinned);
 
   factory OrderEntity.fromJson(Map<String, dynamic> json) {
     json['date'] = (json['date'] as Timestamp).toDate().toIso8601String();
@@ -52,7 +58,10 @@ class OrderEntity {
   }
 
   Map<String, dynamic> toJson() {
-    return _$OrderEntityToJson(this);
+    Map<String, dynamic> json = _$OrderEntityToJson(this);
+    // it is only local parametr
+    json.remove(["isPinned"]);
+    return json;
   }
 
   OrderEntity copy({
@@ -62,18 +71,22 @@ class OrderEntity {
     String? masterAvatar,
     String? serviceId,
     String? serviceName,
+    bool? isPinned,
   }) {
     return OrderEntity(
-        id,
-        clientId,
-        clientName ?? this.clientName,
-        salonId,
-        salonName,
-        masterId ?? this.masterId,
-        masterName ?? this.masterName,
-        masterAvatar ?? this.masterAvatar,
-        serviceId ?? this.serviceId,
-        serviceName ?? this.serviceName,
-        date);
+      id,
+      clientId,
+      clientName ?? this.clientName,
+      salonId,
+      salonName,
+      masterId ?? this.masterId,
+      masterName ?? this.masterName,
+      masterAvatar ?? this.masterAvatar,
+      serviceId ?? this.serviceId,
+      serviceName ?? this.serviceName,
+      date,
+      price,
+      isPinned ?? this.isPinned,
+    );
   }
 }

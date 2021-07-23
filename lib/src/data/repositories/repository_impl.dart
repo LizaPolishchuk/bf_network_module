@@ -51,6 +51,9 @@ class RepositoryImpl implements Repository {
         return Left(Failure());
       }
     } catch(error) {
+      if (error is FirebaseAuthException){
+        return Left(Failure(message: error.message ?? "", codeStr: error.code));
+      }
       return Left(Failure());
     }
   }

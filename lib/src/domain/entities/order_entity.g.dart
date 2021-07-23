@@ -28,13 +28,15 @@ class OrderEntityAdapter extends TypeAdapter<OrderEntity> {
       fields[8] as String,
       fields[9] as String,
       fields[10] as DateTime,
+      fields[11] as double,
+      fields[12] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, OrderEntity obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -56,7 +58,11 @@ class OrderEntityAdapter extends TypeAdapter<OrderEntity> {
       ..writeByte(9)
       ..write(obj.serviceName)
       ..writeByte(10)
-      ..write(obj.date);
+      ..write(obj.date)
+      ..writeByte(11)
+      ..write(obj.price)
+      ..writeByte(12)
+      ..write(obj.isPinned);
   }
 
   @override
@@ -87,6 +93,8 @@ OrderEntity _$OrderEntityFromJson(Map<String, dynamic> json) {
     json['serviceId'] as String,
     json['serviceName'] as String,
     DateTime.parse(json['date'] as String),
+    (json['price'] as num).toDouble(),
+    json['isPinned'] as bool,
   );
 }
 
@@ -103,4 +111,6 @@ Map<String, dynamic> _$OrderEntityToJson(OrderEntity instance) =>
       'serviceId': instance.serviceId,
       'serviceName': instance.serviceName,
       'date': instance.date.toIso8601String(),
+      'price': instance.price,
+      'isPinned': instance.isPinned,
     };
