@@ -12,6 +12,7 @@ abstract class OrdersRemoteDataSource {
   Future<List<OrderEntity>> getOrdersList(String id, OrderForType orderForType);
 
   Future<void> updateOrder(OrderEntity orderEntity);
+
   Future<void> removeOrder(OrderEntity orderEntity);
 }
 
@@ -27,17 +28,24 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
 
   @override
   Future<List<OrderEntity>> getCurrentUserOrdersList() async {
-    String currentUserId = await localStorage.getUserId() ?? "";
-    Query query = ordersCollection.where("clientId", isEqualTo: currentUserId);
-    QuerySnapshot snapshot = await query.get();
+    try {
+      String currentUserId = await localStorage.getUserId() ?? "";
+      Query query = ordersCollection.where(
+          "clientId", isEqualTo: currentUserId);
+      QuerySnapshot snapshot = await query.get();
 
-    return snapshot.docs.map((doc) =>
-        OrderEntity.fromJson(doc.data() as Map<String, dynamic>)
-    ).toList();
+      return snapshot.docs.map((doc) =>
+          OrderEntity.fromJson(doc.data() as Map<String, dynamic>)
+      ).toList();
+    } catch (e) {
+      print("getCurrentUserOrdersList error: ${e.toString()}");
+      throw(e);
+    }
   }
 
   @override
-  Future<List<OrderEntity>> getOrdersList(String id, OrderForType orderForType) async {
+  Future<List<OrderEntity>> getOrdersList(String id,
+      OrderForType orderForType) async {
     String queryField = "";
 
     switch (orderForType) {
@@ -55,7 +63,8 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
     Query query = ordersCollection.where(queryField, isEqualTo: id);
     QuerySnapshot snapshot = await query.get();
 
-    return snapshot.docs.map((doc) => OrderEntity.fromJson(doc.data() as Map<String, dynamic>)).toList();
+    return snapshot.docs.map((doc) =>
+        OrderEntity.fromJson(doc.data() as Map<String, dynamic>)).toList();
   }
 
   @override

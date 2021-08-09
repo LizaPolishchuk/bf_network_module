@@ -60,6 +60,7 @@ class OrderEntity {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = _$OrderEntityToJson(this);
+    json['date'] = Timestamp.fromDate(date);
     return json;
   }
 
@@ -89,5 +90,15 @@ class OrderEntity {
       price ?? this.price,
       isPinned: isPinned ?? this.isPinned,
     );
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return (other as OrderEntity).id == this.id;
   }
 }
