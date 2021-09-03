@@ -3,13 +3,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<User?> signInWithGoogle();
+  Future<User?> loginWithGoogleWeb();
+
+  Future<UserEntity> loginWithGoogle();
+
+  Future<UserEntity> loginWithFacebook();
+
+  Future<String> loginWithSocial(UserEntity user);
 
   Future<User?> signInWithEmailAndPassword(String email, String password);
 
   Future<User?> signUpWithEmailAndPassword(String email, String password);
+
+  Future<UserEntity?> signUpWithEmailAndPasswordNew(
+      String email, String password);
 
   Future<User?> signInWithFacebook();
 
@@ -26,9 +36,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final GoogleSignIn googleSignIn;
   final FacebookAuth facebookLogin;
   final LocalStorage localStorage;
+  final APIClient apiClient;
 
   AuthRemoteDataSourceImpl(this.firebaseAuth, this.googleSignIn,
-      this.facebookLogin, this.localStorage);
+      this.facebookLogin, this.localStorage, this.apiClient);
 
   @override
   Future<User?> signInWithFacebook() async {
@@ -53,7 +64,75 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<User?> signInWithGoogle() async {
+  Future<UserEntity> loginWithGoogle() async {
+    UserEntity userEntity;
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      if (googleUser == null) {
+        throw (Failure(message: "Error in sign in with google, googleUser is null"));
+      }
+
+      userEntity = new UserEntity(googleUser.id, googleUser.displayName,
+          googleUser.email, googleUser.photoUrl, "");
+
+    } catch (e) {
+      print("Error in sign in with google: $e");
+      throw (e);
+    }
+
+    return userEntity;
+  }
+
+  @override
+  Future<UserEntity> loginWithFacebook() async {
+    UserEntity userEntity;
+    try {
+      final LoginResult result = await facebookLogin.login();
+
+      if (result.status == LoginStatus.success) {
+
+        final fbUser = await facebookLogin.getUserData();
+
+        userEntity = UserEntity(fbUser["id"], fbUser["name"], fbUser["email"], fbUser["picture"]["data"]["url"], "");
+
+      } else {
+        throw (Failure(message: "Error in sign in with facebook, facebookUser is null"));
+      }
+
+    } catch (e) {
+      print("Error in sign in with google: $e");
+      throw (e);
+    }
+
+    return userEntity;
+  }
+
+
+  @override
+  Future<String> loginWithSocial(UserEntity user) async {
+    try {
+      final authResult = await apiClient.loginWithSocial(user);
+
+      if (authResult.user == null) {
+        throw Failure(message: "Error login with social: ${authResult.message}");
+      }
+
+      print("loginWithSocial accessToken token: ${authResult.accessToken}");
+
+      localStorage.setAccessToken(authResult.accessToken);
+      localStorage.setRefreshToken(authResult.refreshToken);
+      localStorage.setCurrentUserId(user.id);
+    } catch (e) {
+      print("Error sign up with email and password: $e");
+      throw (e);
+    }
+
+    return user.id;
+  }
+
+  @override
+  Future<User?> loginWithGoogleWeb() async {
     User? firebaseUser;
     try {
       //For web
@@ -123,6 +202,27 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     }
 
     return webFirebaseUser;
+  }
+
+  @override
+  Future<UserEntity?> signUpWithEmailAndPasswordNew(
+      String email, String password) async {
+    UserEntity? user;
+    try {
+      final authResult = await apiClient.signUpWeb(email, password);
+
+      user = authResult.user;
+
+      print(
+          "signUpWithEmailAndPasswordNew accessToken token: ${authResult.accessToken}");
+
+      // localStorage.setCurrentUserId(webFirebaseUser!.uid);
+    } catch (e) {
+      print("Error sign up with email and password: $e");
+      throw (e);
+    }
+
+    return user;
   }
 
   @override

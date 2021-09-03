@@ -1,8 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 
 import 'data/caches/local_starage.dart';
 import 'data/datasources/auth_remote_data_source.dart';
@@ -47,7 +49,7 @@ Future<void> init() async {
   getIt.registerLazySingleton<UserRemoteDataSource>(
       () => UserRemoteDataSourceImpl());
   getIt.registerLazySingleton<AuthRemoteDataSource>(
-      () => AuthRemoteDataSourceImpl(getIt(), getIt(), getIt(), getIt()));
+      () => AuthRemoteDataSourceImpl(getIt(), getIt(), getIt(), getIt(), getIt()));
   getIt.registerLazySingleton<OrdersRemoteDataSource>(
       () => OrdersRemoteDataSourceImpl());
   getIt.registerLazySingleton<MastersRemoteDataSource>(
@@ -84,6 +86,8 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => FirebaseAuth.instance);
   getIt.registerLazySingleton(() => GoogleSignIn());
   getIt.registerLazySingleton(() => FacebookAuth.instance);
+  getIt.registerLazySingleton(() => APIClient(getIt()));
+  getIt.registerLazySingleton(() => Dio());
 
   getIt.registerLazySingleton<Reference>(() =>
       FirebaseStorage.instance.refFromURL('gs://salons-5012c.appspot.com'));

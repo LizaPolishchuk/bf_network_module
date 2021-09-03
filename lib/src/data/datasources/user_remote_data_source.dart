@@ -33,7 +33,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<dynamic> createUser(UserEntity user) async {
-    final Map<String, dynamic> data = user.toMap();
+    final Map<String, dynamic> data = user.toJson();
 
     personsCollection.doc(user.id).set(data).catchError((Object error) {
       print(error);
@@ -47,7 +47,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<UserEntity> getUser(String userId) async {
     final snap = await personsCollection.doc(userId).get();
 
-    UserEntity user = UserEntity.fromMap(snap.data() as Map<String, dynamic>);
+    UserEntity user = UserEntity.fromJson(snap.data() as Map<String, dynamic>);
 
     return user;
   }

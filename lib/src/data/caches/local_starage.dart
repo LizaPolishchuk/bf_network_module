@@ -24,6 +24,8 @@ class LocalStorage {
   static const _services = '_services';
   static const _orders = '_orders';
   static const _userId = '_userId';
+  static const _accessToken = '_accessToken';
+  static const _refreshToken = '_refreshToken';
 
   Future openBox() async {
     this._box = await Hive.openBox<dynamic>(_preferencesBox);
@@ -65,6 +67,14 @@ class LocalStorage {
   getCurrentUserId() => _getValue(_userId);
 
   Future setCurrentUserId(String userId) => _setValue(_userId, userId);
+
+  getAccessToken() => _getValue(_accessToken);
+
+  Future setAccessToken(String accessToken) => _setValue(_accessToken, accessToken);
+
+  getRefreshToken() => _getValue(_refreshToken);
+
+  Future setRefreshToken(String refreshToken) => _setValue(_refreshToken, refreshToken);
 
   T _getValue<T>(dynamic key, {T? defaultValue}) {
     return _box.get(key, defaultValue: defaultValue) as T;

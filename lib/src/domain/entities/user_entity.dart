@@ -1,26 +1,39 @@
+import 'package:hive/hive.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
+
+part 'user_entity.g.dart';
+
+@HiveType(typeId: hiveTypeUsers)
+@JsonSerializable()
 class UserEntity {
-  //public
-  late String id;
-  late String name;
+  @HiveField(0)
+  String id;
+  @HiveField(1)
+  String? name;
+  @HiveField(2)
+  String? email;
+  @HiveField(3)
   String? avatar;
+  @HiveField(4)
+  String? phone;
+  @HiveField(5)
   bool isAdmin = false;
+  @HiveField(6)
+  bool? isActivated;
 
-  UserEntity(this.id, this.name, this.avatar);
+  UserEntity(this.id, this.name, this.email, this.avatar, this.phone,
+      {this.isActivated});
 
-  Map<String, dynamic> toMap() {
-    var map = new Map<String, dynamic>();
-    if (id != null) {
-      map['id'] = id;
-    }
-    map['name'] = name;
-    map['avatar'] = avatar;
-    return map;
+  factory UserEntity.fromJson(Map<String, dynamic> json) {
+    json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
+    return _$UserEntityFromJson(json);
   }
 
-  UserEntity.fromMap(Map<String, dynamic> map) {
-    this.id = map['id'];
-    this.name = map['name'];
-    this.avatar = map['avatar'];
-    this.isAdmin = map['isAdmin'] ?? false;
+  Map<String, dynamic> toJson() => _$UserEntityToJson(this);
+
+  UserEntity copy({String? name, String? email, String? avatar, String? phone}) {
+    return UserEntity(id, name ?? this.name, email ?? this.email,
+        avatar ?? this.avatar, phone ?? this.phone);
   }
 }

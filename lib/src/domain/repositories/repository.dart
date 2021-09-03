@@ -12,6 +12,7 @@ abstract class Repository {
   Future<Either<Failure, String>> signInWithFacebook();
   Future<Either<Failure, String>> signInWithEmailAndPassword(String email, String password);
   Future<Either<Failure, String>> signUpWithEmailAndPassword(String email, String password);
+  Future<Either<Failure, String>> signUpWithEmailAndPasswordNew(String email, String password);
   Future<Either<Failure, String>> signUpWithLinkAndEmail(String email);
   Future<Either<Failure, void>> sendLoginLinkToEmail(String email);
 

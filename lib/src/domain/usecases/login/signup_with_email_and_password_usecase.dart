@@ -8,6 +8,6 @@ class SignUpWithEmailAndPasswordUseCase {
   SignUpWithEmailAndPasswordUseCase(this.repository);
 
   Future<Either<Failure, String>> call(String email, String password) {
-    return repository.signUpWithEmailAndPassword(email, password);
+    return repository.signUpWithEmailAndPasswordNew(email, password);
   }
 }

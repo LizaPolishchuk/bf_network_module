@@ -34,24 +34,13 @@ class RepositoryImpl implements Repository {
   @override
   Future<Either<Failure, String>> signInWithFacebook() async {
     try {
-      FirebaseAuth.User? firebaseUser =
-          await authRemoteDataSource.signInWithFacebook();
-      if (firebaseUser != null) {
-        bool isUserPresent =
-            await userRemoteDataSource.checkIsUserPresent(firebaseUser.uid);
-        if (!isUserPresent) {
-          UserEntity user = new UserEntity(firebaseUser.uid, firebaseUser.displayName??"",
-              firebaseUser.photoURL);
-          userRemoteDataSource.createUser(user);
-        }
-        localStorage.setUserId(firebaseUser.uid);
-//        localDataSource.saveUserAvatar(firebaseUser.photoUrl);
-        return Right(firebaseUser.uid);
-      } else {
-        return Left(Failure());
-      }
-    } catch(error) {
-      if (error is FirebaseAuthException){
+      UserEntity? user = await authRemoteDataSource.loginWithFacebook();
+
+      String userId = await authRemoteDataSource.loginWithSocial(user);
+
+      return Right(userId);
+    } catch (error) {
+      if (error is FirebaseAuthException) {
         return Left(Failure(message: error.message ?? "", codeStr: error.code));
       }
       return Left(Failure());
@@ -68,16 +57,16 @@ class RepositoryImpl implements Repository {
         bool isUserPresent =
             await userRemoteDataSource.checkIsUserPresent(firebaseUser.uid);
         if (!isUserPresent) {
-          UserEntity user = new UserEntity(firebaseUser.uid, firebaseUser.displayName??"",
-              firebaseUser.photoURL);
-          userRemoteDataSource.createUser(user);
+          // UserEntity user = new UserEntity(firebaseUser.uid, firebaseUser.displayName??"", firebaseUser.email,
+          //     firebaseUser.photoURL);
+          // userRemoteDataSource.createUser(user);
         }
         localStorage.setUserId(firebaseUser.uid);
         return Right(firebaseUser.uid);
       } else {
         return Left(Failure());
       }
-    } catch(error) {
+    } catch (error) {
       if (error is FirebaseAuthException) {
         //ERROR_WEAK_PASSWORD - If the password is not strong enough.
         // ERROR_INVALID_EMAIL - If the email address is malformed.
@@ -100,16 +89,29 @@ class RepositoryImpl implements Repository {
         bool isUserPresent =
             await userRemoteDataSource.checkIsUserPresent(firebaseUser.uid);
         if (!isUserPresent) {
-          UserEntity user = new UserEntity(firebaseUser.uid, firebaseUser.displayName??"",
-              firebaseUser.photoURL);
-          userRemoteDataSource.createUser(user);
+          // UserEntity user = new UserEntity(firebaseUser.uid, firebaseUser.displayName??"", firebaseUser.email,
+          //     firebaseUser.photoURL);
+          // userRemoteDataSource.createUser(user);
         }
         localStorage.setUserId(firebaseUser.uid);
         return Right(firebaseUser.uid);
       } else {
         return Left(Failure());
       }
-    } catch(error) {
+    } catch (error) {
+      return Left(Failure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> signUpWithEmailAndPasswordNew(
+      String email, String password) async {
+    try {
+      final result = await authRemoteDataSource.signUpWithEmailAndPasswordNew(
+          email, password);
+
+      return Right(result?.id ?? "");
+    } catch (error) {
       return Left(Failure());
     }
   }
@@ -117,22 +119,13 @@ class RepositoryImpl implements Repository {
   @override
   Future<Either<Failure, String>> signInWithGoogle() async {
     try {
-      FirebaseAuth.User? firebaseUser =
-          await authRemoteDataSource.signInWithGoogle();
-      if (firebaseUser != null) {
-        bool isUserPresent =
-            await userRemoteDataSource.checkIsUserPresent(firebaseUser.uid);
-        if (!isUserPresent) {
-          UserEntity user = new UserEntity(firebaseUser.uid, firebaseUser.displayName ?? "",
-              firebaseUser.photoURL);
-          userRemoteDataSource.createUser(user);
-        }
-        localStorage.setUserId(firebaseUser.uid);
-        return Right(firebaseUser.uid);
-      } else {
-        return Left(Failure());
-      }
-    } catch(error) {
+      UserEntity? user = await authRemoteDataSource.loginWithGoogle();
+
+      String userId = await authRemoteDataSource.loginWithSocial(user);
+
+      return Right(userId);
+
+    } catch (error) {
       return Left(Failure());
     }
   }
@@ -141,19 +134,18 @@ class RepositoryImpl implements Repository {
   Future<Either<Failure, void>> signOut() async {
     try {
       return Right(await authRemoteDataSource.signOut());
-    } catch(error) {
+    } catch (error) {
       return Left(Failure());
     }
   }
 
   @override
-  Future<Either<Failure, List<Salon>>> getSalonsList(
-      String salonId) async {
+  Future<Either<Failure, List<Salon>>> getSalonsList(String salonId) async {
     try {
       List<Salon> salons = await salonsRemoteDataSource.getSalonsList(salonId);
       if (salonId.isNotEmpty) localStorage.setSalonId(salons.first.id);
       return Right(salons);
-    } catch(error) {
+    } catch (error) {
       return Left(Failure(message: "Get salons list error"));
     }
   }
@@ -162,7 +154,7 @@ class RepositoryImpl implements Repository {
   Future<Either<Failure, Salon>> updateSalon(Salon salonEntity) async {
     try {
       return Right(await salonsRemoteDataSource.updateSalon(salonEntity));
-    } catch(error) {
+    } catch (error) {
       return Left(Failure(message: "Get salons list error: $error"));
     }
   }
@@ -171,7 +163,7 @@ class RepositoryImpl implements Repository {
   Future<Either<Failure, List<OrderEntity>>> getCurrentUserOrdersList() async {
     try {
       return Right(await ordersRemoteDataSource.getCurrentUserOrdersList());
-    } catch(error) {
+    } catch (error) {
       return Left(Failure(message: "Get orders list for user error"));
     }
   }
@@ -182,7 +174,7 @@ class RepositoryImpl implements Repository {
     try {
       return Right(
           await ordersRemoteDataSource.getOrdersList(id, orderForType));
-    } catch(error) {
+    } catch (error) {
       return Left(Failure(message: "Get orders list for $orderForType error"));
     }
   }
@@ -190,9 +182,8 @@ class RepositoryImpl implements Repository {
   @override
   Future<Either<Failure, void>> updateOrder(OrderEntity orderEntity) async {
     try {
-      return Right(
-          await ordersRemoteDataSource.updateOrder(orderEntity));
-    } catch(error) {
+      return Right(await ordersRemoteDataSource.updateOrder(orderEntity));
+    } catch (error) {
       return Left(Failure(message: "Update order error"));
     }
   }
@@ -200,19 +191,17 @@ class RepositoryImpl implements Repository {
   @override
   Future<Either<Failure, void>> removeOrder(OrderEntity orderEntity) async {
     try {
-      return Right(
-          await ordersRemoteDataSource.removeOrder(orderEntity));
-    } catch(error) {
+      return Right(await ordersRemoteDataSource.removeOrder(orderEntity));
+    } catch (error) {
       return Left(Failure(message: "Remove order error"));
     }
   }
-
 
   @override
   Future<Either<Failure, Salon>> getSalonById(String salonId) async {
     try {
       return Right(await salonsRemoteDataSource.getSalonById(salonId));
-    } catch(error) {
+    } catch (error) {
       return Left(Failure(message: "Get salon by id error"));
     }
   }
@@ -243,7 +232,7 @@ class RepositoryImpl implements Repository {
   Future<Either<Failure, void>> sendLoginLinkToEmail(String email) async {
     try {
       return Right(await authRemoteDataSource.sendLinkForEmailSignIn(email));
-    } catch(error) {
+    } catch (error) {
       return Left(Failure(message: "Send link to login error"));
     }
   }
@@ -254,11 +243,10 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, List<Service>>> getServicesList(
-      String salonId) async {
+  Future<Either<Failure, List<Service>>> getServicesList(String salonId) async {
     try {
       return Right(await salonsRemoteDataSource.getServicesList(salonId));
-    } catch(error) {
+    } catch (error) {
       return Left(Failure(message: "Get services list error"));
     }
   }
@@ -269,7 +257,7 @@ class RepositoryImpl implements Repository {
     try {
       return Right(
           await salonsRemoteDataSource.removeService(salonId, serviceEntity));
-    } catch(error) {
+    } catch (error) {
       return Left(Failure(message: "Remove service error"));
     }
   }
@@ -280,7 +268,7 @@ class RepositoryImpl implements Repository {
     try {
       return Right(
           await salonsRemoteDataSource.updateService(salonId, serviceEntity));
-    } catch(error) {
+    } catch (error) {
       return Left(Failure(message: "Update service error"));
     }
   }
@@ -289,7 +277,7 @@ class RepositoryImpl implements Repository {
   Future<Either<Failure, List<Master>>> getMastersList(String salonId) async {
     try {
       return Right(await mastersRemoteDataSource.getMastersList(salonId));
-    } catch(error) {
+    } catch (error) {
       return Left(Failure(message: "Get masters list error"));
     }
   }
@@ -298,7 +286,7 @@ class RepositoryImpl implements Repository {
   Future<Either<Failure, void>> removeMaster(Master master) async {
     try {
       return Right(await mastersRemoteDataSource.removeMaster(master));
-    } catch(error) {
+    } catch (error) {
       return Left(Failure(message: "Remove master error"));
     }
   }
@@ -307,7 +295,7 @@ class RepositoryImpl implements Repository {
   Future<Either<Failure, void>> updateMaster(Master master) async {
     try {
       return Right(await mastersRemoteDataSource.updateMaster(master));
-    } catch(error) {
+    } catch (error) {
       return Left(Failure(message: "Update master error"));
     }
   }
