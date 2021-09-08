@@ -11,6 +11,8 @@ export './src/domain/usecases/login/send_login_link_to_email_usecase.dart';
 export './src/domain/usecases/login/sign_out_usecase.dart';
 export './src/domain/usecases/login/sign_up_with_link_and_email_usecase.dart';
 export './src/domain/usecases/login/signup_with_email_and_password_usecase.dart';
+export './src/domain/usecases/login/login_with_phone_usecase.dart';
+export './src/domain/usecases/login/login_with_phone_verify_code_usecase.dart';
 
 export './src/domain/usecases/masters/get_masters_list_use_case.dart';
 export './src/domain/usecases/masters/remove_master_use_case.dart';

@@ -14,7 +14,7 @@ const int hiveTypeServices = 4;
 class LocalStorage {
   late Box<dynamic> _box;
 
-  static const _preferencesBox = '_preferencesBox';
+  static const preferencesBox = '_preferencesBox';
   static const _firstLaunch = '_firstLaunch';
   static const _currentLanguage = '_currentLanguage';
   static const _dataVersions = '_dataVersions';
@@ -24,11 +24,11 @@ class LocalStorage {
   static const _services = '_services';
   static const _orders = '_orders';
   static const _userId = '_userId';
-  static const _accessToken = '_accessToken';
+  static const accessToken = '_accessToken';
   static const _refreshToken = '_refreshToken';
 
   Future openBox() async {
-    this._box = await Hive.openBox<dynamic>(_preferencesBox);
+    this._box = await Hive.openBox<dynamic>(preferencesBox);
   }
 
   bool isFirstLaunch() => _getValue(_firstLaunch) ?? true;
@@ -68,9 +68,9 @@ class LocalStorage {
 
   Future setCurrentUserId(String userId) => _setValue(_userId, userId);
 
-  getAccessToken() => _getValue(_accessToken);
+  getAccessToken() => _getValue(accessToken);
 
-  Future setAccessToken(String accessToken) => _setValue(_accessToken, accessToken);
+  Future setAccessToken(String token) => _setValue(accessToken, token);
 
   getRefreshToken() => _getValue(_refreshToken);
 

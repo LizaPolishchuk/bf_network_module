@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -24,6 +25,10 @@ abstract class AuthRemoteDataSource {
   Future<User?> signInWithFacebook();
 
   Future<User?> signInWithEmailAndLink(String email);
+
+  Future<bool?> signInWithPhone(String phone);
+
+  Future<String> verifyCode(String code);
 
   Future<void> sendLinkForEmailSignIn(String email);
 
@@ -70,12 +75,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       if (googleUser == null) {
-        throw (Failure(message: "Error in sign in with google, googleUser is null"));
+        throw (Failure(
+            message: "Error in sign in with google, googleUser is null"));
       }
 
       userEntity = new UserEntity(googleUser.id, googleUser.displayName,
-          googleUser.email, googleUser.photoUrl, "");
-
+          googleUser.email, googleUser.photoUrl, null);
     } catch (e) {
       print("Error in sign in with google: $e");
       throw (e);
@@ -91,23 +96,21 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       final LoginResult result = await facebookLogin.login();
 
       if (result.status == LoginStatus.success) {
-
         final fbUser = await facebookLogin.getUserData();
 
-        userEntity = UserEntity(fbUser["id"], fbUser["name"], fbUser["email"], fbUser["picture"]["data"]["url"], "");
-
+        userEntity = UserEntity(fbUser["id"], fbUser["name"], fbUser["email"],
+            fbUser["picture"]["data"]["url"], null);
       } else {
-        throw (Failure(message: "Error in sign in with facebook, facebookUser is null"));
+        throw (Failure(
+            message: "Error in sign in with facebook, facebookUser is null"));
       }
-
     } catch (e) {
-      print("Error in sign in with google: $e");
+      print("Error login with facebook: $e");
       throw (e);
     }
 
     return userEntity;
   }
-
 
   @override
   Future<String> loginWithSocial(UserEntity user) async {
@@ -115,16 +118,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       final authResult = await apiClient.loginWithSocial(user);
 
       if (authResult.user == null) {
-        throw Failure(message: "Error login with social: ${authResult.message}");
+        throw Failure(
+            message: "Error login with social: ${authResult.message}");
       }
 
-      print("loginWithSocial accessToken token: ${authResult.accessToken}");
+      print(
+          "loginWithSocial success, token: ${authResult.accessToken}");
 
       localStorage.setAccessToken(authResult.accessToken);
       localStorage.setRefreshToken(authResult.refreshToken);
       localStorage.setCurrentUserId(user.id);
     } catch (e) {
-      print("Error sign up with email and password: $e");
+      print("Error login with social: $e");
       throw (e);
     }
 
@@ -253,8 +258,54 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<void> signOut() async {
     facebookLogin.logOut();
     googleSignIn.signOut();
-    firebaseAuth.signOut();
+    // apiClient.logout();
     localStorage.clear();
     return;
+  }
+
+  @override
+  Future<bool?> signInWithPhone(String phone) async {
+    return await apiClient.login(phone).then((value) {
+      return true;
+    }).catchError((e) {
+      print("signInWithPhone error: $e");
+      return false;
+    });
+  }
+
+  @override
+  Future<String> verifyCode(String code) async {
+    UserEntity user;
+
+    try {
+      final authResult = await apiClient.verifyCode(code);
+
+      if (authResult.user == null) {
+        throw Failure(message: "${authResult.message}");
+      }
+
+      user = authResult.user!;
+
+      print("verifyCode success, token: ${authResult.accessToken}");
+
+      localStorage.setAccessToken(authResult.accessToken);
+      localStorage.setRefreshToken(authResult.refreshToken);
+      localStorage.setCurrentUserId(user.id);
+    } catch (e) {
+      if (e is DioError) {
+        String? errorMessage = (e.response as Response).data["message"];
+        if (errorMessage?.isNotEmpty == true) {
+          print("Error verifyCode: $errorMessage");
+        }
+        throw (Failure(
+            code: (e.response as Response).statusCode,
+            message: "$errorMessage"));
+      } else {
+        print("Error verifyCode: $e");
+        throw (e);
+      }
+    }
+
+    return user.id;
   }
 }

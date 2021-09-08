@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/custom_interceptors.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/auth_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/base_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/tokens_response.dart';
@@ -9,6 +10,7 @@ import '../../../salons_app_flutter_module.dart';
 part 'api_client.g.dart';
 
 @RestApi(baseUrl: "https://salonsliza.herokuapp.com/api")
+// @RestApi(baseUrl: "http://localhost:3999/api")
 
 abstract class APIClient {
   factory APIClient(Dio dio) = _APIClient;

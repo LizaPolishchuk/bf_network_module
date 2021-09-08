@@ -23,7 +23,7 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
       fields[3] as String?,
       fields[4] as String?,
       isActivated: fields[6] as bool?,
-    )..isAdmin = fields[5] as bool;
+    )..isAdmin = fields[5] as bool?;
   }
 
   @override
@@ -69,7 +69,7 @@ UserEntity _$UserEntityFromJson(Map<String, dynamic> json) {
     json['avatar'] as String?,
     json['phone'] as String?,
     isActivated: json['isActivated'] as bool?,
-  )..isAdmin = json['isAdmin'] as bool;
+  )..isAdmin = json['isAdmin'] as bool? ?? false;
 }
 
 Map<String, dynamic> _$UserEntityToJson(UserEntity instance) =>

@@ -20,3 +20,4 @@ class AuthResponse extends TokensResponse {
 
   Map<String, dynamic> toJson() => _$AuthResponseToJson(this);
 }
+

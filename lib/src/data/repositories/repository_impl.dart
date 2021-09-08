@@ -124,7 +124,6 @@ class RepositoryImpl implements Repository {
       String userId = await authRemoteDataSource.loginWithSocial(user);
 
       return Right(userId);
-
     } catch (error) {
       return Left(Failure());
     }
@@ -297,6 +296,28 @@ class RepositoryImpl implements Repository {
       return Right(await mastersRemoteDataSource.updateMaster(master));
     } catch (error) {
       return Left(Failure(message: "Update master error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool?>> signInWithPhone(String phone) async {
+    try {
+      var a = await authRemoteDataSource.signInWithPhone(phone);
+      return Right(a);
+    } catch (error) {
+      return Left(Failure(message: "Login with phone error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> verifyCode(String code) async {
+    try {
+      return Right(await authRemoteDataSource.verifyCode(code));
+    } catch (error) {
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "Verify code error"));
     }
   }
 }

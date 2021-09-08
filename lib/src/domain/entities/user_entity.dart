@@ -18,7 +18,8 @@ class UserEntity {
   @HiveField(4)
   String? phone;
   @HiveField(5)
-  bool isAdmin = false;
+  @JsonKey(defaultValue: false)
+  bool? isAdmin;
   @HiveField(6)
   bool? isActivated;
 
