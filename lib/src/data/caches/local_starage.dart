@@ -1,5 +1,6 @@
 
 import 'package:hive/hive.dart';
+import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
@@ -24,6 +25,7 @@ class LocalStorage {
   static const _services = '_services';
   static const _orders = '_orders';
   static const _userId = '_userId';
+  static const _user = '_user';
   static const accessToken = '_accessToken';
   static const _refreshToken = '_refreshToken';
 
@@ -67,6 +69,10 @@ class LocalStorage {
   getCurrentUserId() => _getValue(_userId);
 
   Future setCurrentUserId(String userId) => _setValue(_userId, userId);
+
+  getCurrentUser() => _getValue(_user);
+
+  Future setCurrentUser(UserEntity user) => _setValue(_user, user);
 
   getAccessToken() => _getValue(accessToken);
 

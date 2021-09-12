@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 
 import 'data/caches/local_starage.dart';
@@ -55,7 +56,7 @@ Future<void> init() async {
   getIt.registerLazySingleton<SalonsRemoteDataSource>(
       () => SalonsRemoteDataSourceImpl(getIt()));
   getIt.registerLazySingleton<UserRemoteDataSource>(
-      () => UserRemoteDataSourceImpl());
+      () => UserRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<AuthRemoteDataSource>(() =>
       AuthRemoteDataSourceImpl(getIt(), getIt(), getIt(), getIt(), getIt()));
   getIt.registerLazySingleton<OrdersRemoteDataSource>(
@@ -86,6 +87,8 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => RemoveMasterUseCase(getIt()));
   getIt.registerLazySingleton(() => LoginWithPhoneVerifyCodeUseCase(getIt()));
   getIt.registerLazySingleton(() => LoginWithPhoneUseCase(getIt()));
+  getIt.registerLazySingleton(() => UpdateUserUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetUserUseCase(getIt()));
 
   ///External
   // final sharedPreferences = await SharedPreferences.getInstance();

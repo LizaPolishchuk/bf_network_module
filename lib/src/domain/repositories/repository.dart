@@ -1,5 +1,6 @@
 
 import 'package:dartz/dartz.dart';
+import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
@@ -8,17 +9,21 @@ import 'package:salons_app_flutter_module/src/domain/entities/service_entity.dar
 
 abstract class Repository {
   ///Login
-  Future<Either<Failure, String>> signInWithGoogle();
-  Future<Either<Failure, String>> signInWithFacebook();
+  Future<Either<Failure, Map<UserEntity, bool?>>> signInWithGoogle();
+  Future<Either<Failure, Map<UserEntity, bool?>>> signInWithFacebook();
   Future<Either<Failure, String>> signInWithEmailAndPassword(String email, String password);
   Future<Either<Failure, String>> signUpWithEmailAndPassword(String email, String password);
   Future<Either<Failure, String>> signUpWithEmailAndPasswordNew(String email, String password);
   Future<Either<Failure, String>> signUpWithLinkAndEmail(String email);
   Future<Either<Failure, bool?>> signInWithPhone(String phone);
-  Future<Either<Failure, String>> verifyCode(String code);
+  Future<Either<Failure, Map<UserEntity, bool?>>> verifyCode(String code);
   Future<Either<Failure, void>> sendLoginLinkToEmail(String email);
 
   Future<Either<Failure, void>> signOut();
+
+  ///Users
+  Future<Either<Failure, UserEntity>> getUser(String userId);
+  Future<Either<Failure, UserEntity>> updateUser(UserEntity user);
 
   ///Salons
   Future<Either<Failure, List<Salon>>> getSalonsList(String userId);

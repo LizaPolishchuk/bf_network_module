@@ -22,14 +22,16 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
       fields[2] as String?,
       fields[3] as String?,
       fields[4] as String?,
-      isActivated: fields[6] as bool?,
-    )..isAdmin = fields[5] as bool?;
+      fields[5] as int?,
+      isActivated: fields[7] as bool?,
+      isRegistered: fields[8] as bool?,
+    )..isAdmin = fields[6] as bool?;
   }
 
   @override
   void write(BinaryWriter writer, UserEntity obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,9 +43,13 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
       ..writeByte(4)
       ..write(obj.phone)
       ..writeByte(5)
-      ..write(obj.isAdmin)
+      ..write(obj.gender)
       ..writeByte(6)
-      ..write(obj.isActivated);
+      ..write(obj.isAdmin)
+      ..writeByte(7)
+      ..write(obj.isActivated)
+      ..writeByte(8)
+      ..write(obj.isRegistered);
   }
 
   @override
@@ -68,7 +74,9 @@ UserEntity _$UserEntityFromJson(Map<String, dynamic> json) {
     json['email'] as String?,
     json['avatar'] as String?,
     json['phone'] as String?,
+    json['gender'] as int?,
     isActivated: json['isActivated'] as bool?,
+    isRegistered: json['isRegistered'] as bool? ?? true,
   )..isAdmin = json['isAdmin'] as bool? ?? false;
 }
 
@@ -79,6 +87,8 @@ Map<String, dynamic> _$UserEntityToJson(UserEntity instance) =>
       'email': instance.email,
       'avatar': instance.avatar,
       'phone': instance.phone,
+      'gender': instance.gender,
       'isAdmin': instance.isAdmin,
       'isActivated': instance.isActivated,
+      'isRegistered': instance.isRegistered,
     };

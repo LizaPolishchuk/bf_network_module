@@ -32,17 +32,30 @@ class RepositoryImpl implements Repository {
       this.mastersRemoteDataSource);
 
   @override
-  Future<Either<Failure, String>> signInWithFacebook() async {
+  Future<Either<Failure, Map<UserEntity, bool?>>> signInWithFacebook() async {
     try {
       UserEntity? user = await authRemoteDataSource.loginWithFacebook();
 
-      String userId = await authRemoteDataSource.loginWithSocial(user);
+      Map<UserEntity, bool?> response = await authRemoteDataSource.loginWithSocial(user);
 
-      return Right(userId);
+      return Right(response);
     } catch (error) {
       if (error is FirebaseAuthException) {
         return Left(Failure(message: error.message ?? "", codeStr: error.code));
       }
+      return Left(Failure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Map<UserEntity, bool?>>> signInWithGoogle() async {
+    try {
+      UserEntity? user = await authRemoteDataSource.loginWithGoogle();
+
+      Map<UserEntity, bool?> response = await authRemoteDataSource.loginWithSocial(user);
+
+      return Right(response);
+    } catch (error) {
       return Left(Failure());
     }
   }
@@ -111,19 +124,6 @@ class RepositoryImpl implements Repository {
           email, password);
 
       return Right(result?.id ?? "");
-    } catch (error) {
-      return Left(Failure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, String>> signInWithGoogle() async {
-    try {
-      UserEntity? user = await authRemoteDataSource.loginWithGoogle();
-
-      String userId = await authRemoteDataSource.loginWithSocial(user);
-
-      return Right(userId);
     } catch (error) {
       return Left(Failure());
     }
@@ -310,7 +310,7 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, String>> verifyCode(String code) async {
+  Future<Either<Failure, Map<UserEntity, bool?>>> verifyCode(String code) async {
     try {
       return Right(await authRemoteDataSource.verifyCode(code));
     } catch (error) {
@@ -318,6 +318,30 @@ class RepositoryImpl implements Repository {
         return Left(error);
       }
       return Left(Failure(message: "Verify code error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> getUser(String userId) async {
+    try {
+      return Right(await userRemoteDataSource.getUser(userId));
+    } catch (error) {
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "getUser error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> updateUser(UserEntity user) async {
+    try {
+      return Right(await userRemoteDataSource.updateUser(user));
+    } catch (error) {
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "updateUser error"));
     }
   }
 }

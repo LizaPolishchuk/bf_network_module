@@ -10,8 +10,9 @@ part 'auth_response.g.dart';
 class AuthResponse extends TokensResponse {
   final UserEntity? user;
   final Salon? salon;
+  final bool? creator;
 
-  AuthResponse(this.user, this.salon, accessToken, refreshToken, message)
+  AuthResponse(this.user, this.salon, this.creator, accessToken, refreshToken, message)
       : super(accessToken, refreshToken, message);
 
   factory AuthResponse.fromJson(Map<String, dynamic> json) {

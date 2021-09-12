@@ -13,7 +13,7 @@ abstract class AuthRemoteDataSource {
 
   Future<UserEntity> loginWithFacebook();
 
-  Future<String> loginWithSocial(UserEntity user);
+  Future<Map<UserEntity, bool?>> loginWithSocial(UserEntity user);
 
   Future<User?> signInWithEmailAndPassword(String email, String password);
 
@@ -28,7 +28,7 @@ abstract class AuthRemoteDataSource {
 
   Future<bool?> signInWithPhone(String phone);
 
-  Future<String> verifyCode(String code);
+  Future<Map<UserEntity, bool?>> verifyCode(String code);
 
   Future<void> sendLinkForEmailSignIn(String email);
 
@@ -80,7 +80,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }
 
       userEntity = new UserEntity(googleUser.id, googleUser.displayName,
-          googleUser.email, googleUser.photoUrl, null);
+          googleUser.email, googleUser.photoUrl, null, null);
     } catch (e) {
       print("Error in sign in with google: $e");
       throw (e);
@@ -99,7 +99,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         final fbUser = await facebookLogin.getUserData();
 
         userEntity = UserEntity(fbUser["id"], fbUser["name"], fbUser["email"],
-            fbUser["picture"]["data"]["url"], null);
+            fbUser["picture"]["data"]["url"], null, null);
       } else {
         throw (Failure(
             message: "Error in sign in with facebook, facebookUser is null"));
@@ -113,7 +113,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<String> loginWithSocial(UserEntity user) async {
+  Future<Map<UserEntity, bool?>> loginWithSocial(UserEntity user) async {
+    bool? creator;
+    UserEntity userFromResp;
     try {
       final authResult = await apiClient.loginWithSocial(user);
 
@@ -122,18 +124,21 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
             message: "Error login with social: ${authResult.message}");
       }
 
-      print(
-          "loginWithSocial success, token: ${authResult.accessToken}");
+      creator = authResult.creator;
+      userFromResp = authResult.user!..isRegistered = !creator!;
+
+      print("loginWithSocial success, token: ${authResult.accessToken}");
 
       localStorage.setAccessToken(authResult.accessToken);
       localStorage.setRefreshToken(authResult.refreshToken);
-      localStorage.setCurrentUserId(user.id);
+      localStorage.setCurrentUserId(userFromResp.id);
+      localStorage.setCurrentUser(userFromResp);
     } catch (e) {
       print("Error login with social: $e");
       throw (e);
     }
 
-    return user.id;
+    return {userFromResp: creator};
   }
 
   @override
@@ -162,8 +167,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
         firebaseUser = userCred.user;
       }
-
-      localStorage.setCurrentUserId(firebaseUser!.uid);
     } catch (e) {
       firebaseUser = null;
       print("Error in sign in with google: $e");
@@ -274,8 +277,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<String> verifyCode(String code) async {
+  Future<Map<UserEntity, bool?>> verifyCode(String code) async {
     UserEntity user;
+    late bool? creator;
 
     try {
       final authResult = await apiClient.verifyCode(code);
@@ -284,13 +288,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         throw Failure(message: "${authResult.message}");
       }
 
-      user = authResult.user!;
+      creator = authResult.creator;
+      user = authResult.user!..isRegistered = !creator!;
 
       print("verifyCode success, token: ${authResult.accessToken}");
 
       localStorage.setAccessToken(authResult.accessToken);
       localStorage.setRefreshToken(authResult.refreshToken);
       localStorage.setCurrentUserId(user.id);
+      localStorage.setCurrentUser(user);
     } catch (e) {
       if (e is DioError) {
         String? errorMessage = (e.response as Response).data["message"];
@@ -306,6 +312,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }
     }
 
-    return user.id;
+    return {user: creator};
   }
 }

@@ -4,6 +4,7 @@ import 'package:salons_app_flutter_module/src/data/datasources/custom_intercepto
 import 'package:salons_app_flutter_module/src/domain/entities/responses/auth_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/base_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/tokens_response.dart';
+import 'package:salons_app_flutter_module/src/domain/entities/responses/user_response.dart';
 
 import '../../../salons_app_flutter_module.dart';
 
@@ -41,6 +42,15 @@ abstract class APIClient {
   @POST("/auth/loginVerify")
   @FormUrlEncoded()
   Future<AuthResponse> verifyCode(@Field("code") String code);
+
+  @GET("/user")
+  Future<UserResponse> getUser(@Query("userId") String userId);
+
+  @POST("/user/update")
+  Future<UserResponse> updateUser(@Body() UserEntity user);
+
+  @POST("/user/delete/{userId}")
+  Future<BaseResponse> deleteUser(@Path() String userId);
 
   @GET("/master/{salonId}")
   Future<BaseResponse> getMastersList(@Query("salonId") String salonId);
@@ -88,5 +98,5 @@ abstract class APIClient {
   Future<BaseResponse> updateSalon(@Body() Salon salon);
 
   @POST("/salon/delete/{salonId}")
-  Future<BaseResponse> deleteSalon(@Path() Salon salonId);
+  Future<BaseResponse> deleteSalon(@Path() String salonId);
 }

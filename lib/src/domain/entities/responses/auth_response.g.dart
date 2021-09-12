@@ -14,6 +14,7 @@ AuthResponse _$AuthResponseFromJson(Map<String, dynamic> json) {
     json['salon'] == null
         ? null
         : Salon.fromJson(json['salon'] as Map<String, dynamic>),
+    json['creator'] as bool?,
     json['accessToken'],
     json['refreshToken'],
     json['message'],
@@ -27,4 +28,5 @@ Map<String, dynamic> _$AuthResponseToJson(AuthResponse instance) =>
       'refreshToken': instance.refreshToken,
       'user': instance.user,
       'salon': instance.salon,
+      'creator': instance.creator,
     };
