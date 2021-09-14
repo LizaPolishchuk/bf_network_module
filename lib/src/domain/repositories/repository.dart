@@ -11,9 +11,9 @@ abstract class Repository {
   ///Login
   Future<Either<Failure, Map<UserEntity, bool?>>> signInWithGoogle();
   Future<Either<Failure, Map<UserEntity, bool?>>> signInWithFacebook();
-  Future<Either<Failure, String>> signInWithEmailAndPassword(String email, String password);
+  Future<Either<Failure, Salon>> signInWithEmailAndPassword(String email, String password);
   Future<Either<Failure, String>> signUpWithEmailAndPassword(String email, String password);
-  Future<Either<Failure, String>> signUpWithEmailAndPasswordNew(String email, String password);
+  Future<Either<Failure, Salon>> signUpWithEmailAndPasswordNew(String email, String password);
   Future<Either<Failure, String>> signUpWithLinkAndEmail(String email);
   Future<Either<Failure, bool?>> signInWithPhone(String phone);
   Future<Either<Failure, Map<UserEntity, bool?>>> verifyCode(String code);

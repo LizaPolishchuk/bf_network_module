@@ -18,15 +18,22 @@ class Salon extends BaseEntity {
   @HiveField(5)
   String? description;
 
-  Salon([id, name, this.photo, this.photoPath,  this.ownerId, this.description]) : super(id, name);
+  Salon([id, name, this.photo, this.photoPath, this.ownerId, this.description])
+      : super(id, name);
 
   factory Salon.fromJson(Map<String, dynamic> json) {
+    json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
     return _$SalonFromJson(json);
   }
 
-  Map<String, dynamic> toJson() => _$SalonToJson(this);
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = _$SalonToJson(this);
+    json["_id"] = json["id"];
+    json.remove("id");
+    return json;
+  }
 
   Salon.defaultSalon() : super("example_salon_id", "") {
-     Salon("example_salon_id");
+    Salon("example_salon_id");
   }
 }

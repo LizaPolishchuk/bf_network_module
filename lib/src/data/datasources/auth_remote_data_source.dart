@@ -15,11 +15,11 @@ abstract class AuthRemoteDataSource {
 
   Future<Map<UserEntity, bool?>> loginWithSocial(UserEntity user);
 
-  Future<User?> signInWithEmailAndPassword(String email, String password);
+  Future<Salon> signInWithEmailAndPassword(String email, String password);
 
   Future<User?> signUpWithEmailAndPassword(String email, String password);
 
-  Future<UserEntity?> signUpWithEmailAndPasswordNew(
+  Future<Salon> signUpWithEmailAndPasswordNew(
       String email, String password);
 
   Future<User?> signInWithFacebook();
@@ -177,21 +177,29 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<User?> signInWithEmailAndPassword(
+  Future<Salon> signInWithEmailAndPassword(
       String email, String password) async {
-    User? webFirebaseUser;
+    Salon salon;
     try {
-      final authResult = await firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
-      webFirebaseUser = authResult.user;
-      localStorage.setCurrentUserId(webFirebaseUser!.uid);
+      final authResult = await apiClient.loginWeb(email, password);
+
+      if (authResult.salon == null) {
+        throw Failure(message: "${authResult.message ?? "signInWithEmailAndPassword Salon is null"}");
+      }
+
+      salon = authResult.salon!;
+
+      print("signUpWithEmailAndPasswordNew accessToken token: ${authResult.accessToken}");
+
+      localStorage.setSalon(salon);
+      localStorage.setAccessToken(authResult.accessToken);
+      localStorage.setRefreshToken(authResult.refreshToken);
     } catch (e) {
-      webFirebaseUser = null;
-      print("Error in sign in with email and password: $e");
+      print("Error sign up with email and password: $e");
       throw (e);
     }
 
-    return webFirebaseUser;
+    return salon;
   }
 
   @override
@@ -213,24 +221,29 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<UserEntity?> signUpWithEmailAndPasswordNew(
+  Future<Salon> signUpWithEmailAndPasswordNew(
       String email, String password) async {
-    UserEntity? user;
+    Salon salon;
     try {
       final authResult = await apiClient.signUpWeb(email, password);
 
-      user = authResult.user;
+      if (authResult.salon == null) {
+        throw Failure(message: "${authResult.message ?? "signUpWithEmailAndPassword Salon is null"}");
+      }
 
-      print(
-          "signUpWithEmailAndPasswordNew accessToken token: ${authResult.accessToken}");
+      salon = authResult.salon!;
 
-      // localStorage.setCurrentUserId(webFirebaseUser!.uid);
+      print("signUpWithEmailAndPasswordNew accessToken token: ${authResult.accessToken}");
+
+      localStorage.setSalon(salon);
+      localStorage.setAccessToken(authResult.accessToken);
+      localStorage.setRefreshToken(authResult.refreshToken);
     } catch (e) {
       print("Error sign up with email and password: $e");
       throw (e);
     }
 
-    return user;
+    return salon;
   }
 
   @override

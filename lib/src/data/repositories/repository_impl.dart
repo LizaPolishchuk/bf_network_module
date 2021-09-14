@@ -61,34 +61,14 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, String>> signInWithEmailAndPassword(
+  Future<Either<Failure, Salon>> signInWithEmailAndPassword(
       String email, String password) async {
     try {
-      FirebaseAuth.User? firebaseUser = await authRemoteDataSource
-          .signInWithEmailAndPassword(email, password);
-      if (firebaseUser != null) {
-        bool isUserPresent =
-            await userRemoteDataSource.checkIsUserPresent(firebaseUser.uid);
-        if (!isUserPresent) {
-          // UserEntity user = new UserEntity(firebaseUser.uid, firebaseUser.displayName??"", firebaseUser.email,
-          //     firebaseUser.photoURL);
-          // userRemoteDataSource.createUser(user);
-        }
-        localStorage.setUserId(firebaseUser.uid);
-        return Right(firebaseUser.uid);
-      } else {
-        return Left(Failure());
-      }
-    } catch (error) {
-      if (error is FirebaseAuthException) {
-        //ERROR_WEAK_PASSWORD - If the password is not strong enough.
-        // ERROR_INVALID_EMAIL - If the email address is malformed.
-        // ERROR_EMAIL_ALREADY_IN_USE - If the email is already in use by a different account.
-        if (error.code == 'ERROR_EMAIL_ALREADY_IN_USE') {}
+      final result = await authRemoteDataSource.signInWithEmailAndPassword(email, password);
 
-        return Left(Failure(message: error.message ?? "", codeStr: error.code));
-      }
-      return Left(Failure(message: ""));
+      return Right(result);
+    } catch (error) {
+      return Left(Failure());
     }
   }
 
@@ -117,13 +97,13 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, String>> signUpWithEmailAndPasswordNew(
+  Future<Either<Failure, Salon>> signUpWithEmailAndPasswordNew(
       String email, String password) async {
     try {
       final result = await authRemoteDataSource.signUpWithEmailAndPasswordNew(
           email, password);
 
-      return Right(result?.id ?? "");
+      return Right(result);
     } catch (error) {
       return Left(Failure());
     }
