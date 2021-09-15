@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/custom_interceptors.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/auth_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/base_response.dart';
+import 'package:salons_app_flutter_module/src/domain/entities/responses/salon_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/tokens_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/user_response.dart';
 
@@ -95,7 +95,7 @@ abstract class APIClient {
   Future<BaseResponse> addSalon(@Body() Salon salon);
 
   @POST("/salon/update")
-  Future<BaseResponse> updateSalon(@Body() Salon salon);
+  Future<SalonResponse> updateSalon(@Body() Salon salon);
 
   @POST("/salon/delete/{salonId}")
   Future<BaseResponse> deleteSalon(@Path() String salonId);

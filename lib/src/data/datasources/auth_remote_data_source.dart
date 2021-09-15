@@ -5,6 +5,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
+import 'package:salons_app_flutter_module/src/domain/entities/responses/salon_response.dart';
 
 abstract class AuthRemoteDataSource {
   Future<User?> loginWithGoogleWeb();
@@ -179,27 +180,39 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<Salon> signInWithEmailAndPassword(
       String email, String password) async {
-    Salon salon;
+    SalonResponse salonData;
     try {
       final authResult = await apiClient.loginWeb(email, password);
 
-      if (authResult.salon == null) {
+      if (authResult.salonData == null) {
         throw Failure(message: "${authResult.message ?? "signInWithEmailAndPassword Salon is null"}");
       }
 
-      salon = authResult.salon!;
+      salonData = authResult.salonData!;
 
       print("signUpWithEmailAndPasswordNew accessToken token: ${authResult.accessToken}");
 
-      localStorage.setSalon(salon);
+      localStorage.setSalon(salonData.salon!);
+      localStorage.setMastersList(salonData.masters ?? []);
+      localStorage.setServicesList(salonData.services ?? []);
       localStorage.setAccessToken(authResult.accessToken);
       localStorage.setRefreshToken(authResult.refreshToken);
     } catch (e) {
+      if (e is DioError) {
+        String? errorMessage = (e.response as Response).data["message"];
+
+        if (errorMessage?.isNotEmpty != true) {
+          errorMessage = "Something went wrong";
+        }
+
+        throw(Failure(message: errorMessage!));
+      }
+
       print("Error sign up with email and password: $e");
       throw (e);
     }
 
-    return salon;
+    return salonData.salon!;
   }
 
   @override
@@ -223,27 +236,38 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<Salon> signUpWithEmailAndPasswordNew(
       String email, String password) async {
-    Salon salon;
+    SalonResponse salonData;
     try {
       final authResult = await apiClient.signUpWeb(email, password);
 
-      if (authResult.salon == null) {
+      if (authResult.salonData?.salon == null) {
         throw Failure(message: "${authResult.message ?? "signUpWithEmailAndPassword Salon is null"}");
       }
 
-      salon = authResult.salon!;
+      salonData = authResult.salonData!;
 
       print("signUpWithEmailAndPasswordNew accessToken token: ${authResult.accessToken}");
 
-      localStorage.setSalon(salon);
+      localStorage.setSalon(salonData.salon!);
+      localStorage.setMastersList(salonData.masters ?? []);
+      localStorage.setServicesList(salonData.services ?? []);
       localStorage.setAccessToken(authResult.accessToken);
       localStorage.setRefreshToken(authResult.refreshToken);
     } catch (e) {
+      if(e is DioError) {
+        String? errorMessage = (e.response as Response).data["message"];
+
+        if (errorMessage?.isNotEmpty != true) {
+          errorMessage = "Something went wrong";
+        }
+
+        throw(Failure(message: errorMessage!));
+      }
       print("Error sign up with email and password: $e");
       throw (e);
     }
 
-    return salon;
+    return salonData.salon!;
   }
 
   @override

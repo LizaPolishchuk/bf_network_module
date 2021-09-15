@@ -54,7 +54,7 @@ Future<void> init() async {
 
   ///Data sources
   getIt.registerLazySingleton<SalonsRemoteDataSource>(
-      () => SalonsRemoteDataSourceImpl(getIt()));
+      () => SalonsRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<UserRemoteDataSource>(
       () => UserRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<AuthRemoteDataSource>(() =>

@@ -68,6 +68,9 @@ class RepositoryImpl implements Repository {
 
       return Right(result);
     } catch (error) {
+      if(error is Failure) {
+        return Left(error);
+      }
       return Left(Failure());
     }
   }
@@ -92,6 +95,9 @@ class RepositoryImpl implements Repository {
         return Left(Failure());
       }
     } catch (error) {
+      if(error is Failure) {
+        return Left(error);
+      }
       return Left(Failure());
     }
   }
@@ -105,6 +111,9 @@ class RepositoryImpl implements Repository {
 
       return Right(result);
     } catch (error) {
+      if(error is Failure) {
+        return Left(error);
+      }
       return Left(Failure());
     }
   }

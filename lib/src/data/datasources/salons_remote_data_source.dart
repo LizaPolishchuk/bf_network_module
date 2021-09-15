@@ -1,6 +1,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/service_entity.dart';
@@ -27,9 +29,10 @@ abstract class SalonsRemoteDataSource {
 class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
   late CollectionReference salonsCollection;
   late CollectionReference mastersCollection;
-  LocalStorage localStorage;
+  LocalStorage _localStorage;
+  APIClient _apiClient;
 
-  SalonsRemoteDataSourceImpl(this.localStorage) {
+  SalonsRemoteDataSourceImpl(this._localStorage, this._apiClient) {
     salonsCollection = FirebaseFirestore.instance.collection(SALONS_COLLECTION);
     mastersCollection =
         FirebaseFirestore.instance.collection(MASTERS_COLLECTION);
@@ -80,15 +83,17 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
 
   @override
   Future<Salon> updateSalon(Salon salon) async {
-    final Map<String, dynamic> data = salon.toJson();
+    final response = await _apiClient.updateSalon(salon);
 
-    salonsCollection.doc(salon.id).set(data).catchError((Object error) {
-      throw(error);
-    });
+    if (response.salon == null) {
+      throw(Failure(message: response.message ?? "updateUser error: user is null"));
+    }
 
-    await saveSalonToLocalStorage(salon, null);
+    _localStorage.setSalon(response.salon!);
+    _localStorage.setMastersList(response.masters ?? []);
+    _localStorage.setServicesList(response.services ?? []);
 
-    return salon;
+    return response.salon!;
   }
 
   @override
@@ -158,16 +163,16 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
       return Service.fromJson(doc.data() as Map<String, dynamic>);
     }).toList();
 
-    await localStorage.setServicesList(services);
+    await _localStorage.setServicesList(services);
 
     return services;
   }
 
   Future<void> saveSalonToLocalStorage(Salon salon, List<Service>? services) async {
-    localStorage.setSalon(salon);
-    localStorage.setSalonId(salon.id);
+    _localStorage.setSalon(salon);
+    _localStorage.setSalonId(salon.id);
     if (services != null) {
-      localStorage.setServicesList(services);
+      _localStorage.setServicesList(services);
     }
   }
 }
