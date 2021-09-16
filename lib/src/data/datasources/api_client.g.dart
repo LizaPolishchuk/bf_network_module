@@ -243,17 +243,20 @@ class _APIClient implements APIClient {
   }
 
   @override
-  Future<BaseResponse> deleteMaster(masterId) async {
+  Future<BaseResponse2<dynamic>> deleteMaster(masterId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(Options(
+        _setStreamType<BaseResponse2<dynamic>>(Options(
                 method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
             .compose(_dio.options, '/master/delete/$masterId',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = BaseResponse2<dynamic>.fromJson(
+      _result.data!,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -320,64 +323,77 @@ class _APIClient implements APIClient {
   }
 
   @override
-  Future<BaseResponse> getServiceList(salonId) async {
+  Future<BaseResponse2<List<Service>>> getServiceList(salonId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'salonId': salonId};
+    final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
+        _setStreamType<BaseResponse2<List<Service>>>(
             Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, '/service/{salonId}',
+                .compose(_dio.options, '/service/$salonId',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = BaseResponse2<List<Service>>.fromJson(
+        _result.data!,
+        (json) => (json as List<dynamic>)
+            .map<Service>((i) => Service.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 
   @override
-  Future<BaseResponse> addService(service) async {
+  Future<BaseResponse2<Service>> addService(service) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(service.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
+        _setStreamType<BaseResponse2<Service>>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/service/create',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = BaseResponse2<Service>.fromJson(
+      _result.data!,
+      (json) => Service.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
   @override
-  Future<BaseResponse> updateService(service) async {
+  Future<BaseResponse2<Service>> updateService(service) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(service.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
+        _setStreamType<BaseResponse2<Service>>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/service/update',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = BaseResponse2<Service>.fromJson(
+      _result.data!,
+      (json) => Service.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
   @override
-  Future<BaseResponse> deleteService(serviceId) async {
+  Future<BaseResponse2<dynamic>> deleteService(serviceId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, '/service/delete/$serviceId',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+        _setStreamType<BaseResponse2<dynamic>>(Options(
+                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, '/service/delete/$serviceId',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseResponse2<dynamic>.fromJson(
+      _result.data!,
+      (json) => json as dynamic,
+    );
     return value;
   }
 

@@ -28,6 +28,7 @@ export './src/domain/usecases/orders/update_order_use_case.dart';
 export './src/domain/usecases/salons/get_salon_by_id_use_case.dart';
 export './src/domain/usecases/salons/get_salons_list_use_case.dart';
 export './src/domain/usecases/salons/update_salon_use_case.dart';
+export './src/domain/usecases/services/add_service_use_case.dart';
 export './src/domain/usecases/services/get_services_list_use_case.dart';
 export './src/domain/usecases/services/remove_service_use_case.dart';
 export './src/domain/usecases/services/update_service_use_case.dart';

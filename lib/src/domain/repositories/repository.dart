@@ -46,8 +46,9 @@ abstract class Repository {
 
   ///Services
   Future<Either<Failure, List<Service>>> getServicesList(String salonId);
-  Future<Either<Failure, void>> removeService(String salonId, Service serviceEntity);
-  Future<Either<Failure, void>> updateService(String salonId, Service serviceEntity);
+  Future<Either<Failure, Service>> addService(Service service);
+  Future<Either<Failure, Service>> updateService(Service service);
+  Future<Either<Failure, void>> removeService(String serviceId);
 
   ///Masters
   Future<Either<Failure, List<Master>>> getMastersList(String salonId);

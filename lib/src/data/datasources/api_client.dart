@@ -63,7 +63,7 @@ abstract class APIClient {
   Future<BaseResponse2<Master>> updateMaster(@Body() Master master);
 
   @DELETE("/master/delete/{masterId}")
-  Future<BaseResponse> deleteMaster(@Path("masterId") String masterId);
+  Future<BaseResponse2> deleteMaster(@Path("masterId") String masterId);
 
   @GET("/order/{userId}")
   Future<BaseResponse> getOrdersList(@Query("userId") String userId);
@@ -78,16 +78,16 @@ abstract class APIClient {
   Future<BaseResponse> deleteOrder(@Path() String orderId);
 
   @GET("/service/{salonId}")
-  Future<BaseResponse> getServiceList(@Query("salonId") String salonId);
+  Future<BaseResponse2<List<Service>>> getServiceList(@Path("salonId") String salonId);
 
   @POST("/service/create")
-  Future<BaseResponse> addService(@Body() Service service);
+  Future<BaseResponse2<Service>> addService(@Body() Service service);
 
   @POST("/service/update")
-  Future<BaseResponse> updateService(@Body() Service service);
+  Future<BaseResponse2<Service>> updateService(@Body() Service service);
 
-  @POST("/service/delete/{serviceId}")
-  Future<BaseResponse> deleteService(@Path() String serviceId);
+  @DELETE("/service/delete/{serviceId}")
+  Future<BaseResponse2> deleteService(@Path("serviceId") String serviceId);
 
   @GET("/salon")
   Future<BaseResponse> getSalonList();

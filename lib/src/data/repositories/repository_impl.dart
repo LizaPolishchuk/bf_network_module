@@ -7,6 +7,7 @@ import 'package:salons_app_flutter_module/src/data/datasources/auth_remote_data_
 import 'package:salons_app_flutter_module/src/data/datasources/masters_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/orders_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/salons_remote_data_source.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/services_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/user_remote_data_source.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
@@ -18,6 +19,7 @@ import 'package:salons_app_flutter_module/src/domain/repositories/repository.dar
 class RepositoryImpl implements Repository {
   LocalStorage localStorage;
   SalonsRemoteDataSource salonsRemoteDataSource;
+  ServiceRemoteDataSource serviceRemoteDataSource;
   AuthRemoteDataSource authRemoteDataSource;
   UserRemoteDataSource userRemoteDataSource;
   OrdersRemoteDataSource ordersRemoteDataSource;
@@ -29,6 +31,7 @@ class RepositoryImpl implements Repository {
       this.authRemoteDataSource,
       this.userRemoteDataSource,
       this.ordersRemoteDataSource,
+      this.serviceRemoteDataSource,
       this.mastersRemoteDataSource);
 
   @override
@@ -36,7 +39,8 @@ class RepositoryImpl implements Repository {
     try {
       UserEntity? user = await authRemoteDataSource.loginWithFacebook();
 
-      Map<UserEntity, bool?> response = await authRemoteDataSource.loginWithSocial(user);
+      Map<UserEntity, bool?> response =
+          await authRemoteDataSource.loginWithSocial(user);
 
       return Right(response);
     } catch (error) {
@@ -52,7 +56,8 @@ class RepositoryImpl implements Repository {
     try {
       UserEntity? user = await authRemoteDataSource.loginWithGoogle();
 
-      Map<UserEntity, bool?> response = await authRemoteDataSource.loginWithSocial(user);
+      Map<UserEntity, bool?> response =
+          await authRemoteDataSource.loginWithSocial(user);
 
       return Right(response);
     } catch (error) {
@@ -64,11 +69,12 @@ class RepositoryImpl implements Repository {
   Future<Either<Failure, Salon>> signInWithEmailAndPassword(
       String email, String password) async {
     try {
-      final result = await authRemoteDataSource.signInWithEmailAndPassword(email, password);
+      final result = await authRemoteDataSource.signInWithEmailAndPassword(
+          email, password);
 
       return Right(result);
     } catch (error) {
-      if(error is Failure) {
+      if (error is Failure) {
         return Left(error);
       }
       return Left(Failure());
@@ -95,7 +101,7 @@ class RepositoryImpl implements Repository {
         return Left(Failure());
       }
     } catch (error) {
-      if(error is Failure) {
+      if (error is Failure) {
         return Left(error);
       }
       return Left(Failure());
@@ -111,7 +117,7 @@ class RepositoryImpl implements Repository {
 
       return Right(result);
     } catch (error) {
-      if(error is Failure) {
+      if (error is Failure) {
         return Left(error);
       }
       return Left(Failure());
@@ -194,28 +200,6 @@ class RepositoryImpl implements Repository {
     }
   }
 
-  // @override
-  // Future<Either<Failure, List<AvailableTime>>> getAvailableTimesByMasterId(
-  //     String salonId, String masterId) async {
-  //   try {
-  //     return Right(await salonsRemoteDataSource.getAvailableTimesByMasterId(
-  //         salonId, masterId));
-  //   } catch(error) {
-  //     return Left(Failure(message: "Get available times by masterId error"));
-  //   }
-  // }
-  //
-  // @override
-  // Future<Either<Failure, List<AvailableTime>>> getAvailableTimesByServiceId(
-  //     String salonId, String serviceId) async {
-  //   try {
-  //     return Right(await salonsRemoteDataSource.getAvailableTimesByServiceId(
-  //         salonId, serviceId));
-  //   } catch(error) {
-  //     return Left(Failure(message: "Get available times by serviceId error"));
-  //   }
-  // }
-
   @override
   Future<Either<Failure, void>> sendLoginLinkToEmail(String email) async {
     try {
@@ -233,31 +217,36 @@ class RepositoryImpl implements Repository {
   @override
   Future<Either<Failure, List<Service>>> getServicesList(String salonId) async {
     try {
-      return Right(await salonsRemoteDataSource.getServicesList(salonId));
+      return Right(await serviceRemoteDataSource.getServicesList(salonId));
     } catch (error) {
-      return Left(Failure(message: "Get services list error"));
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "getServicesList error"));
     }
   }
 
   @override
-  Future<Either<Failure, void>> removeService(
-      String salonId, Service serviceEntity) async {
+  Future<Either<Failure, void>> removeService(String serviceId) async {
     try {
-      return Right(
-          await salonsRemoteDataSource.removeService(salonId, serviceEntity));
+      return Right(await serviceRemoteDataSource.removeService(serviceId));
     } catch (error) {
-      return Left(Failure(message: "Remove service error"));
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "removeService error"));
     }
   }
 
   @override
-  Future<Either<Failure, void>> updateService(
-      String salonId, Service serviceEntity) async {
+  Future<Either<Failure, Service>> updateService(Service service) async {
     try {
-      return Right(
-          await salonsRemoteDataSource.updateService(salonId, serviceEntity));
+      return Right(await serviceRemoteDataSource.updateService(service));
     } catch (error) {
-      return Left(Failure(message: "Update service error"));
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "updateService error"));
     }
   }
 
@@ -309,7 +298,8 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, Map<UserEntity, bool?>>> verifyCode(String code) async {
+  Future<Either<Failure, Map<UserEntity, bool?>>> verifyCode(
+      String code) async {
     try {
       return Right(await authRemoteDataSource.verifyCode(code));
     } catch (error) {
@@ -341,6 +331,18 @@ class RepositoryImpl implements Repository {
         return Left(error);
       }
       return Left(Failure(message: "updateUser error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Service>> addService(Service service) async {
+    try {
+      return Right(await serviceRemoteDataSource.addService(service));
+    } catch (error) {
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "addService error"));
     }
   }
 }

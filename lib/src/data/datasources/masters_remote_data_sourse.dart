@@ -1,10 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
-
-const MASTERS_COLLECTION = 'masters';
 
 abstract class MastersRemoteDataSource {
   Future<List<Master>> getMastersList(String salonId);
@@ -17,18 +14,13 @@ abstract class MastersRemoteDataSource {
 }
 
 class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
-  late CollectionReference mastersCollection;
-  LocalStorage _localStorage;
-  APIClient _apiClient;
+  final LocalStorage _localStorage;
+  final APIClient _apiClient;
 
-  MastersRemoteDataSourceImpl(this._localStorage, this._apiClient) {
-    mastersCollection =
-        FirebaseFirestore.instance.collection(MASTERS_COLLECTION);
-  }
+  const MastersRemoteDataSourceImpl(this._localStorage, this._apiClient);
 
   @override
   Future<List<Master>> getMastersList(String salonId) async {
-    print("getMastersList: $salonId");
     final response = await _apiClient.getMastersList(salonId);
 
     if (response.data == null) {
@@ -36,8 +28,6 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
     }
 
     _localStorage.setMastersList(response.data ?? []);
-
-    print("getMastersList response: ${response.data}");
 
     return response.data!;
   }
