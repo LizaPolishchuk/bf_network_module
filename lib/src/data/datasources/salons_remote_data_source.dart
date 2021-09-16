@@ -90,6 +90,7 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
     }
 
     _localStorage.setSalon(response.salon!);
+    _localStorage.setSalonId(response.salon!.id);
     _localStorage.setMastersList(response.masters ?? []);
     _localStorage.setServicesList(response.services ?? []);
 

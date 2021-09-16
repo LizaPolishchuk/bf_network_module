@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/auth_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/base_response.dart';
+import 'package:salons_app_flutter_module/src/domain/entities/responses/base_response2.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/salon_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/tokens_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/user_response.dart';
@@ -10,8 +11,8 @@ import '../../../salons_app_flutter_module.dart';
 
 part 'api_client.g.dart';
 
-@RestApi(baseUrl: "https://salonsliza.herokuapp.com/api")
-// @RestApi(baseUrl: "http://localhost:3999/api")
+// @RestApi(baseUrl: "https://salonsliza.herokuapp.com/api")
+@RestApi(baseUrl: "http://localhost:3999/api")
 
 abstract class APIClient {
   factory APIClient(Dio dio) = _APIClient;
@@ -53,16 +54,16 @@ abstract class APIClient {
   Future<BaseResponse> deleteUser(@Path() String userId);
 
   @GET("/master/{salonId}")
-  Future<BaseResponse> getMastersList(@Query("salonId") String salonId);
+  Future<BaseResponse2<List<Master>>> getMastersList(@Path("salonId") String salonId);
 
   @POST("/master/create")
-  Future<BaseResponse> addMaster(@Body() Master master);
+  Future<BaseResponse2<Master>> addMaster(@Body() Master master);
 
   @POST("/master/update")
-  Future<BaseResponse> updateMaster(@Body() Master master);
+  Future<BaseResponse2<Master>> updateMaster(@Body() Master master);
 
-  @POST("/master/delete/{masterId}")
-  Future<BaseResponse> deleteMaster(@Path() String masterId);
+  @DELETE("/master/delete/{masterId}")
+  Future<BaseResponse> deleteMaster(@Path("masterId") String masterId);
 
   @GET("/order/{userId}")
   Future<BaseResponse> getOrdersList(@Query("userId") String userId);

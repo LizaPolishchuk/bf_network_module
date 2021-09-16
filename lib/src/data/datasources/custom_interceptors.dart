@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 class CustomInterceptors extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    print('http --> ${options.method} ${options.baseUrl}${options.path} \n headers: ${options.headers} \n "data: ${options.data}');
+    print('http --> ${options.method} ${options.baseUrl}${options.path}${options.queryParameters} \n headers: ${options.headers} \n "data: ${options.data}');
     return super.onRequest(options, handler);
   }
 

@@ -193,6 +193,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       print("signUpWithEmailAndPasswordNew accessToken token: ${authResult.accessToken}");
 
       localStorage.setSalon(salonData.salon!);
+      localStorage.setSalonId(salonData.salon!.id);
       localStorage.setMastersList(salonData.masters ?? []);
       localStorage.setServicesList(salonData.services ?? []);
       localStorage.setAccessToken(authResult.accessToken);
@@ -249,6 +250,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       print("signUpWithEmailAndPasswordNew accessToken token: ${authResult.accessToken}");
 
       localStorage.setSalon(salonData.salon!);
+      localStorage.setSalonId(salonData.salon!.id);
       localStorage.setMastersList(salonData.masters ?? []);
       localStorage.setServicesList(salonData.services ?? []);
       localStorage.setAccessToken(authResult.accessToken);

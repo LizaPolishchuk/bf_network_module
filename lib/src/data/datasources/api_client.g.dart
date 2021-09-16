@@ -8,7 +8,7 @@ part of 'api_client.dart';
 
 class _APIClient implements APIClient {
   _APIClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://salonsliza.herokuapp.com/api';
+    baseUrl ??= 'http://localhost:3999/api';
   }
 
   final Dio _dio;
@@ -186,49 +186,59 @@ class _APIClient implements APIClient {
   }
 
   @override
-  Future<BaseResponse> getMastersList(salonId) async {
+  Future<BaseResponse2<List<Master>>> getMastersList(salonId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'salonId': salonId};
+    final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
+        _setStreamType<BaseResponse2<List<Master>>>(
             Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, '/master/{salonId}',
+                .compose(_dio.options, '/master/$salonId',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = BaseResponse2<List<Master>>.fromJson(
+        _result.data!,
+        (json) => (json as List<dynamic>)
+            .map<Master>((i) => Master.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 
   @override
-  Future<BaseResponse> addMaster(master) async {
+  Future<BaseResponse2<Master>> addMaster(master) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(master.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
+        _setStreamType<BaseResponse2<Master>>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/master/create',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = BaseResponse2<Master>.fromJson(
+      _result.data!,
+      (json) => Master.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
   @override
-  Future<BaseResponse> updateMaster(master) async {
+  Future<BaseResponse2<Master>> updateMaster(master) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(master.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
+        _setStreamType<BaseResponse2<Master>>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/master/update',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = BaseResponse2<Master>.fromJson(
+      _result.data!,
+      (json) => Master.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
@@ -238,11 +248,11 @@ class _APIClient implements APIClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, '/master/delete/$masterId',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<BaseResponse>(Options(
+                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, '/master/delete/$masterId',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BaseResponse.fromJson(_result.data!);
     return value;
   }

@@ -1,61 +1,86 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
-
-import '../../injection_container.dart';
 
 const MASTERS_COLLECTION = 'masters';
 
 abstract class MastersRemoteDataSource {
   Future<List<Master>> getMastersList(String salonId);
 
-  Future<void> updateMaster(Master master);
+  Future<Master> updateMaster(Master master);
 
-  Future<void> removeMaster(Master master);
+  Future<Master> addMaster(Master master);
+
+  Future<void> removeMaster(String masterId);
 }
 
 class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
   late CollectionReference mastersCollection;
-  LocalStorage localStorage;
+  LocalStorage _localStorage;
+  APIClient _apiClient;
 
-  MastersRemoteDataSourceImpl(this.localStorage) {
+  MastersRemoteDataSourceImpl(this._localStorage, this._apiClient) {
     mastersCollection =
         FirebaseFirestore.instance.collection(MASTERS_COLLECTION);
   }
 
   @override
   Future<List<Master>> getMastersList(String salonId) async {
-    Query query = mastersCollection.where("workedInSalons", arrayContains: salonId);
-    QuerySnapshot snapshot = await query.get();
+    print("getMastersList: $salonId");
+    final response = await _apiClient.getMastersList(salonId);
 
-    print('getMastersList: ${snapshot.docs.length}');
+    if (response.data == null) {
+      throw(Failure(message: response.message ?? "getMastersList error: data is null"));
+    }
 
-    List<Master> mastersList = snapshot.docs.map((doc) =>
-        Master.fromJson(doc.data() as Map<String, dynamic>))
-        .toList();
-    localStorage.setMastersList(mastersList);
+    _localStorage.setMastersList(response.data ?? []);
 
-    return mastersList;
+    print("getMastersList response: ${response.data}");
+
+    return response.data!;
   }
 
   @override
-  Future<void> updateMaster(Master master) async {
-    final Map<String, dynamic> data = master.toJson();
+  Future<Master> updateMaster(Master master) async {
+    final response = await _apiClient.updateMaster(master);
 
-    mastersCollection.doc(master.id).set(data).catchError((Object error) {
-      print(error);
-      return;
-    });
+    if (response.data == null) {
+      throw(Failure(message: response.message ?? "updateMaster error: master is null"));
+    }
+
+    // _localStorage.setMastersList(response.masters ?? []);
+    // _localStorage.setServicesList(response.services ?? []);
+
+    return response.data!;
+  }
+
+  @override
+  Future<void> removeMaster(String masterId) async {
+    final response = await _apiClient.deleteMaster(masterId);
+
+    // if (response.data == null) {
+    //   throw(Failure(message: response.message ?? "updateMaster error: master is null"));
+    // }
+
+    // _localStorage.setMastersList(response.masters ?? []);
+    // _localStorage.setServicesList(response.services ?? []);
 
     return;
   }
 
   @override
-  Future<void> removeMaster(Master master) async {
-    mastersCollection.doc(master.id).delete().catchError((Object error) {
-      print(error);
-    });
+  Future<Master> addMaster(Master master) async {
+    final response = await _apiClient.addMaster(master);
 
-    return;
+    if (response.data == null) {
+      throw(Failure(message: response.message ?? "addMaster error: master is null"));
+    }
+
+    // _localStorage.setMastersList(response.masters ?? []);
+    // _localStorage.setServicesList(response.services ?? []);
+
+    return response.data!;
   }
 }

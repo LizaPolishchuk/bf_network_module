@@ -266,25 +266,35 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await mastersRemoteDataSource.getMastersList(salonId));
     } catch (error) {
+      print("getMastersList error: ${error}");
       return Left(Failure(message: "Get masters list error"));
     }
   }
 
   @override
-  Future<Either<Failure, void>> removeMaster(Master master) async {
+  Future<Either<Failure, void>> removeMaster(String masterId) async {
     try {
-      return Right(await mastersRemoteDataSource.removeMaster(master));
+      return Right(await mastersRemoteDataSource.removeMaster(masterId));
     } catch (error) {
       return Left(Failure(message: "Remove master error"));
     }
   }
 
   @override
-  Future<Either<Failure, void>> updateMaster(Master master) async {
+  Future<Either<Failure, Master>> updateMaster(Master master) async {
     try {
       return Right(await mastersRemoteDataSource.updateMaster(master));
     } catch (error) {
       return Left(Failure(message: "Update master error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Master>> addMaster(Master master) async {
+    try {
+      return Right(await mastersRemoteDataSource.addMaster(master));
+    } catch (error) {
+      return Left(Failure(message: "Add master error"));
     }
   }
 

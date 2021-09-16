@@ -26,11 +26,16 @@ class Master extends BaseEntity{
   Master(id, name, this.avatar, this.avatarPath, this.position, this.workedInSalons, this.providedServices, this.status) : super(id, name);
 
   factory Master.fromJson(Map<String, dynamic> json) {
+    json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
     return _$MasterFromJson(json);
   }
 
-  Map<String, dynamic> toJson() => _$MasterToJson(this);
-
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = _$MasterToJson(this);
+    json["_id"] = json["id"];
+    json.remove("id");
+    return json;
+  }
 
   Master copy({String? name, String? position}) {
     return Master(id, name ?? this.name, avatar, avatarPath, position ?? this.position, workedInSalons, providedServices, status);

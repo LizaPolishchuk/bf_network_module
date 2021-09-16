@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
+import 'package:salons_app_flutter_module/src/domain/usecases/masters/add_master_use_case.dart';
 
 import 'data/caches/local_starage.dart';
 import 'data/datasources/auth_remote_data_source.dart';
@@ -62,7 +63,7 @@ Future<void> init() async {
   getIt.registerLazySingleton<OrdersRemoteDataSource>(
       () => OrdersRemoteDataSourceImpl());
   getIt.registerLazySingleton<MastersRemoteDataSource>(
-      () => MastersRemoteDataSourceImpl(getIt()));
+      () => MastersRemoteDataSourceImpl(getIt(), getIt()));
 
   ///Use Cases
   getIt.registerLazySingleton(() => GetSalonsListUseCase(getIt()));
@@ -89,6 +90,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => LoginWithPhoneUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateUserUseCase(getIt()));
   getIt.registerLazySingleton(() => GetUserUseCase(getIt()));
+  getIt.registerLazySingleton(() => AddMasterUseCase(getIt()));
 
   ///External
   // final sharedPreferences = await SharedPreferences.getInstance();
