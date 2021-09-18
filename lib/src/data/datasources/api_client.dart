@@ -13,21 +13,23 @@ part 'api_client.g.dart';
 
 // @RestApi(baseUrl: "https://salonsliza.herokuapp.com/api")
 @RestApi(baseUrl: "http://localhost:3999/api")
-
 abstract class APIClient {
   factory APIClient(Dio dio) = _APIClient;
 
   @POST("/authWeb/register")
   @FormUrlEncoded()
-  Future<AuthResponse> signUpWeb(@Field("email") String email, @Field("password") String password);
+  Future<AuthResponse> signUpWeb(
+      @Field("email") String email, @Field("password") String password);
 
   @POST("/authWeb/login")
   @FormUrlEncoded()
-  Future<AuthResponse> loginWeb(@Field("email") String email, @Field("password") String password);
+  Future<AuthResponse> loginWeb(
+      @Field("email") String email, @Field("password") String password);
 
   @POST("/authWeb/refresh")
   @FormUrlEncoded()
-  Future<TokensResponse> refreshTokenWeb(@Field("refreshToken") String refreshToken);
+  Future<TokensResponse> refreshTokenWeb(
+      @Field("refreshToken") String refreshToken);
 
   @POST("/authWeb/forgot")
   @FormUrlEncoded()
@@ -54,7 +56,8 @@ abstract class APIClient {
   Future<BaseResponse> deleteUser(@Path() String userId);
 
   @GET("/master/{salonId}")
-  Future<BaseResponse2<List<Master>>> getMastersList(@Path("salonId") String salonId);
+  Future<BaseResponse2<List<Master>>> getMastersList(
+      @Path("salonId") String salonId);
 
   @POST("/master/create")
   Future<BaseResponse2<Master>> addMaster(@Body() Master master);
@@ -65,20 +68,23 @@ abstract class APIClient {
   @DELETE("/master/delete/{masterId}")
   Future<BaseResponse2> deleteMaster(@Path("masterId") String masterId);
 
-  @GET("/order/{userId}")
-  Future<BaseResponse> getOrdersList(@Query("userId") String userId);
+  @GET("/order/{id}")
+  Future<BaseResponse2<List<OrderEntity>>> getOrdersList(
+      @Path("id") String userId,  @Queries() Map<String, String> options);
 
   @POST("/order/create")
-  Future<BaseResponse> addOrder(@Body() OrderEntity orderEntity);
+  Future<BaseResponse2<OrderEntity>> addOrder(@Body() OrderEntity orderEntity);
 
   @POST("/order/update")
-  Future<BaseResponse> updateOrder(@Body() OrderEntity orderEntity);
+  Future<BaseResponse2<OrderEntity>> updateOrder(
+      @Body() OrderEntity orderEntity);
 
-  @POST("/order/delete/{orderId}")
-  Future<BaseResponse> deleteOrder(@Path() String orderId);
+  @DELETE("/order/delete/{orderId}")
+  Future<BaseResponse2> deleteOrder(@Path("orderId") String orderId);
 
   @GET("/service/{salonId}")
-  Future<BaseResponse2<List<Service>>> getServiceList(@Path("salonId") String salonId);
+  Future<BaseResponse2<List<Service>>> getServiceList(
+      @Path("salonId") String salonId);
 
   @POST("/service/create")
   Future<BaseResponse2<Service>> addService(@Body() Service service);

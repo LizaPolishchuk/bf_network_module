@@ -261,64 +261,80 @@ class _APIClient implements APIClient {
   }
 
   @override
-  Future<BaseResponse> getOrdersList(userId) async {
+  Future<BaseResponse2<List<OrderEntity>>> getOrdersList(
+      userId, options) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'userId': userId};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(options);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
+        _setStreamType<BaseResponse2<List<OrderEntity>>>(
             Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, '/order/{userId}',
+                .compose(_dio.options, '/order/$userId',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = BaseResponse2<List<OrderEntity>>.fromJson(
+        _result.data!,
+        (json) => (json as List<dynamic>)
+            .map<OrderEntity>(
+                (i) => OrderEntity.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 
   @override
-  Future<BaseResponse> addOrder(orderEntity) async {
+  Future<BaseResponse2<OrderEntity>> addOrder(orderEntity) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(orderEntity.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
+        _setStreamType<BaseResponse2<OrderEntity>>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/order/create',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = BaseResponse2<OrderEntity>.fromJson(
+      _result.data!,
+      (json) => OrderEntity.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
   @override
-  Future<BaseResponse> updateOrder(orderEntity) async {
+  Future<BaseResponse2<OrderEntity>> updateOrder(orderEntity) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(orderEntity.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
+        _setStreamType<BaseResponse2<OrderEntity>>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/order/update',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = BaseResponse2<OrderEntity>.fromJson(
+      _result.data!,
+      (json) => OrderEntity.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
   @override
-  Future<BaseResponse> deleteOrder(orderId) async {
+  Future<BaseResponse2<dynamic>> deleteOrder(orderId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, '/order/delete/$orderId',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+        _setStreamType<BaseResponse2<dynamic>>(Options(
+                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, '/order/delete/$orderId',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseResponse2<dynamic>.fromJson(
+      _result.data!,
+      (json) => json as dynamic,
+    );
     return value;
   }
 

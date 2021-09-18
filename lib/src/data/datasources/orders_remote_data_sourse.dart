@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
-
-import '../../injection_container.dart';
 
 const ORDERS_COLLECTION = 'orders';
 
@@ -11,17 +10,19 @@ abstract class OrdersRemoteDataSource {
 
   Future<List<OrderEntity>> getOrdersList(String id, OrderForType orderForType);
 
-  Future<void> updateOrder(OrderEntity orderEntity);
+  Future<OrderEntity> addOrder(OrderEntity orderEntity);
 
-  Future<void> removeOrder(OrderEntity orderEntity);
+  Future<OrderEntity> updateOrder(OrderEntity orderEntity);
+
+  Future<void> removeOrder(String orderId);
 }
 
 class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
   late CollectionReference ordersCollection;
-  late LocalStorage localStorage;
+  final LocalStorage _localStorage;
+  final APIClient _apiClient;
 
-  OrdersRemoteDataSourceImpl() {
-    localStorage = getIt<LocalStorage>();
+  OrdersRemoteDataSourceImpl(this._localStorage, this._apiClient) {
     ordersCollection =
         FirebaseFirestore.instance.collection(ORDERS_COLLECTION);
   }
@@ -29,7 +30,7 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
   @override
   Future<List<OrderEntity>> getCurrentUserOrdersList() async {
     try {
-      String currentUserId = await localStorage.getUserId() ?? "";
+      String currentUserId = await _localStorage.getUserId() ?? "";
       Query query = ordersCollection.where(
           "clientId", isEqualTo: currentUserId);
       QuerySnapshot snapshot = await query.get();
@@ -58,7 +59,19 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
       case OrderForType.MASTER:
         queryField = "masterId";
         break;
+      case OrderForType.USER:
+        queryField = "userId";
+        break;
     }
+
+    final response = await _apiClient.getOrdersList(id, {queryField: id});
+
+    if (response.data == null) {
+      throw(Failure(message: response.message ?? "getOrdersList error: orders is null"));
+    }
+
+    return response.data!;
+
 
     Query query = ordersCollection.where(queryField, isEqualTo: id);
     QuerySnapshot snapshot = await query.get();
@@ -68,23 +81,32 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
   }
 
   @override
-  Future<void> removeOrder(OrderEntity orderEntity) async {
-    ordersCollection.doc(orderEntity.id).delete().catchError((Object error) {
-      print(error);
-    });
+  Future<void> removeOrder(String orderId) async {
+    final response = await _apiClient.deleteOrder(orderId);
 
     return;
   }
 
   @override
-  Future<void> updateOrder(OrderEntity orderEntity) async {
-    final Map<String, dynamic> data = orderEntity.toJson();
+  Future<OrderEntity> updateOrder(OrderEntity orderEntity) async {
+    final response = await _apiClient.updateOrder(orderEntity);
 
-    ordersCollection.doc(orderEntity.id).set(data).catchError((Object error) {
-      print(error);
-      return;
-    });
+    if (response.data == null) {
+      throw(Failure(message: response.message ?? "updateOrder error: order is null"));
+    }
 
-    return;
+    return response.data!;
   }
+
+  @override
+  Future<OrderEntity> addOrder(OrderEntity orderEntity) async {
+    final response = await _apiClient.addOrder(orderEntity);
+
+    if (response.data == null) {
+      throw(Failure(message: response.message ?? "addOrder error: order is null"));
+    }
+
+    return response.data!;
+  }
+
 }

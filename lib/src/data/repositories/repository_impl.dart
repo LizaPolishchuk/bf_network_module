@@ -174,20 +174,38 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, void>> updateOrder(OrderEntity orderEntity) async {
+  Future<Either<Failure, OrderEntity>> updateOrder(OrderEntity orderEntity) async {
     try {
       return Right(await ordersRemoteDataSource.updateOrder(orderEntity));
     } catch (error) {
-      return Left(Failure(message: "Update order error"));
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "updateOrder error"));
     }
   }
 
   @override
-  Future<Either<Failure, void>> removeOrder(OrderEntity orderEntity) async {
+  Future<Either<Failure, OrderEntity>> addOrder(OrderEntity orderEntity) async {
     try {
-      return Right(await ordersRemoteDataSource.removeOrder(orderEntity));
+      return Right(await ordersRemoteDataSource.addOrder(orderEntity));
     } catch (error) {
-      return Left(Failure(message: "Remove order error"));
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "addOrder error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> removeOrder(String orderId) async {
+    try {
+      return Right(await ordersRemoteDataSource.removeOrder(orderId));
+    } catch (error) {
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "removeOrder error"));
     }
   }
 

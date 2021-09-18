@@ -21,6 +21,7 @@ export './src/domain/usecases/masters/add_master_use_case.dart';
 export './src/domain/usecases/masters/get_masters_list_use_case.dart';
 export './src/domain/usecases/masters/remove_master_use_case.dart';
 export './src/domain/usecases/masters/update_master_use_case.dart';
+export './src/domain/usecases/orders/add_order_use_case.dart';
 export './src/domain/usecases/orders/get_orders_list_for_current_user.dart';
 export './src/domain/usecases/orders/get_orders_list_usecase.dart';
 export './src/domain/usecases/orders/remove_order_use_case.dart';

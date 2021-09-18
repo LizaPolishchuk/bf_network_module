@@ -8,6 +8,7 @@ import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/services_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/masters/add_master_use_case.dart';
+import 'package:salons_app_flutter_module/src/domain/usecases/orders/add_order_use_case.dart';
 
 import 'data/caches/local_starage.dart';
 import 'data/datasources/auth_remote_data_source.dart';
@@ -64,7 +65,7 @@ Future<void> init() async {
   getIt.registerLazySingleton<AuthRemoteDataSource>(() =>
       AuthRemoteDataSourceImpl(getIt(), getIt(), getIt(), getIt(), getIt()));
   getIt.registerLazySingleton<OrdersRemoteDataSource>(
-      () => OrdersRemoteDataSourceImpl());
+      () => OrdersRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<MastersRemoteDataSource>(
       () => MastersRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<ServiceRemoteDataSource>(
@@ -81,6 +82,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => GetSalonByIdUseCase(getIt()));
   getIt.registerLazySingleton(() => GetOrdersListUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateOrderUseCase(getIt()));
+  getIt.registerLazySingleton(() => AddOrderUseCase(getIt()));
   getIt.registerLazySingleton(() => RemoveOrderUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateSalonUseCase(getIt()));
   getIt.registerLazySingleton(() => SignUpWithLinkAndEmailUseCase(getIt()));

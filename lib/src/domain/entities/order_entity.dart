@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 
 part 'order_entity.g.dart';
 
-enum OrderForType { SALON, SERVICE, MASTER }
+enum OrderForType { USER, SALON, MASTER, SERVICE }
 
 @HiveType(typeId: hiveTypeOrders)
 @JsonSerializable()
@@ -54,13 +53,14 @@ class OrderEntity {
       {this.isPinned = false});
 
   factory OrderEntity.fromJson(Map<String, dynamic> json) {
-    json['date'] = (json['date'] as Timestamp).toDate().toIso8601String();
+    json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
     return _$OrderEntityFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = _$OrderEntityToJson(this);
-    json['date'] = Timestamp.fromDate(date);
+    json["_id"] = json["id"];
+    json.remove("id");
     return json;
   }
 
