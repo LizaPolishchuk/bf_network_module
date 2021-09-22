@@ -26,8 +26,7 @@ abstract class Repository {
   Future<Either<Failure, UserEntity>> updateUser(UserEntity user);
 
   ///Salons
-  Future<Either<Failure, List<Salon>>> getSalonsList(String userId);
-
+  Future<Either<Failure, List<Salon>>> getSalonsList(bool? loadTop);
   Future<Either<Failure, Salon>> getSalonById(String salonId);
   Future<Either<Failure, Salon>> updateSalon(Salon salonEntity);
 

@@ -17,8 +17,10 @@ class Salon extends BaseEntity {
   String? ownerId;
   @HiveField(5)
   String? description;
+  @HiveField(6)
+  bool? isTop;
 
-  Salon([id, name, this.photo, this.photoPath, this.ownerId, this.description])
+  Salon([id, name, this.photo, this.photoPath, this.ownerId, this.description, this.isTop])
       : super(id, name);
 
   factory Salon.fromJson(Map<String, dynamic> json) {

@@ -8,7 +8,7 @@ part of 'api_client.dart';
 
 class _APIClient implements APIClient {
   _APIClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://localhost:3999/api';
+    baseUrl ??= 'https://salonsliza.herokuapp.com/api';
   }
 
   final Dio _dio;
@@ -104,12 +104,12 @@ class _APIClient implements APIClient {
   }
 
   @override
-  Future<BaseResponse> login(phone) async {
+  Future<AuthResponse> login(phone) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = {'phone': phone};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(Options(
+        _setStreamType<AuthResponse>(Options(
                 method: 'POST',
                 headers: <String, dynamic>{},
                 extra: _extra,
@@ -117,7 +117,7 @@ class _APIClient implements APIClient {
             .compose(_dio.options, '/auth/login',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = AuthResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -414,33 +414,53 @@ class _APIClient implements APIClient {
   }
 
   @override
-  Future<BaseResponse> getSalonList() async {
+  Future<BaseResponse2<List<Salon>>> getSalonList(loadTop) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'loadTop': loadTop};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
+        _setStreamType<BaseResponse2<List<Salon>>>(
             Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/salon',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = BaseResponse2<List<Salon>>.fromJson(
+        _result.data!,
+        (json) => (json as List<dynamic>)
+            .map<Salon>((i) => Salon.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 
   @override
-  Future<BaseResponse> addSalon(salon) async {
+  Future<SalonResponse> getSalon(salonId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<SalonResponse>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/salon/$salonId',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SalonResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<SalonResponse> addSalon(salon) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(salon.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
+        _setStreamType<SalonResponse>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/salon/create',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = SalonResponse.fromJson(_result.data!);
     return value;
   }
 

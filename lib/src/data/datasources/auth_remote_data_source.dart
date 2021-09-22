@@ -308,10 +308,19 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<bool?> signInWithPhone(String phone) async {
     return await apiClient.login(phone).then((value) {
-      return true;
+      return value.creator ?? false;
     }).catchError((e) {
-      print("signInWithPhone error: $e");
-      return false;
+      if(e is DioError) {
+        String? errorMessage = (e.response as Response).data["message"];
+
+        if (errorMessage?.isNotEmpty != true) {
+          errorMessage = "Something went wrong";
+        }
+
+        throw(Failure(message: errorMessage!));
+      }
+      print("Error sign In With Phone: $e");
+      throw (e);
     });
   }
 
@@ -327,8 +336,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         throw Failure(message: "${authResult.message}");
       }
 
-      creator = authResult.creator;
-      user = authResult.user!..isRegistered = !creator!;
+      creator = authResult.creator ?? false;
+      user = authResult.user!..isRegistered = !creator;
 
       print("verifyCode success, token: ${authResult.accessToken}");
 

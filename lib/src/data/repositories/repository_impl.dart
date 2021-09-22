@@ -134,11 +134,9 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, List<Salon>>> getSalonsList(String salonId) async {
+  Future<Either<Failure, List<Salon>>> getSalonsList(bool? loadTop) async {
     try {
-      List<Salon> salons = await salonsRemoteDataSource.getSalonsList(salonId);
-      if (salonId.isNotEmpty) localStorage.setSalonId(salons.first.id);
-      return Right(salons);
+      return Right(await salonsRemoteDataSource.getSalonsList(loadTop));
     } catch (error) {
       return Left(Failure(message: "Get salons list error"));
     }
@@ -308,8 +306,7 @@ class RepositoryImpl implements Repository {
   @override
   Future<Either<Failure, bool?>> signInWithPhone(String phone) async {
     try {
-      var a = await authRemoteDataSource.signInWithPhone(phone);
-      return Right(a);
+      return Right(await authRemoteDataSource.signInWithPhone(phone));
     } catch (error) {
       return Left(Failure(message: "Login with phone error"));
     }

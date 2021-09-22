@@ -23,13 +23,14 @@ class SalonAdapter extends TypeAdapter<Salon> {
       fields[3] as String?,
       fields[4] as String?,
       fields[5] as String?,
+      fields[6] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Salon obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(2)
       ..write(obj.photo)
       ..writeByte(3)
@@ -38,6 +39,8 @@ class SalonAdapter extends TypeAdapter<Salon> {
       ..write(obj.ownerId)
       ..writeByte(5)
       ..write(obj.description)
+      ..writeByte(6)
+      ..write(obj.isTop)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -67,6 +70,7 @@ Salon _$SalonFromJson(Map<String, dynamic> json) {
     json['photoPath'] as String?,
     json['ownerId'] as String?,
     json['description'] as String?,
+    json['isTop'] as bool?,
   );
 }
 
@@ -77,4 +81,5 @@ Map<String, dynamic> _$SalonToJson(Salon instance) => <String, dynamic>{
       'photoPath': instance.photoPath,
       'ownerId': instance.ownerId,
       'description': instance.description,
+      'isTop': instance.isTop,
     };

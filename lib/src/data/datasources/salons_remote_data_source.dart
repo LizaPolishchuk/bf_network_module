@@ -13,7 +13,7 @@ const MASTERS_COLLECTION = 'masters';
 const AVAILABLE_TIMES_COLLECTION = 'available_times';
 
 abstract class SalonsRemoteDataSource {
-  Future<List<Salon>> getSalonsList(String userId);
+  Future<List<Salon>> getSalonsList(bool? loadTop);
 
   Future<Salon> getSalonById(String salonId);
 
@@ -33,47 +33,15 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
   }
 
   @override
-  Future<List<Salon>> getSalonsList(String userId) async {
-    QuerySnapshot snapshot;
+  Future<List<Salon>> getSalonsList(bool? loadTop) async {
+    final response = await _apiClient.getSalonList(loadTop);
 
-    ///if it is not admin
-    if (userId.isNotEmpty) {
-      Query query = salonsCollection.where("ownerId", isEqualTo: userId);
-      QuerySnapshot snapshot = await query.get();
-
-      if (snapshot.docs.isEmpty) {
-        return [];
-      } else {
-        QueryDocumentSnapshot snap = (await query.get()).docs.first;
-
-        Query queryMasters = mastersCollection.where("salonIdList",
-            arrayContains:
-                (snapshot.docs.first.data() as Map<String, dynamic>)["id"]);
-        List<Master> mastersList = (await queryMasters.get())
-            .docs
-            .map((doc) => Master.fromJson(doc.data() as Map<String, dynamic>))
-            .toList();
-        print('mastersList: ${mastersList.length}');
-
-        final servicesCollection =
-            await snap.reference.collection(SERVICES_COLLECTION).get();
-        List<Service> services = servicesCollection.docs
-            .map((doc) => Service.fromJson(doc.data()))
-            .toList();
-        print('services: ${services.length}');
-
-        Salon salonEntity = Salon.fromJson(snap.data() as Map<String, dynamic>);
-
-        // await _saveSalonToLocalStorage(salonEntity, services);
-
-        return [salonEntity];
-      }
-    } else {
-      snapshot = await salonsCollection.get();
-      return snapshot.docs
-          .map((doc) => Salon.fromJson(doc.data() as Map<String, dynamic>))
-          .toList();
+    if (response.data == null) {
+      throw (Failure(
+          message: response.message ?? "getSalonsList error: data is null"));
     }
+
+    return response.data!;
   }
 
   @override
@@ -82,7 +50,7 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
 
     if (response.salon == null) {
       throw (Failure(
-          message: response.message ?? "updateUser error: user is null"));
+          message: response.message ?? "updateSalon error: salon is null"));
     }
 
     _saveSalonToLocalStorage(response);
@@ -92,29 +60,14 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
 
   @override
   Future<Salon> getSalonById(String salonId) async {
-    print('getSalonById: $salonId');
-    DocumentSnapshot snap = await salonsCollection.doc(salonId).get();
-    final servicesCollection =
-        await snap.reference.collection(SERVICES_COLLECTION).get();
-    Query query =
-        mastersCollection.where("salonIdList", arrayContains: salonId);
-    QuerySnapshot snapshot = await query.get();
+    final response = await _apiClient.getSalon(salonId);
 
-    List<Master> mastersList = snapshot.docs
-        .map((doc) => Master.fromJson(doc.data() as Map<String, dynamic>))
-        .toList();
-    print('mastersList: ${mastersList.length}');
+    if (response.salon == null) {
+      throw (Failure(
+          message: response.message ?? "getSalonById error: salon is null"));
+    }
 
-    List<Service> services = servicesCollection.docs
-        .map((doc) => Service.fromJson(doc.data()))
-        .toList();
-    print('services: ${services.length}');
-
-    Salon salonEntity = Salon.fromJson(snap.data() as Map<String, dynamic>);
-
-    // await _saveSalonToLocalStorage(salonEntity, services);
-
-    return salonEntity;
+    return response.salon!;
   }
 
   Future<void> _saveSalonToLocalStorage(SalonResponse response) async {

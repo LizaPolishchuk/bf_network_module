@@ -11,8 +11,8 @@ import '../../../salons_app_flutter_module.dart';
 
 part 'api_client.g.dart';
 
-// @RestApi(baseUrl: "https://salonsliza.herokuapp.com/api")
-@RestApi(baseUrl: "http://localhost:3999/api")
+@RestApi(baseUrl: "https://salonsliza.herokuapp.com/api")
+// @RestApi(baseUrl: "http://localhost:3999/api")
 abstract class APIClient {
   factory APIClient(Dio dio) = _APIClient;
 
@@ -40,7 +40,7 @@ abstract class APIClient {
 
   @POST("/auth/login")
   @FormUrlEncoded()
-  Future<BaseResponse> login(@Field("phone") String phone);
+  Future<AuthResponse> login(@Field("phone") String phone);
 
   @POST("/auth/loginVerify")
   @FormUrlEncoded()
@@ -70,7 +70,7 @@ abstract class APIClient {
 
   @GET("/order/{id}")
   Future<BaseResponse2<List<OrderEntity>>> getOrdersList(
-      @Path("id") String userId,  @Queries() Map<String, String> options);
+      @Path("id") String userId, @Queries() Map<String, String> options);
 
   @POST("/order/create")
   Future<BaseResponse2<OrderEntity>> addOrder(@Body() OrderEntity orderEntity);
@@ -96,10 +96,13 @@ abstract class APIClient {
   Future<BaseResponse2> deleteService(@Path("serviceId") String serviceId);
 
   @GET("/salon")
-  Future<BaseResponse> getSalonList();
+  Future<BaseResponse2<List<Salon>>> getSalonList(@Query("loadTop") bool? loadTop);
+
+  @GET("/salon/{salonId}")
+  Future<SalonResponse> getSalon(@Path("salonId") String salonId);
 
   @POST("/salon/create")
-  Future<BaseResponse> addSalon(@Body() Salon salon);
+  Future<SalonResponse> addSalon(@Body() Salon salon);
 
   @POST("/salon/update")
   Future<SalonResponse> updateSalon(@Body() Salon salon);
