@@ -10,20 +10,20 @@ part 'master_entity.g.dart';
 @HiveType(typeId: hiveTypeMasters)
 @JsonSerializable()
 class Master extends BaseEntity{
-  @HiveField(2)
-  String? avatar;
   @HiveField(3)
-  String? avatarPath;
+  String? avatar;
   @HiveField(4)
-  String? position;
+  String? avatarPath;
   @HiveField(5)
-  List<String> workedInSalons;
+  String? position;
   @HiveField(6)
-  Map<String, String>? providedServices;
+  List<String> workedInSalons;
   @HiveField(7)
+  Map<String, String>? providedServices;
+  @HiveField(8)
   String? status;
 
-  Master(id, name, this.avatar, this.avatarPath, this.position, this.workedInSalons, this.providedServices, this.status) : super(id, name);
+  Master(id, name, description, this.avatar, this.avatarPath, this.position, this.workedInSalons, this.providedServices, this.status) : super(id, name, description);
 
   factory Master.fromJson(Map<String, dynamic> json) {
     json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
@@ -38,7 +38,7 @@ class Master extends BaseEntity{
   }
 
   Master copy({String? name, String? position}) {
-    return Master(id, name ?? this.name, avatar, avatarPath, position ?? this.position, workedInSalons, providedServices, status);
+    return Master(id, name ?? this.name, description, avatar, avatarPath, position ?? this.position, workedInSalons, providedServices, status);
   }
 
   @override

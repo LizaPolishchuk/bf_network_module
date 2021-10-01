@@ -1,44 +1,41 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'salon_entity.dart';
+part of 'category_entity.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class SalonAdapter extends TypeAdapter<Salon> {
+class CategoryAdapter extends TypeAdapter<Category> {
   @override
-  final int typeId = 0;
+  final int typeId = 5;
 
   @override
-  Salon read(BinaryReader reader) {
+  Category read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Salon(
+    return Category(
       fields[0] as dynamic,
       fields[1] as dynamic,
       fields[2] as dynamic,
-      fields[3] as String?,
-      fields[4] as String?,
+      fields[3] as double?,
+      fields[4] as double?,
       fields[5] as String?,
-      fields[6] as bool?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Salon obj) {
+  void write(BinaryWriter writer, Category obj) {
     writer
-      ..writeByte(7)
-      ..writeByte(3)
-      ..write(obj.photo)
-      ..writeByte(4)
-      ..write(obj.photoPath)
-      ..writeByte(5)
-      ..write(obj.ownerId)
       ..writeByte(6)
-      ..write(obj.isTop)
+      ..writeByte(3)
+      ..write(obj.priceFrom)
+      ..writeByte(4)
+      ..write(obj.priceTo)
+      ..writeByte(5)
+      ..write(obj.creatorSalon)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -53,7 +50,7 @@ class SalonAdapter extends TypeAdapter<Salon> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is SalonAdapter &&
+      other is CategoryAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
@@ -62,24 +59,22 @@ class SalonAdapter extends TypeAdapter<Salon> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-Salon _$SalonFromJson(Map<String, dynamic> json) {
-  return Salon(
+Category _$CategoryFromJson(Map<String, dynamic> json) {
+  return Category(
     json['id'],
     json['name'],
     json['description'],
-    json['photo'] as String?,
-    json['photoPath'] as String?,
-    json['ownerId'] as String?,
-    json['isTop'] as bool?,
+    (json['priceFrom'] as num?)?.toDouble(),
+    (json['priceTo'] as num?)?.toDouble(),
+    json['creatorSalon'] as String?,
   );
 }
 
-Map<String, dynamic> _$SalonToJson(Salon instance) => <String, dynamic>{
+Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
-      'photo': instance.photo,
-      'photoPath': instance.photoPath,
-      'ownerId': instance.ownerId,
-      'isTop': instance.isTop,
+      'priceFrom': instance.priceFrom,
+      'priceTo': instance.priceTo,
+      'creatorSalon': instance.creatorSalon,
     };

@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/salon_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/service_entity.dart';
 
 const SALONS_COLLECTION = 'salons';
 const SERVICES_COLLECTION = 'services';
@@ -13,7 +11,7 @@ const MASTERS_COLLECTION = 'masters';
 const AVAILABLE_TIMES_COLLECTION = 'available_times';
 
 abstract class SalonsRemoteDataSource {
-  Future<List<Salon>> getSalonsList(bool? loadTop);
+  Future<List<Salon>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit);
 
   Future<Salon> getSalonById(String salonId);
 
@@ -33,8 +31,8 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
   }
 
   @override
-  Future<List<Salon>> getSalonsList(bool? loadTop) async {
-    final response = await _apiClient.getSalonList(loadTop);
+  Future<List<Salon>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit) async {
+    final response = await _apiClient.getSalonList(loadTop, searchKey, page, limit);
 
     if (response.data == null) {
       throw (Failure(

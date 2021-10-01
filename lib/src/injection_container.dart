@@ -6,7 +6,12 @@ import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/categories_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/services_remote_data_sourse.dart';
+import 'package:salons_app_flutter_module/src/domain/usecases/categories/add_category_use_case.dart';
+import 'package:salons_app_flutter_module/src/domain/usecases/categories/get_categories_list_use_case.dart';
+import 'package:salons_app_flutter_module/src/domain/usecases/categories/remove_category_use_case.dart';
+import 'package:salons_app_flutter_module/src/domain/usecases/categories/update_category_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/masters/add_master_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/orders/add_order_use_case.dart';
 
@@ -55,6 +60,7 @@ Future<void> init() async {
         getIt(),
         getIt(),
         getIt(),
+        getIt(),
       ));
 
   ///Data sources
@@ -70,6 +76,8 @@ Future<void> init() async {
       () => MastersRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<ServiceRemoteDataSource>(
       () => ServicesRemoteDataSourceImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<CategoryRemoteDataSource>(
+      () => CategoryRemoteDataSourceImpl(getIt(), getIt()));
 
   ///Use Cases
   getIt.registerLazySingleton(() => GetSalonsListUseCase(getIt()));
@@ -99,6 +107,10 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => GetUserUseCase(getIt()));
   getIt.registerLazySingleton(() => AddMasterUseCase(getIt()));
   getIt.registerLazySingleton(() => AddServiceUseCase(getIt()));
+  getIt.registerLazySingleton(() => AddCategoryUseCase(getIt()));
+  getIt.registerLazySingleton(() => UpdateCategoryUseCase(getIt()));
+  getIt.registerLazySingleton(() => RemoveCategoryUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetCategoriesListUseCase(getIt()));
 
   ///External
   // final sharedPreferences = await SharedPreferences.getInstance();

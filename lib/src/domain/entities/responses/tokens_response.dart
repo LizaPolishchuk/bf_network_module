@@ -5,7 +5,9 @@ part 'tokens_response.g.dart';
 
 @JsonSerializable()
 class TokensResponse extends BaseResponse {
+  @JsonKey(defaultValue: "")
   final String accessToken;
+  @JsonKey(defaultValue: "")
   final String refreshToken;
 
   TokensResponse(this.accessToken, this.refreshToken, message) : super(message);

@@ -15,8 +15,8 @@ AuthResponse _$AuthResponseFromJson(Map<String, dynamic> json) {
         ? null
         : SalonResponse.fromJson(json['data'] as Map<String, dynamic>),
     json['creator'] as bool?,
-    json['accessToken'],
-    json['refreshToken'],
+    json['accessToken'] ?? '',
+    json['refreshToken'] ?? '',
     json['message'],
   );
 }

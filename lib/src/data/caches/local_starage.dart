@@ -1,6 +1,7 @@
 
 import 'package:hive/hive.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
+import 'package:salons_app_flutter_module/src/domain/entities/category_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
@@ -11,6 +12,7 @@ const int hiveTypeUsers = 1;
 const int hiveTypeMasters = 2;
 const int hiveTypeOrders = 3;
 const int hiveTypeServices = 4;
+const int hiveTypeCategories = 5;
 
 class LocalStorage {
   late Box<dynamic> _box;
@@ -24,6 +26,7 @@ class LocalStorage {
   static const _masters = '_masters';
   static const _services = '_services';
   static const _orders = '_orders';
+  static const _categories = '_categories';
   static const _userId = '_userId';
   static const _user = '_user';
   static const accessToken = '_accessToken';
@@ -65,6 +68,10 @@ class LocalStorage {
   getOrdersList() => _getValue(_orders);
 
   Future setOrdersList(List<OrderEntity> orders) => _setValue(_orders, orders);
+
+  getCategoriesList() => _getValue(_categories);
+
+  Future setCategoriesList(List<Category> categories) => _setValue(_categories, categories);
 
   getCurrentUserId() => _getValue(_userId);
 

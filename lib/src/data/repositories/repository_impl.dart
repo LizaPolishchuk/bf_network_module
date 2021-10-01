@@ -4,11 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/auth_remote_data_source.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/categories_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/masters_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/orders_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/salons_remote_data_source.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/services_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/user_remote_data_source.dart';
+import 'package:salons_app_flutter_module/src/domain/entities/category_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
@@ -24,6 +26,7 @@ class RepositoryImpl implements Repository {
   UserRemoteDataSource userRemoteDataSource;
   OrdersRemoteDataSource ordersRemoteDataSource;
   MastersRemoteDataSource mastersRemoteDataSource;
+  CategoryRemoteDataSource categoryRemoteDataSource;
 
   RepositoryImpl(
       this.localStorage,
@@ -32,7 +35,8 @@ class RepositoryImpl implements Repository {
       this.userRemoteDataSource,
       this.ordersRemoteDataSource,
       this.serviceRemoteDataSource,
-      this.mastersRemoteDataSource);
+      this.mastersRemoteDataSource,
+      this.categoryRemoteDataSource);
 
   @override
   Future<Either<Failure, Map<UserEntity, bool?>>> signInWithFacebook() async {
@@ -134,9 +138,11 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, List<Salon>>> getSalonsList(bool? loadTop) async {
+  Future<Either<Failure, List<Salon>>> getSalonsList(
+      bool? loadTop, String? searchKey, int? page, int? limit) async {
     try {
-      return Right(await salonsRemoteDataSource.getSalonsList(loadTop));
+      return Right(await salonsRemoteDataSource.getSalonsList(
+          loadTop, searchKey, page, limit));
     } catch (error) {
       return Left(Failure(message: "Get salons list error"));
     }
@@ -172,7 +178,8 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, OrderEntity>> updateOrder(OrderEntity orderEntity) async {
+  Future<Either<Failure, OrderEntity>> updateOrder(
+      OrderEntity orderEntity) async {
     try {
       return Right(await ordersRemoteDataSource.updateOrder(orderEntity));
     } catch (error) {
@@ -231,9 +238,9 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, List<Service>>> getServicesList(String salonId) async {
+  Future<Either<Failure, List<Service>>> getServicesList(String salonId, String categoryId) async {
     try {
-      return Right(await serviceRemoteDataSource.getServicesList(salonId));
+      return Right(await serviceRemoteDataSource.getServicesList(salonId, categoryId));
     } catch (error) {
       if (error is Failure) {
         return Left(error);
@@ -358,6 +365,55 @@ class RepositoryImpl implements Repository {
         return Left(error);
       }
       return Left(Failure(message: "addService error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Category>> addCategory(Category category) async {
+    try {
+      return Right(await categoryRemoteDataSource.addCategory(category));
+    } catch (error) {
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "Add category error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Category>>> getCategoryList(
+      String salonId) async {
+    try {
+      return Right(await categoryRemoteDataSource.getCategoriesList(salonId));
+    } catch (error) {
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "Get categories list error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> removeCategory(String categoryId) async {
+    try {
+      return Right(await categoryRemoteDataSource.removeCategory(categoryId));
+    } catch (error) {
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "Remove category error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Category>> updateCategory(Category category) async {
+    try {
+      return Right(await categoryRemoteDataSource.updateCategory(category));
+    } catch (error) {
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "Update category error"));
     }
   }
 }

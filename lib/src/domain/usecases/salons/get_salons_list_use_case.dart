@@ -8,7 +8,7 @@ class GetSalonsListUseCase {
 
   GetSalonsListUseCase(this.repository);
 
-  Future<Either<Failure, List<Salon>>> call({bool? loadTop, String? searchText}) async {
-    return await repository.getSalonsList(loadTop);
+  Future<Either<Failure, List<Salon>>> call({bool? loadTop, String? searchText, int? page, int? limit}) async {
+    return await repository.getSalonsList(loadTop, searchText, page, limit);
   }
 }

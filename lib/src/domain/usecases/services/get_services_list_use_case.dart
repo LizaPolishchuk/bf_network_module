@@ -8,7 +8,7 @@ class GetServicesListUseCase {
 
   GetServicesListUseCase(this.repository);
 
-  Future<Either<Failure, List<Service>>> call(String salonId) async {
-    return await repository.getServicesList(salonId);
+  Future<Either<Failure, List<Service>>> call(String salonId, String categoryId) async {
+    return await repository.getServicesList(salonId, categoryId);
   }
 }

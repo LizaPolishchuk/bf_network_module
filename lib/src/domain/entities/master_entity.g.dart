@@ -19,35 +19,38 @@ class MasterAdapter extends TypeAdapter<Master> {
     return Master(
       fields[0] as dynamic,
       fields[1] as dynamic,
-      fields[2] as String?,
+      fields[2] as dynamic,
       fields[3] as String?,
       fields[4] as String?,
-      (fields[5] as List).cast<String>(),
-      (fields[6] as Map?)?.cast<String, String>(),
-      fields[7] as String?,
+      fields[5] as String?,
+      (fields[6] as List).cast<String>(),
+      (fields[7] as Map?)?.cast<String, String>(),
+      fields[8] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Master obj) {
     writer
-      ..writeByte(8)
-      ..writeByte(2)
-      ..write(obj.avatar)
+      ..writeByte(9)
       ..writeByte(3)
-      ..write(obj.avatarPath)
+      ..write(obj.avatar)
       ..writeByte(4)
-      ..write(obj.position)
+      ..write(obj.avatarPath)
       ..writeByte(5)
-      ..write(obj.workedInSalons)
+      ..write(obj.position)
       ..writeByte(6)
-      ..write(obj.providedServices)
+      ..write(obj.workedInSalons)
       ..writeByte(7)
+      ..write(obj.providedServices)
+      ..writeByte(8)
       ..write(obj.status)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name);
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.description);
   }
 
   @override
@@ -69,6 +72,7 @@ Master _$MasterFromJson(Map<String, dynamic> json) {
   return Master(
     json['id'],
     json['name'],
+    json['description'],
     json['avatar'] as String?,
     json['avatarPath'] as String?,
     json['position'] as String?,
@@ -83,6 +87,7 @@ Master _$MasterFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$MasterToJson(Master instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'description': instance.description,
       'avatar': instance.avatar,
       'avatarPath': instance.avatarPath,
       'position': instance.position,

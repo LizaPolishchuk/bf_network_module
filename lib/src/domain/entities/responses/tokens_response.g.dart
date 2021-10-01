@@ -8,8 +8,8 @@ part of 'tokens_response.dart';
 
 TokensResponse _$TokensResponseFromJson(Map<String, dynamic> json) {
   return TokensResponse(
-    json['accessToken'] as String,
-    json['refreshToken'] as String,
+    json['accessToken'] as String? ?? '',
+    json['refreshToken'] as String? ?? '',
     json['message'],
   );
 }

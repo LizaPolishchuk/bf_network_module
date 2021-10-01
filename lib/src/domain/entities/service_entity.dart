@@ -9,12 +9,14 @@ part 'service_entity.g.dart';
 @HiveType(typeId: hiveTypeServices)
 @JsonSerializable()
 class Service extends BaseEntity {
-  @HiveField(2)
-  double? price;
   @HiveField(3)
+  double? price;
+  @HiveField(4)
   String? creatorSalon;
+  @HiveField(5)
+  String? categoryId;
 
-  Service(id, name, this.price, this.creatorSalon) : super(id, name);
+  Service(id, name,description, this.price, this.creatorSalon, this.categoryId) : super(id, name,description);
 
   factory Service.fromJson(Map<String, dynamic> json) {
     json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
@@ -28,8 +30,8 @@ class Service extends BaseEntity {
     return json;
   }
 
-  Service copy({String? id, String? name, double? price, String? creatorSalon}) {
-    return Service(id ?? this.id, name ?? this.name, price ?? this.price, creatorSalon ?? this.creatorSalon);
+  Service copy({String? id, String? name, double? price, String? creatorSalon, String? categoryId}) {
+    return Service(id ?? this.id, name ?? this.name, description, price ?? this.price, creatorSalon ?? this.creatorSalon, categoryId ?? this.categoryId);
   }
 
   @override

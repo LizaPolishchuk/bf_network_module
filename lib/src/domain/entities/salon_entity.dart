@@ -9,19 +9,17 @@ part 'salon_entity.g.dart';
 @HiveType(typeId: hiveTypeSalons)
 @JsonSerializable()
 class Salon extends BaseEntity {
-  @HiveField(2)
-  String? photo;
   @HiveField(3)
-  String? photoPath;
+  String? photo;
   @HiveField(4)
-  String? ownerId;
+  String? photoPath;
   @HiveField(5)
-  String? description;
+  String? ownerId;
   @HiveField(6)
   bool? isTop;
 
-  Salon([id, name, this.photo, this.photoPath, this.ownerId, this.description, this.isTop])
-      : super(id, name);
+  Salon([id, name, description, this.photo, this.photoPath, this.ownerId, this.isTop])
+      : super(id, name, description);
 
   factory Salon.fromJson(Map<String, dynamic> json) {
     json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
@@ -35,7 +33,7 @@ class Salon extends BaseEntity {
     return json;
   }
 
-  Salon.defaultSalon() : super("example_salon_id", "") {
+  Salon.defaultSalon() : super("example_salon_id", "", "") {
     Salon("example_salon_id");
   }
 }

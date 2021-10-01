@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
+import 'package:salons_app_flutter_module/src/domain/entities/category_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/auth_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/base_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/base_response2.dart';
@@ -84,7 +85,7 @@ abstract class APIClient {
 
   @GET("/service/{salonId}")
   Future<BaseResponse2<List<Service>>> getServiceList(
-      @Path("salonId") String salonId);
+      @Path("salonId") String salonId, @Query("categoryId") String categoryId);
 
   @POST("/service/create")
   Future<BaseResponse2<Service>> addService(@Body() Service service);
@@ -96,7 +97,11 @@ abstract class APIClient {
   Future<BaseResponse2> deleteService(@Path("serviceId") String serviceId);
 
   @GET("/salon")
-  Future<BaseResponse2<List<Salon>>> getSalonList(@Query("loadTop") bool? loadTop);
+  Future<BaseResponse2<List<Salon>>> getSalonList(
+      @Query("loadTop") bool? loadTop,
+      @Query("searchKey") String? searchKey,
+      @Query("page") int? page,
+      @Query("limit") int? limit);
 
   @GET("/salon/{salonId}")
   Future<SalonResponse> getSalon(@Path("salonId") String salonId);
@@ -109,4 +114,18 @@ abstract class APIClient {
 
   @POST("/salon/delete/{salonId}")
   Future<BaseResponse> deleteSalon(@Path() String salonId);
+
+  @GET("/category/{salonId}")
+  Future<BaseResponse2<List<Category>>> getCategoryList(
+      @Path("salonId") String salonId);
+
+  @POST("/category/create")
+  Future<BaseResponse2<Category>> addCategory(@Body() Category category);
+
+  @POST("/category/update")
+  Future<BaseResponse2<Category>> updateCategory(@Body() Category category);
+
+  @DELETE("/category/delete/{categoryId}")
+  Future<BaseResponse2> deleteCategory(@Path("categoryId") String categoryId);
+
 }

@@ -2,6 +2,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
+import 'package:salons_app_flutter_module/src/domain/entities/category_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
@@ -26,7 +27,7 @@ abstract class Repository {
   Future<Either<Failure, UserEntity>> updateUser(UserEntity user);
 
   ///Salons
-  Future<Either<Failure, List<Salon>>> getSalonsList(bool? loadTop);
+  Future<Either<Failure, List<Salon>>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit);
   Future<Either<Failure, Salon>> getSalonById(String salonId);
   Future<Either<Failure, Salon>> updateSalon(Salon salonEntity);
 
@@ -45,10 +46,16 @@ abstract class Repository {
   Future<Either<Failure, OrderEntity>> addOrder(OrderEntity orderEntity);
 
   ///Services
-  Future<Either<Failure, List<Service>>> getServicesList(String salonId);
+  Future<Either<Failure, List<Service>>> getServicesList(String salonId, String categoryId);
   Future<Either<Failure, Service>> addService(Service service);
   Future<Either<Failure, Service>> updateService(Service service);
   Future<Either<Failure, void>> removeService(String serviceId);
+
+  ///Categories
+  Future<Either<Failure, List<Category>>> getCategoryList(String salonId);
+  Future<Either<Failure, Category>> addCategory(Category category);
+  Future<Either<Failure, Category>> updateCategory(Category category);
+  Future<Either<Failure, void>> removeCategory(String categoryId);
 
   ///Masters
   Future<Either<Failure, List<Master>>> getMastersList(String salonId);
