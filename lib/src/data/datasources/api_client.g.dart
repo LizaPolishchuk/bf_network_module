@@ -8,7 +8,7 @@ part of 'api_client.dart';
 
 class _APIClient implements APIClient {
   _APIClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://salonsliza.herokuapp.com/api';
+    baseUrl ??= 'http://localhost:3999/api';
   }
 
   final Dio _dio;
@@ -271,6 +271,32 @@ class _APIClient implements APIClient {
         _setStreamType<BaseResponse2<List<OrderEntity>>>(
             Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/order/$userId',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseResponse2<List<OrderEntity>>.fromJson(
+        _result.data!,
+        (json) => (json as List<dynamic>)
+            .map<OrderEntity>(
+                (i) => OrderEntity.fromJson(i as Map<String, dynamic>))
+            .toList());
+    return value;
+  }
+
+  @override
+  Future<BaseResponse2<List<OrderEntity>>> getAvailableTimeList(
+      salonId, masterId, serviceId, date) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'salonId': salonId,
+      r'masterId': masterId,
+      r'serviceId': serviceId,
+      r'date': date
+    };
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse2<List<OrderEntity>>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/order',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BaseResponse2<List<OrderEntity>>.fromJson(

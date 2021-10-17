@@ -65,7 +65,11 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
           message: response.message ?? "getSalonById error: salon is null"));
     }
 
-    return response.salon!;
+    Salon salon = response.salon!;
+    salon.mastersList = response.masters ?? [];
+    salon.servicesList = response.services ?? [];
+
+    return salon;
   }
 
   Future<void> _saveSalonToLocalStorage(SalonResponse response) async {

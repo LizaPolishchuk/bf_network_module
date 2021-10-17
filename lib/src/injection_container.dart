@@ -111,6 +111,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => UpdateCategoryUseCase(getIt()));
   getIt.registerLazySingleton(() => RemoveCategoryUseCase(getIt()));
   getIt.registerLazySingleton(() => GetCategoriesListUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetAvailableTimeUseCase(getIt()));
 
   ///External
   // final sharedPreferences = await SharedPreferences.getInstance();

@@ -178,6 +178,16 @@ class RepositoryImpl implements Repository {
   }
 
   @override
+  Future<Either<Failure, List<OrderEntity>>> getAvailableTime(String salonId, String serviceId, String masterId, String date) async {
+    try {
+      return Right(
+          await ordersRemoteDataSource.getAvailableTime(salonId, serviceId, masterId, date));
+    } catch (error) {
+      return Left(Failure(message: "Get orders list for error"));
+    }
+  }
+
+  @override
   Future<Either<Failure, OrderEntity>> updateOrder(
       OrderEntity orderEntity) async {
     try {

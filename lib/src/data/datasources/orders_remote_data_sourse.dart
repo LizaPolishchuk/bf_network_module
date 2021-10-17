@@ -9,6 +9,7 @@ abstract class OrdersRemoteDataSource {
   Future<List<OrderEntity>> getCurrentUserOrdersList();
 
   Future<List<OrderEntity>> getOrdersList(String id, OrderForType orderForType);
+  Future<List<OrderEntity>> getAvailableTime(String salonId, String serviceId, String masterId, String date);
 
   Future<OrderEntity> addOrder(OrderEntity orderEntity);
 
@@ -71,14 +72,19 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
     }
 
     return response.data!;
-
-
-    Query query = ordersCollection.where(queryField, isEqualTo: id);
-    QuerySnapshot snapshot = await query.get();
-
-    return snapshot.docs.map((doc) =>
-        OrderEntity.fromJson(doc.data() as Map<String, dynamic>)).toList();
   }
+
+  @override
+  Future<List<OrderEntity>> getAvailableTime(String salonId, String serviceId, String masterId, String date) async {
+    final response = await _apiClient.getAvailableTimeList(salonId, masterId, serviceId, date);
+
+    if (response.data == null) {
+      throw(Failure(message: response.message ?? "getOrdersList error: orders is null"));
+    }
+
+    return response.data!;
+  }
+
 
   @override
   Future<void> removeOrder(String orderId) async {

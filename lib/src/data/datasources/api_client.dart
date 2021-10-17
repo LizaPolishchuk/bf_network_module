@@ -12,8 +12,11 @@ import '../../../salons_app_flutter_module.dart';
 
 part 'api_client.g.dart';
 
-@RestApi(baseUrl: "https://salonsliza.herokuapp.com/api")
-// @RestApi(baseUrl: "http://localhost:3999/api")
+///prod
+// @RestApi(baseUrl: "https://salonsliza.herokuapp.com/api")
+///local
+@RestApi(baseUrl: "http://localhost:3999/api")
+
 abstract class APIClient {
   factory APIClient(Dio dio) = _APIClient;
 
@@ -73,6 +76,13 @@ abstract class APIClient {
   Future<BaseResponse2<List<OrderEntity>>> getOrdersList(
       @Path("id") String userId, @Queries() Map<String, String> options);
 
+  @GET("/order")
+  Future<BaseResponse2<List<OrderEntity>>> getAvailableTimeList(
+      @Query("salonId") String salonId,
+      @Query("masterId") String masterId,
+      @Query("serviceId") String serviceId,
+      @Query("date") String date);
+
   @POST("/order/create")
   Future<BaseResponse2<OrderEntity>> addOrder(@Body() OrderEntity orderEntity);
 
@@ -127,5 +137,4 @@ abstract class APIClient {
 
   @DELETE("/category/delete/{categoryId}")
   Future<BaseResponse2> deleteCategory(@Path("categoryId") String categoryId);
-
 }

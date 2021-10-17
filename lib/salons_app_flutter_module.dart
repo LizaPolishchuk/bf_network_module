@@ -31,6 +31,7 @@ export './src/domain/usecases/orders/get_orders_list_for_current_user.dart';
 export './src/domain/usecases/orders/get_orders_list_usecase.dart';
 export './src/domain/usecases/orders/remove_order_use_case.dart';
 export './src/domain/usecases/orders/update_order_use_case.dart';
+export './src/domain/usecases/orders/get_available_time_usecase.dart';
 export './src/domain/usecases/salons/get_salon_by_id_use_case.dart';
 export './src/domain/usecases/salons/get_salons_list_use_case.dart';
 export './src/domain/usecases/salons/update_salon_use_case.dart';
