@@ -1,14 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/salon_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
-
-const SALONS_COLLECTION = 'salons';
-const SERVICES_COLLECTION = 'services';
-const MASTERS_COLLECTION = 'masters';
-const AVAILABLE_TIMES_COLLECTION = 'available_times';
 
 abstract class SalonsRemoteDataSource {
   Future<List<Salon>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit);
@@ -19,16 +13,10 @@ abstract class SalonsRemoteDataSource {
 }
 
 class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
-  late CollectionReference salonsCollection;
-  late CollectionReference mastersCollection;
   LocalStorage _localStorage;
   APIClient _apiClient;
 
-  SalonsRemoteDataSourceImpl(this._localStorage, this._apiClient) {
-    salonsCollection = FirebaseFirestore.instance.collection(SALONS_COLLECTION);
-    mastersCollection =
-        FirebaseFirestore.instance.collection(MASTERS_COLLECTION);
-  }
+  SalonsRemoteDataSourceImpl(this._localStorage, this._apiClient);
 
   @override
   Future<List<Salon>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit) async {

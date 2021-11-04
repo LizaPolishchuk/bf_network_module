@@ -13,9 +13,9 @@ import '../../../salons_app_flutter_module.dart';
 part 'api_client.g.dart';
 
 ///prod
-// @RestApi(baseUrl: "https://salonsliza.herokuapp.com/api")
+@RestApi(baseUrl: "https://salonsliza.herokuapp.com/api")
 ///local
-@RestApi(baseUrl: "http://localhost:3999/api")
+// @RestApi(baseUrl: "http://localhost:3999/api")
 
 abstract class APIClient {
   factory APIClient(Dio dio) = _APIClient;

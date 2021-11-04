@@ -31,12 +31,6 @@ dependencies:
   hive_generator: ^1.1.0
   hive_flutter: ^1.0.0
 
-  #----- Firebase ------
-  firebase_core: ^1.3.0
-  firebase_auth: ^2.0.0
-  cloud_firestore: ^2.3.0
-  firebase_storage: ^9.0.0
-
   #----- Backend ------
   retrofit: ^2.0.1
   logger: ^1.0.0
@@ -45,7 +39,7 @@ dependencies:
 
   #----- Social login ------
   google_sign_in: ^5.0.4
-  flutter_facebook_auth: ^3.4.0
+  flutter_facebook_auth: ^3.5.4
 
   #----- Shared preferences ----
   shared_preferences: ^2.0.6

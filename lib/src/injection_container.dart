@@ -1,6 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -29,14 +27,12 @@ import 'domain/usecases/login/login_with_facebook_usecase.dart';
 import 'domain/usecases/login/login_with_google_usecase.dart';
 import 'domain/usecases/login/login_with_phone_usecase.dart';
 import 'domain/usecases/login/login_with_phone_verify_code_usecase.dart';
-import 'domain/usecases/login/send_login_link_to_email_usecase.dart';
 import 'domain/usecases/login/sign_out_usecase.dart';
 import 'domain/usecases/login/sign_up_with_link_and_email_usecase.dart';
 import 'domain/usecases/login/signup_with_email_and_password_usecase.dart';
 import 'domain/usecases/masters/get_masters_list_use_case.dart';
 import 'domain/usecases/masters/remove_master_use_case.dart';
 import 'domain/usecases/masters/update_master_use_case.dart';
-import 'domain/usecases/orders/get_orders_list_for_current_user.dart';
 import 'domain/usecases/orders/get_orders_list_usecase.dart';
 import 'domain/usecases/orders/remove_order_use_case.dart';
 import 'domain/usecases/orders/update_order_use_case.dart';
@@ -69,7 +65,7 @@ Future<void> init() async {
   getIt.registerLazySingleton<UserRemoteDataSource>(
       () => UserRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<AuthRemoteDataSource>(() =>
-      AuthRemoteDataSourceImpl(getIt(), getIt(), getIt(), getIt(), getIt()));
+      AuthRemoteDataSourceImpl(getIt(), getIt(), getIt(), getIt()));
   getIt.registerLazySingleton<OrdersRemoteDataSource>(
       () => OrdersRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<MastersRemoteDataSource>(
@@ -86,7 +82,6 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => LoginWithEmailAndPasswordUseCase(getIt()));
   getIt.registerLazySingleton(() => SignUpWithEmailAndPasswordUseCase(getIt()));
   getIt.registerLazySingleton(() => SignOutUseCase(getIt()));
-  getIt.registerLazySingleton(() => GetOrdersListForCurrentUser(getIt()));
   getIt.registerLazySingleton(() => GetSalonByIdUseCase(getIt()));
   getIt.registerLazySingleton(() => GetOrdersListUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateOrderUseCase(getIt()));
@@ -94,7 +89,6 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => RemoveOrderUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateSalonUseCase(getIt()));
   getIt.registerLazySingleton(() => SignUpWithLinkAndEmailUseCase(getIt()));
-  getIt.registerLazySingleton(() => SendLoginLinkEmailUseCase(getIt()));
   getIt.registerLazySingleton(() => GetServicesListUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateServiceUseCase(getIt()));
   getIt.registerLazySingleton(() => RemoveServiceUseCase(getIt()));
@@ -119,7 +113,6 @@ Future<void> init() async {
 
   getIt.registerLazySingleton(() => LocalStorage());
 
-  getIt.registerLazySingleton(() => FirebaseAuth.instance);
   getIt.registerLazySingleton(() => GoogleSignIn());
   getIt.registerLazySingleton(() => FacebookAuth.instance);
   getIt.registerLazySingleton(() => APIClient(getIt()));
@@ -130,7 +123,4 @@ Future<void> init() async {
     dio.interceptors.add(CustomInterceptors());
     return dio;
   });
-
-  getIt.registerLazySingleton<Reference>(() =>
-      FirebaseStorage.instance.refFromURL('gs://salons-5012c.appspot.com'));
 }

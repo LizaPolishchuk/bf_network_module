@@ -8,7 +8,7 @@ part of 'api_client.dart';
 
 class _APIClient implements APIClient {
   _APIClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://localhost:3999/api';
+    baseUrl ??= 'https://salonsliza.herokuapp.com/api';
   }
 
   final Dio _dio;

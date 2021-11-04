@@ -1,6 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
@@ -8,7 +6,7 @@ import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/salon_response.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<User?> loginWithGoogleWeb();
+  // Future<User?> loginWithGoogleWeb();
 
   Future<UserEntity> loginWithGoogle();
 
@@ -18,56 +16,29 @@ abstract class AuthRemoteDataSource {
 
   Future<Salon> signInWithEmailAndPassword(String email, String password);
 
-  Future<User?> signUpWithEmailAndPassword(String email, String password);
-
-  Future<Salon> signUpWithEmailAndPasswordNew(
+  Future<Salon> signUpWithEmailAndPassword(
       String email, String password);
 
-  Future<User?> signInWithFacebook();
+  // Future<User?> signInWithFacebook();
 
-  Future<User?> signInWithEmailAndLink(String email);
+  // Future<User?> signInWithEmailAndLink(String email);
 
   Future<bool?> signInWithPhone(String phone);
 
   Future<Map<UserEntity, bool?>> verifyCode(String code);
 
-  Future<void> sendLinkForEmailSignIn(String email);
-
   Future<void> signOut();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-  final FirebaseAuth firebaseAuth;
-  late GoogleAuthProvider webGoogleSignIn;
+  // final FirebaseAuth firebaseAuth;
   final GoogleSignIn googleSignIn;
   final FacebookAuth facebookLogin;
   final LocalStorage localStorage;
   final APIClient apiClient;
 
-  AuthRemoteDataSourceImpl(this.firebaseAuth, this.googleSignIn,
+  AuthRemoteDataSourceImpl(this.googleSignIn,
       this.facebookLogin, this.localStorage, this.apiClient);
-
-  @override
-  Future<User?> signInWithFacebook() async {
-    final LoginResult result = await facebookLogin.login();
-
-    if (result.status == LoginStatus.success) {
-      final OAuthCredential credential =
-          FacebookAuthProvider.credential(result.accessToken!.token);
-
-      final User? user =
-          (await firebaseAuth.signInWithCredential(credential)).user;
-
-      if (user?.isAnonymous == true) {
-        return null;
-      } else if (user != null) {
-        localStorage.setCurrentUserId(user.uid);
-        return user;
-      }
-    } else {
-      return null;
-    }
-  }
 
   @override
   Future<UserEntity> loginWithGoogle() async {
@@ -142,40 +113,40 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     return {userFromResp: creator};
   }
 
-  @override
-  Future<User?> loginWithGoogleWeb() async {
-    User? firebaseUser;
-    try {
-      //For web
-      if (kIsWeb) {
-        UserCredential _userCredential =
-            await firebaseAuth.signInWithPopup(new GoogleAuthProvider());
-        firebaseUser = _userCredential.user;
-      } else {
-        final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-        final GoogleSignInAuthentication? googleAuth =
-            await googleUser?.authentication;
-
-        if (googleAuth == null) {
-          throw (Exception("googleAuth is null"));
-        }
-
-        final userCred = await FirebaseAuth.instance
-            .signInWithCredential(GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        ));
-
-        firebaseUser = userCred.user;
-      }
-    } catch (e) {
-      firebaseUser = null;
-      print("Error in sign in with google: $e");
-      throw (e);
-    }
-
-    return firebaseUser;
-  }
+  // @override
+  // Future<User?> loginWithGoogleWeb() async {
+  //   User? firebaseUser;
+  //   try {
+  //     //For web
+  //     if (kIsWeb) {
+  //       UserCredential _userCredential =
+  //           await firebaseAuth.signInWithPopup(new GoogleAuthProvider());
+  //       firebaseUser = _userCredential.user;
+  //     } else {
+  //       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  //       final GoogleSignInAuthentication? googleAuth =
+  //           await googleUser?.authentication;
+  //
+  //       if (googleAuth == null) {
+  //         throw (Exception("googleAuth is null"));
+  //       }
+  //
+  //       final userCred = await FirebaseAuth.instance
+  //           .signInWithCredential(GoogleAuthProvider.credential(
+  //         accessToken: googleAuth.accessToken,
+  //         idToken: googleAuth.idToken,
+  //       ));
+  //
+  //       firebaseUser = userCred.user;
+  //     }
+  //   } catch (e) {
+  //     firebaseUser = null;
+  //     print("Error in sign in with google: $e");
+  //     throw (e);
+  //   }
+  //
+  //   return firebaseUser;
+  // }
 
   @override
   Future<Salon> signInWithEmailAndPassword(
@@ -217,25 +188,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<User?> signUpWithEmailAndPassword(
-      String email, String password) async {
-    User? webFirebaseUser;
-    try {
-      final authResult = await firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      webFirebaseUser = authResult.user;
-      localStorage.setCurrentUserId(webFirebaseUser!.uid);
-    } catch (e) {
-      webFirebaseUser = null;
-      print("Error sign up with email and password: $e");
-      throw (e);
-    }
-
-    return webFirebaseUser;
-  }
-
-  @override
-  Future<Salon> signUpWithEmailAndPasswordNew(
+  Future<Salon> signUpWithEmailAndPassword(
       String email, String password) async {
     SalonResponse salonData;
     try {
@@ -270,30 +223,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     }
 
     return salonData.salon!;
-  }
-
-  @override
-  Future<User?> signInWithEmailAndLink(String email) async {
-    return null;
-    // firebaseAuth.signInWithEmailLink(email: email, emailLink: emailLink)
-  }
-
-  @override
-  Future<void> sendLinkForEmailSignIn(String email) async {
-    firebaseAuth
-        .sendSignInLinkToEmail(
-            email: email,
-            actionCodeSettings: ActionCodeSettings(
-                dynamicLinkDomain: 'salonsapp.page.link',
-                url: "https://salonsapp.page.link/welcome",
-                // url: 'https://www.salonsapp.com/?email=' + email,
-                handleCodeInApp: true,
-                androidInstallApp: true,
-                androidMinimumVersion: "1",
-                iOSBundleId: "pea.salonsapp.web",
-                androidPackageName: 'pea.salonsapp.web'))
-        .then((value) => print("sendSignInLinkToEmail success"))
-        .catchError((error) => print("sendSignInLinkToEmail Error: $error"));
   }
 
   @override

@@ -1,13 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
 
-const ORDERS_COLLECTION = 'orders';
-
 abstract class OrdersRemoteDataSource {
-  Future<List<OrderEntity>> getCurrentUserOrdersList();
-
   Future<List<OrderEntity>> getOrdersList(String id, OrderForType orderForType);
   Future<List<OrderEntity>> getAvailableTime(String salonId, String serviceId, String masterId, String date);
 
@@ -19,31 +14,10 @@ abstract class OrdersRemoteDataSource {
 }
 
 class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
-  late CollectionReference ordersCollection;
   final LocalStorage _localStorage;
   final APIClient _apiClient;
 
-  OrdersRemoteDataSourceImpl(this._localStorage, this._apiClient) {
-    ordersCollection =
-        FirebaseFirestore.instance.collection(ORDERS_COLLECTION);
-  }
-
-  @override
-  Future<List<OrderEntity>> getCurrentUserOrdersList() async {
-    try {
-      String currentUserId = await _localStorage.getUserId() ?? "";
-      Query query = ordersCollection.where(
-          "clientId", isEqualTo: currentUserId);
-      QuerySnapshot snapshot = await query.get();
-
-      return snapshot.docs.map((doc) =>
-          OrderEntity.fromJson(doc.data() as Map<String, dynamic>)
-      ).toList();
-    } catch (e) {
-      print("getCurrentUserOrdersList error: ${e.toString()}");
-      throw(e);
-    }
-  }
+  OrdersRemoteDataSourceImpl(this._localStorage, this._apiClient);
 
   @override
   Future<List<OrderEntity>> getOrdersList(String id,

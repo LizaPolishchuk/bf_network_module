@@ -1,6 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart' as FirebaseAuth;
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/auth_remote_data_source.dart';
@@ -48,9 +46,6 @@ class RepositoryImpl implements Repository {
 
       return Right(response);
     } catch (error) {
-      if (error is FirebaseAuthException) {
-        return Left(Failure(message: error.message ?? "", codeStr: error.code));
-      }
       return Left(Failure());
     }
   }
@@ -86,37 +81,10 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, String>> signUpWithEmailAndPassword(
+  Future<Either<Failure, Salon>> signUpWithEmailAndPassword(
       String email, String password) async {
     try {
-      FirebaseAuth.User? firebaseUser = await authRemoteDataSource
-          .signUpWithEmailAndPassword(email, password);
-      if (firebaseUser != null) {
-        bool isUserPresent =
-            await userRemoteDataSource.checkIsUserPresent(firebaseUser.uid);
-        if (!isUserPresent) {
-          // UserEntity user = new UserEntity(firebaseUser.uid, firebaseUser.displayName??"", firebaseUser.email,
-          //     firebaseUser.photoURL);
-          // userRemoteDataSource.createUser(user);
-        }
-        localStorage.setUserId(firebaseUser.uid);
-        return Right(firebaseUser.uid);
-      } else {
-        return Left(Failure());
-      }
-    } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, Salon>> signUpWithEmailAndPasswordNew(
-      String email, String password) async {
-    try {
-      final result = await authRemoteDataSource.signUpWithEmailAndPasswordNew(
+      final result = await authRemoteDataSource.signUpWithEmailAndPassword(
           email, password);
 
       return Right(result);
@@ -154,15 +122,6 @@ class RepositoryImpl implements Repository {
       return Right(await salonsRemoteDataSource.updateSalon(salonEntity));
     } catch (error) {
       return Left(Failure(message: "Get salons list error: $error"));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<OrderEntity>>> getCurrentUserOrdersList() async {
-    try {
-      return Right(await ordersRemoteDataSource.getCurrentUserOrdersList());
-    } catch (error) {
-      return Left(Failure(message: "Get orders list for user error"));
     }
   }
 
@@ -230,15 +189,6 @@ class RepositoryImpl implements Repository {
       return Right(await salonsRemoteDataSource.getSalonById(salonId));
     } catch (error) {
       return Left(Failure(message: "Get salon by id error"));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> sendLoginLinkToEmail(String email) async {
-    try {
-      return Right(await authRemoteDataSource.sendLinkForEmailSignIn(email));
-    } catch (error) {
-      return Left(Failure(message: "Send link to login error"));
     }
   }
 

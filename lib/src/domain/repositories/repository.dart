@@ -13,12 +13,10 @@ abstract class Repository {
   Future<Either<Failure, Map<UserEntity, bool?>>> signInWithGoogle();
   Future<Either<Failure, Map<UserEntity, bool?>>> signInWithFacebook();
   Future<Either<Failure, Salon>> signInWithEmailAndPassword(String email, String password);
-  Future<Either<Failure, String>> signUpWithEmailAndPassword(String email, String password);
-  Future<Either<Failure, Salon>> signUpWithEmailAndPasswordNew(String email, String password);
+  Future<Either<Failure, Salon>> signUpWithEmailAndPassword(String email, String password);
   Future<Either<Failure, String>> signUpWithLinkAndEmail(String email);
   Future<Either<Failure, bool?>> signInWithPhone(String phone);
   Future<Either<Failure, Map<UserEntity, bool?>>> verifyCode(String code);
-  Future<Either<Failure, void>> sendLoginLinkToEmail(String email);
 
   Future<Either<Failure, void>> signOut();
 
@@ -39,7 +37,6 @@ abstract class Repository {
   //     String salonId, String serviceId);
 
   ///Orders
-  Future<Either<Failure, List<OrderEntity>>> getCurrentUserOrdersList();
   Future<Either<Failure, List<OrderEntity>>> getOrdersList(String id, OrderForType orderForType);
   Future<Either<Failure, List<OrderEntity>>> getAvailableTime(String salonId, String serviceId, String masterId, String date);
   Future<Either<Failure, void>> removeOrder(String orderId);
