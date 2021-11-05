@@ -8,7 +8,7 @@ class LoginWithPhoneVerifyCodeUseCase {
 
   LoginWithPhoneVerifyCodeUseCase(this.repository);
 
-  Future<Either<Failure, Map<UserEntity, bool?>>> call(String code) {
-    return repository.verifyCode(code);
+  Future<Either<Failure, Map<UserEntity, bool?>>> call(String code, String phoneNumber) {
+    return repository.verifyCode(code, phoneNumber);
   }
 }

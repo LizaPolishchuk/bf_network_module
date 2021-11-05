@@ -25,7 +25,7 @@ abstract class AuthRemoteDataSource {
 
   Future<bool?> signInWithPhone(String phone);
 
-  Future<Map<UserEntity, bool?>> verifyCode(String code);
+  Future<Map<UserEntity, bool?>> verifyCode(String code, String phoneNumber);
 
   Future<void> signOut();
 }
@@ -254,12 +254,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<Map<UserEntity, bool?>> verifyCode(String code) async {
+  Future<Map<UserEntity, bool?>> verifyCode(String code, String phoneNumber) async {
     UserEntity user;
     late bool? creator;
 
     try {
-      final authResult = await apiClient.verifyCode(code);
+      final authResult = await apiClient.verifyCode(code, phoneNumber);
 
       if (authResult.user == null) {
         throw Failure(message: "${authResult.message}");

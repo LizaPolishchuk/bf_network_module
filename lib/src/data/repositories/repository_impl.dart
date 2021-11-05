@@ -281,9 +281,9 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<Either<Failure, Map<UserEntity, bool?>>> verifyCode(
-      String code) async {
+      String code, String phoneNumber) async {
     try {
-      return Right(await authRemoteDataSource.verifyCode(code));
+      return Right(await authRemoteDataSource.verifyCode(code, phoneNumber));
     } catch (error) {
       if (error is Failure) {
         return Left(error);

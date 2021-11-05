@@ -48,7 +48,7 @@ abstract class APIClient {
 
   @POST("/auth/loginVerify")
   @FormUrlEncoded()
-  Future<AuthResponse> verifyCode(@Field("code") String code);
+  Future<AuthResponse> verifyCode(@Field("code") String code, @Field("phone") String phoneNumber);
 
   @GET("/user")
   Future<UserResponse> getUser(@Query("userId") String userId);

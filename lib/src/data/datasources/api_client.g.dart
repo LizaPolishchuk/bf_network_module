@@ -122,10 +122,10 @@ class _APIClient implements APIClient {
   }
 
   @override
-  Future<AuthResponse> verifyCode(code) async {
+  Future<AuthResponse> verifyCode(code, phoneNumber) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _data = {'code': code};
+    final _data = {'code': code, 'phone': phoneNumber};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<AuthResponse>(Options(
                 method: 'POST',
