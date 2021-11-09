@@ -37,7 +37,7 @@ abstract class Repository {
   //     String salonId, String serviceId);
 
   ///Orders
-  Future<Either<Failure, List<OrderEntity>>> getOrdersList(String id, OrderForType orderForType);
+  Future<Either<Failure, List<OrderEntity>>> getOrdersList(String id, OrderForType orderForType, String? dateFor, String? dateFrom, String? dateTo);
   Future<Either<Failure, List<OrderEntity>>> getAvailableTime(String salonId, String serviceId, String masterId, String date);
   Future<Either<Failure, void>> removeOrder(String orderId);
   Future<Either<Failure, OrderEntity>> updateOrder(OrderEntity orderEntity);

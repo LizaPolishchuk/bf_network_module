@@ -74,7 +74,7 @@ abstract class APIClient {
 
   @GET("/order/{id}")
   Future<BaseResponse2<List<OrderEntity>>> getOrdersList(
-      @Path("id") String userId, @Queries() Map<String, String> options);
+      @Path("id") String userId, @Queries() Map<String, String?> options);
 
   @GET("/order")
   Future<BaseResponse2<List<OrderEntity>>> getAvailableTimeList(

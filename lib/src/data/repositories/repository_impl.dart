@@ -127,10 +127,10 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<Either<Failure, List<OrderEntity>>> getOrdersList(
-      String id, OrderForType orderForType) async {
+      String id, OrderForType orderForType, String? dateFor, String? dateFrom, String? dateTo) async {
     try {
       return Right(
-          await ordersRemoteDataSource.getOrdersList(id, orderForType));
+          await ordersRemoteDataSource.getOrdersList(id, orderForType, dateFor, dateFrom, dateTo));
     } catch (error) {
       return Left(Failure(message: "Get orders list for $orderForType error"));
     }

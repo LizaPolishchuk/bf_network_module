@@ -3,8 +3,11 @@ import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
 
 abstract class OrdersRemoteDataSource {
-  Future<List<OrderEntity>> getOrdersList(String id, OrderForType orderForType);
-  Future<List<OrderEntity>> getAvailableTime(String salonId, String serviceId, String masterId, String date);
+  Future<List<OrderEntity>> getOrdersList(String id, OrderForType orderForType,
+      String? dateFor, String? dateFrom, String? dateTo);
+
+  Future<List<OrderEntity>> getAvailableTime(String salonId, String serviceId,
+      String masterId, String date);
 
   Future<OrderEntity> addOrder(OrderEntity orderEntity);
 
@@ -21,7 +24,8 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
 
   @override
   Future<List<OrderEntity>> getOrdersList(String id,
-      OrderForType orderForType) async {
+      OrderForType orderForType, String? dateFor, String? dateFrom,
+      String? dateTo) async {
     String queryField = "";
 
     switch (orderForType) {
@@ -39,21 +43,31 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
         break;
     }
 
-    final response = await _apiClient.getOrdersList(id, {queryField: id});
+
+    final response = await _apiClient.getOrdersList(id, {
+      queryField: id,
+      "dateFor": dateFor,
+      "dateFrom": dateFrom,
+      "dateTo": dateTo
+    });
 
     if (response.data == null) {
-      throw(Failure(message: response.message ?? "getOrdersList error: orders is null"));
+      throw(Failure(
+          message: response.message ?? "getOrdersList error: orders is null"));
     }
 
     return response.data!;
   }
 
   @override
-  Future<List<OrderEntity>> getAvailableTime(String salonId, String serviceId, String masterId, String date) async {
-    final response = await _apiClient.getAvailableTimeList(salonId, masterId, serviceId, date);
+  Future<List<OrderEntity>> getAvailableTime(String salonId, String serviceId,
+      String masterId, String date) async {
+    final response = await _apiClient.getAvailableTimeList(
+        salonId, masterId, serviceId, date);
 
     if (response.data == null) {
-      throw(Failure(message: response.message ?? "getOrdersList error: orders is null"));
+      throw(Failure(
+          message: response.message ?? "getOrdersList error: orders is null"));
     }
 
     return response.data!;
@@ -72,7 +86,8 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
     final response = await _apiClient.updateOrder(orderEntity);
 
     if (response.data == null) {
-      throw(Failure(message: response.message ?? "updateOrder error: order is null"));
+      throw(Failure(
+          message: response.message ?? "updateOrder error: order is null"));
     }
 
     return response.data!;
@@ -83,7 +98,8 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
     final response = await _apiClient.addOrder(orderEntity);
 
     if (response.data == null) {
-      throw(Failure(message: response.message ?? "addOrder error: order is null"));
+      throw(Failure(
+          message: response.message ?? "addOrder error: order is null"));
     }
 
     return response.data!;
