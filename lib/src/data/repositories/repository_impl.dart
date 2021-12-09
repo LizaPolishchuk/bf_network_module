@@ -271,7 +271,7 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, bool?>> signInWithPhone(String phone) async {
+  Future<Either<Failure, void>> signInWithPhone(String phone) async {
     try {
       return Right(await authRemoteDataSource.signInWithPhone(phone));
     } catch (error) {

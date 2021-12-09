@@ -43,8 +43,7 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
         break;
     }
 
-
-    final response = await _apiClient.getOrdersList(id, {
+    final response = await _apiClient.getOrdersList({
       queryField: id,
       "dateFor": dateFor,
       "dateFrom": dateFrom,

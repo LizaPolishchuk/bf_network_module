@@ -31,6 +31,8 @@ dependencies:
   hive_generator: ^1.1.0
   hive_flutter: ^1.0.0
 
+  firebase_auth: ^3.3.0
+
   #----- Backend ------
   retrofit: ^2.0.1
   logger: ^1.0.0

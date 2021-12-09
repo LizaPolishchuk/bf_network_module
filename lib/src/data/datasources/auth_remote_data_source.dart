@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
@@ -23,7 +27,7 @@ abstract class AuthRemoteDataSource {
 
   // Future<User?> signInWithEmailAndLink(String email);
 
-  Future<bool?> signInWithPhone(String phone);
+  Future<void> signInWithPhone(String phone);
 
   Future<Map<UserEntity, bool?>> verifyCode(String code, String phoneNumber);
 
@@ -31,13 +35,13 @@ abstract class AuthRemoteDataSource {
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-  // final FirebaseAuth firebaseAuth;
+  final FirebaseAuth firebaseAuth;
   final GoogleSignIn googleSignIn;
   final FacebookAuth facebookLogin;
   final LocalStorage localStorage;
   final APIClient apiClient;
 
-  AuthRemoteDataSourceImpl(this.googleSignIn,
+  AuthRemoteDataSourceImpl(this.googleSignIn, this.firebaseAuth,
       this.facebookLogin, this.localStorage, this.apiClient);
 
   @override
@@ -234,46 +238,61 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     return;
   }
 
+  String? verificationId;
   @override
-  Future<bool?> signInWithPhone(String phone) async {
-    return await apiClient.login(phone).then((value) {
-      return value.creator ?? false;
-    }).catchError((e) {
-      if(e is DioError) {
-        String? errorMessage = (e.response as Response).data["message"];
+  Future<void> signInWithPhone(String phone) async {
+    final completer = Completer<void>();
 
-        if (errorMessage?.isNotEmpty != true) {
-          errorMessage = "Something went wrong";
-        }
+    try {
+      await firebaseAuth.verifyPhoneNumber(
+        phoneNumber: phone,
+        timeout: const Duration(seconds: 60),
+        verificationCompleted: (PhoneAuthCredential credential) {},
+        verificationFailed: (FirebaseAuthException e) {
+          completer.completeError(e);
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          this.verificationId = verificationId;
+          completer.complete();
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {},
+      );
+    } catch (e) {
+      rethrow;
+    }
 
-        throw(Failure(message: errorMessage!));
-      }
-      print("Error sign In With Phone: $e");
-      throw (e);
-    });
+    return completer.future;
+
+    // return await apiClient.login(phone).then((value) {
+    //   return value.creator ?? false;
+    // }).catchError((e) {
+    //   if(e is DioError) {
+    //     String? errorMessage = (e.response as Response).data["message"];
+    //
+    //     if (errorMessage?.isNotEmpty != true) {
+    //       errorMessage = "Something went wrong";
+    //     }
+    //
+    //     throw(Failure(message: errorMessage!));
+    //   }
+    //   print("Error sign In With Phone: $e");
+    //   throw (e);
+    // });
   }
 
   @override
   Future<Map<UserEntity, bool?>> verifyCode(String code, String phoneNumber) async {
-    UserEntity user;
-    late bool? creator;
+    assert(verificationId != null);
+
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationId!, smsCode: code);
+    UserCredential loggedInUser;
+    bool isNewUser = true;
 
     try {
-      final authResult = await apiClient.verifyCode(code, phoneNumber);
+        loggedInUser = await firebaseAuth.signInWithCredential(credential);
+        isNewUser = loggedInUser.additionalUserInfo?.isNewUser ?? true;
 
-      if (authResult.user == null) {
-        throw Failure(message: "${authResult.message}");
-      }
-
-      creator = authResult.creator ?? false;
-      user = authResult.user!..isRegistered = !creator;
-
-      print("verifyCode success, token: ${authResult.accessToken}");
-
-      localStorage.setAccessToken(authResult.accessToken);
-      localStorage.setRefreshToken(authResult.refreshToken);
-      localStorage.setCurrentUserId(user.id);
-      localStorage.setCurrentUser(user);
     } catch (e) {
       if (e is DioError) {
         String? errorMessage = (e.response as Response).data["message"];
@@ -289,6 +308,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }
     }
 
-    return {user: creator};
+    assert(loggedInUser.user?.uid != null);
+
+    debugPrint("User success logged in uid: ${loggedInUser.user!.uid}");
+
+    UserEntity userEntity = UserEntity(loggedInUser.user!.uid, "", "", "", phoneNumber, null);
+
+    var response = await loginWithSocial(userEntity);
+
+    return response;
   }
 }

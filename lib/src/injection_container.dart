@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -65,7 +66,7 @@ Future<void> init() async {
   getIt.registerLazySingleton<UserRemoteDataSource>(
       () => UserRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<AuthRemoteDataSource>(() =>
-      AuthRemoteDataSourceImpl(getIt(), getIt(), getIt(), getIt()));
+      AuthRemoteDataSourceImpl(getIt(), getIt(), getIt(), getIt(), getIt()));
   getIt.registerLazySingleton<OrdersRemoteDataSource>(
       () => OrdersRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<MastersRemoteDataSource>(
@@ -115,7 +116,8 @@ Future<void> init() async {
 
   getIt.registerLazySingleton(() => GoogleSignIn());
   getIt.registerLazySingleton(() => FacebookAuth.instance);
-  getIt.registerLazySingleton(() => APIClient(getIt()));
+  getIt.registerLazySingleton(() => FirebaseAuth.instance);
+  getIt.registerLazySingleton(() => APIClient(getIt(), baseUrl: "http://localhost:3999/api"));
 
   getIt.registerLazySingleton(() {
     Dio dio = Dio();

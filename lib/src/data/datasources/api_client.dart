@@ -18,7 +18,7 @@ part 'api_client.g.dart';
 // @RestApi(baseUrl: "http://localhost:3999/api")
 
 abstract class APIClient {
-  factory APIClient(Dio dio) = _APIClient;
+  factory APIClient(Dio dio, {String baseUrl}) = _APIClient;
 
   @POST("/authWeb/register")
   @FormUrlEncoded()
@@ -72,9 +72,8 @@ abstract class APIClient {
   @DELETE("/master/delete/{masterId}")
   Future<BaseResponse2> deleteMaster(@Path("masterId") String masterId);
 
-  @GET("/order/{id}")
-  Future<BaseResponse2<List<OrderEntity>>> getOrdersList(
-      @Path("id") String userId, @Queries() Map<String, String?> options);
+  @GET("/order/list")
+  Future<BaseResponse2<List<OrderEntity>>> getOrdersList( @Queries() Map<String, String?> options);
 
   @GET("/order")
   Future<BaseResponse2<List<OrderEntity>>> getAvailableTimeList(

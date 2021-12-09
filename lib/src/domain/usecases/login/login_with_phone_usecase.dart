@@ -7,7 +7,7 @@ class LoginWithPhoneUseCase {
 
   LoginWithPhoneUseCase(this.repository);
 
-  Future<Either<Failure, bool?>> call(String phone) {
+  Future<Either<Failure, void>> call(String phone) {
     return repository.signInWithPhone(phone);
   }
 }

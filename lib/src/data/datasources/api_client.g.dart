@@ -261,8 +261,7 @@ class _APIClient implements APIClient {
   }
 
   @override
-  Future<BaseResponse2<List<OrderEntity>>> getOrdersList(
-      userId, options) async {
+  Future<BaseResponse2<List<OrderEntity>>> getOrdersList(options) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.addAll(options);
@@ -270,7 +269,7 @@ class _APIClient implements APIClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BaseResponse2<List<OrderEntity>>>(
             Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, '/order/$userId',
+                .compose(_dio.options, '/order/list',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BaseResponse2<List<OrderEntity>>.fromJson(
