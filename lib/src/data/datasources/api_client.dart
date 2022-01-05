@@ -50,8 +50,8 @@ abstract class APIClient {
   @FormUrlEncoded()
   Future<AuthResponse> verifyCode(@Field("code") String code, @Field("phone") String phoneNumber);
 
-  @GET("/user")
-  Future<UserResponse> getUser(@Query("userId") String userId);
+  @GET("/user/{userId}")
+  Future<UserResponse> getUser(@Path("userId") String userId);
 
   @POST("/user/update")
   Future<UserResponse> updateUser(@Body() UserEntity user);
