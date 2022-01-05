@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/category_entity.dart';
+import 'package:salons_app_flutter_module/src/domain/entities/filters_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
@@ -61,4 +62,9 @@ abstract class Repository {
   Future<Either<Failure, Master>> updateMaster(Master master);
   Future<Either<Failure, Master>> addMaster(Master master);
 
-  }
+  ///Filters
+  Future<Either<Failure, Filters>> addFilters(Filters filters);
+  Future<Either<Failure, Filters>> getFilters();
+  Future<Either<Failure, void>> removeFilters(String filterId) ;
+  Future<Either<Failure, Filters>> updateFilters(Filters filters) ;
+}

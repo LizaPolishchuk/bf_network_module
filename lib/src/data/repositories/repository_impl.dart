@@ -3,12 +3,14 @@ import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/auth_remote_data_source.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/categories_remote_data_sourse.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/filters_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/masters_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/orders_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/salons_remote_data_source.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/services_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/user_remote_data_source.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/category_entity.dart';
+import 'package:salons_app_flutter_module/src/domain/entities/filters_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
@@ -25,6 +27,7 @@ class RepositoryImpl implements Repository {
   OrdersRemoteDataSource ordersRemoteDataSource;
   MastersRemoteDataSource mastersRemoteDataSource;
   CategoryRemoteDataSource categoryRemoteDataSource;
+  FiltersRemoteDataSource filtersRemoteDataSource;
 
   RepositoryImpl(
       this.localStorage,
@@ -34,7 +37,8 @@ class RepositoryImpl implements Repository {
       this.ordersRemoteDataSource,
       this.serviceRemoteDataSource,
       this.mastersRemoteDataSource,
-      this.categoryRemoteDataSource);
+      this.categoryRemoteDataSource,
+      this.filtersRemoteDataSource);
 
   @override
   Future<Either<Failure, Map<UserEntity, bool?>>> signInWithFacebook() async {
@@ -374,6 +378,54 @@ class RepositoryImpl implements Repository {
         return Left(error);
       }
       return Left(Failure(message: "Update category error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Filters>> addFilters(Filters filters) async {
+    try {
+      return Right(await filtersRemoteDataSource.addFilters(filters));
+    } catch (error) {
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "Add filters error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Filters>> getFilters() async {
+    try {
+      return Right(await filtersRemoteDataSource.getFilters());
+    } catch (error) {
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "Get filters error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> removeFilters(String filterId) async {
+    try {
+      return Right(await filtersRemoteDataSource.removeFilters(filterId));
+    } catch (error) {
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "Remove filters error"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Filters>> updateFilters(Filters filters) async {
+    try {
+      return Right(await filtersRemoteDataSource.updateFilters(filters));
+    } catch (error) {
+      if (error is Failure) {
+        return Left(error);
+      }
+      return Left(Failure(message: "Update filters error"));
     }
   }
 }
