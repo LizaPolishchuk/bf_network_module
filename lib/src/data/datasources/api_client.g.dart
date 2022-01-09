@@ -441,7 +441,7 @@ class _APIClient implements APIClient {
 
   @override
   Future<BaseResponse2<List<Salon>>> getSalonList(
-      loadTop, searchKey, page, limit) async {
+      loadTop, searchKey, page, limit, searchFilters) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'loadTop': loadTop,
@@ -449,6 +449,7 @@ class _APIClient implements APIClient {
       r'page': page,
       r'limit': limit
     };
+    queryParameters.addAll(searchFilters ?? <String, dynamic>{});
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(

@@ -111,7 +111,10 @@ abstract class APIClient {
       @Query("loadTop") bool? loadTop,
       @Query("searchKey") String? searchKey,
       @Query("page") int? page,
-      @Query("limit") int? limit);
+      @Query("limit") int? limit,
+      @Queries() Map<String, dynamic>? searchFilters,
+      // @Body() SearchFilters? searchFilters
+      );
 
   @GET("/salon/{salonId}")
   Future<SalonResponse> getSalon(@Path("salonId") String salonId);

@@ -11,7 +11,6 @@ class BaseResponse2<T> {
 
   factory BaseResponse2.fromJson(
       Map<String, dynamic> json, T Function(Object? json) fromJsonT) {
-    print("BaseResponse2.fromJson : $json");
     return _$BaseResponse2FromJson(json, fromJsonT);
   }
 

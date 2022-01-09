@@ -18,6 +18,8 @@ import 'package:salons_app_flutter_module/src/domain/entities/service_entity.dar
 import 'package:salons_app_flutter_module/src/domain/entities/user_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/repositories/repository.dart';
 
+import '../../../salons_app_flutter_module.dart';
+
 class RepositoryImpl implements Repository {
   LocalStorage localStorage;
   SalonsRemoteDataSource salonsRemoteDataSource;
@@ -111,10 +113,10 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<Either<Failure, List<Salon>>> getSalonsList(
-      bool? loadTop, String? searchKey, int? page, int? limit) async {
+      bool? loadTop, String? searchKey, int? page, int? limit, SearchFilters? searchFilters) async {
     try {
       return Right(await salonsRemoteDataSource.getSalonsList(
-          loadTop, searchKey, page, limit));
+          loadTop, searchKey, page, limit, searchFilters));
     } catch (error) {
       return Left(Failure(message: "Get salons list error"));
     }
@@ -396,8 +398,12 @@ class RepositoryImpl implements Repository {
   @override
   Future<Either<Failure, Filters>> getFilters() async {
     try {
-      return Right(await filtersRemoteDataSource.getFilters());
+      var filters = await filtersRemoteDataSource.getFilters();
+      print("getFilters succes: $filters");
+      return Right(filters);
     } catch (error) {
+      print("getFilters error: $error");
+
       if (error is Failure) {
         return Left(error);
       }

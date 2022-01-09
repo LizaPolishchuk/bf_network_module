@@ -1,3 +1,4 @@
+import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
@@ -5,7 +6,7 @@ import 'package:salons_app_flutter_module/src/domain/entities/responses/salon_re
 import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
 
 abstract class SalonsRemoteDataSource {
-  Future<List<Salon>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit);
+  Future<List<Salon>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit, SearchFilters? searchFilters);
 
   Future<Salon> getSalonById(String salonId);
 
@@ -19,8 +20,8 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
   SalonsRemoteDataSourceImpl(this._localStorage, this._apiClient);
 
   @override
-  Future<List<Salon>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit) async {
-    final response = await _apiClient.getSalonList(loadTop, searchKey, page, limit);
+  Future<List<Salon>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit, SearchFilters? searchFilters) async {
+    final response = await _apiClient.getSalonList(loadTop, searchKey, page, limit, searchFilters?.toJson());
 
     if (response.data == null) {
       throw (Failure(
