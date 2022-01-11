@@ -32,6 +32,7 @@ dependencies:
   hive_flutter: ^1.0.0
 
   firebase_auth: ^3.3.0
+  connectivity: ^3.0.6
 
   #----- Backend ------
   retrofit: ^2.0.1

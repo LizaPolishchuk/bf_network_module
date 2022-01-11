@@ -1,3 +1,4 @@
+import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
@@ -21,6 +22,8 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
 
   @override
   Future<List<Category>> getCategoriesList(String salonId) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.getCategoryList(salonId);
 
     if (response.data == null) {
@@ -35,6 +38,8 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
 
   @override
   Future<Category> addCategory(Category category) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.addCategory(category);
 
     if (response.data == null) {
@@ -47,6 +52,8 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
 
   @override
   Future<Category> updateCategory(Category category) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.updateCategory(category);
 
     if (response.data == null) {
@@ -59,6 +66,8 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
 
   @override
   Future<void> removeCategory(String categoryId) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.deleteCategory(categoryId);
 
     return;

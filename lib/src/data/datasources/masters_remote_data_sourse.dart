@@ -1,3 +1,4 @@
+import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
@@ -21,6 +22,8 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
 
   @override
   Future<List<Master>> getMastersList(String salonId) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.getMastersList(salonId);
 
     if (response.data == null) {
@@ -34,6 +37,8 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
 
   @override
   Future<Master> updateMaster(Master master) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.updateMaster(master);
 
     if (response.data == null) {
@@ -48,6 +53,8 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
 
   @override
   Future<void> removeMaster(String masterId) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.deleteMaster(masterId);
 
     // if (response.data == null) {
@@ -62,6 +69,8 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
 
   @override
   Future<Master> addMaster(Master master) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.addMaster(master);
 
     if (response.data == null) {

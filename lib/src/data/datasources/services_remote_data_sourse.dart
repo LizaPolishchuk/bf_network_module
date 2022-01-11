@@ -1,3 +1,4 @@
+import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
@@ -21,6 +22,8 @@ class ServicesRemoteDataSourceImpl implements ServiceRemoteDataSource {
 
   @override
   Future<List<Service>> getServicesList(String salonId, String categoryId) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.getServiceList(salonId, categoryId);
 
     if (response.data == null) {
@@ -35,6 +38,8 @@ class ServicesRemoteDataSourceImpl implements ServiceRemoteDataSource {
 
   @override
   Future<Service> addService(Service service) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.addService(service);
 
     if (response.data == null) {
@@ -47,6 +52,8 @@ class ServicesRemoteDataSourceImpl implements ServiceRemoteDataSource {
 
   @override
   Future<Service> updateService(Service service) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.updateService(service);
 
     if (response.data == null) {
@@ -59,6 +66,8 @@ class ServicesRemoteDataSourceImpl implements ServiceRemoteDataSource {
 
   @override
   Future<void> removeService(String serviceId) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.deleteService(serviceId);
 
     return;

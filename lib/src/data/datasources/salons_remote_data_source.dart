@@ -1,4 +1,5 @@
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
+import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
@@ -21,6 +22,8 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
 
   @override
   Future<List<Salon>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit, SearchFilters? searchFilters) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.getSalonList(loadTop, searchKey, page, limit, searchFilters?.toJson());
 
     if (response.data == null) {
@@ -33,6 +36,8 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
 
   @override
   Future<Salon> updateSalon(Salon salon) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.updateSalon(salon);
 
     if (response.salon == null) {
@@ -47,6 +52,8 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
 
   @override
   Future<Salon> getSalonById(String salonId) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.getSalon(salonId);
 
     if (response.salon == null) {

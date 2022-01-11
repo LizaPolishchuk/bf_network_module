@@ -1,4 +1,5 @@
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
+import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
 
@@ -26,6 +27,8 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
   Future<List<OrderEntity>> getOrdersList(String id,
       OrderForType orderForType, String? dateFor, String? dateFrom,
       String? dateTo) async {
+    await ConnectivityManager.checkInternetConnection();
+
     String queryField = "";
 
     switch (orderForType) {
@@ -61,6 +64,8 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
   @override
   Future<List<OrderEntity>> getAvailableTime(String salonId, String serviceId,
       String masterId, String date) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.getAvailableTimeList(
         salonId, masterId, serviceId, date);
 
@@ -75,6 +80,8 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
 
   @override
   Future<void> removeOrder(String orderId) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.deleteOrder(orderId);
 
     return;
@@ -82,6 +89,8 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
 
   @override
   Future<OrderEntity> updateOrder(OrderEntity orderEntity) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.updateOrder(orderEntity);
 
     if (response.data == null) {
@@ -94,6 +103,8 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
 
   @override
   Future<OrderEntity> addOrder(OrderEntity orderEntity) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.addOrder(orderEntity);
 
     if (response.data == null) {

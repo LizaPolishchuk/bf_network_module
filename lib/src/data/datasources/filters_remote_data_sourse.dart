@@ -1,3 +1,4 @@
+import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/filters_entity.dart';
@@ -19,6 +20,8 @@ class FiltersRemoteDataSourceImpl implements FiltersRemoteDataSource {
 
   @override
   Future<Filters> getFilters() async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.getFilters();
 
     if (response.data == null) {
@@ -31,6 +34,8 @@ class FiltersRemoteDataSourceImpl implements FiltersRemoteDataSource {
 
   @override
   Future<Filters> addFilters(Filters filtersEntity) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.addFilters(filtersEntity);
 
     if (response.data == null) {
@@ -43,6 +48,8 @@ class FiltersRemoteDataSourceImpl implements FiltersRemoteDataSource {
 
   @override
   Future<Filters> updateFilters(Filters filtersEntity) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.updateFilters(filtersEntity);
 
     if (response.data == null) {
@@ -55,6 +62,8 @@ class FiltersRemoteDataSourceImpl implements FiltersRemoteDataSource {
 
   @override
   Future<void> removeFilters(String filterId) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.deleteFilters(filterId);
 
     return;

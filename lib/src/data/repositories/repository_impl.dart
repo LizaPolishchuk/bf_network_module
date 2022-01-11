@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/auth_remote_data_source.dart';
@@ -21,7 +22,6 @@ import 'package:salons_app_flutter_module/src/domain/repositories/repository.dar
 import '../../../salons_app_flutter_module.dart';
 
 class RepositoryImpl implements Repository {
-  LocalStorage localStorage;
   SalonsRemoteDataSource salonsRemoteDataSource;
   ServiceRemoteDataSource serviceRemoteDataSource;
   AuthRemoteDataSource authRemoteDataSource;
@@ -32,7 +32,6 @@ class RepositoryImpl implements Repository {
   FiltersRemoteDataSource filtersRemoteDataSource;
 
   RepositoryImpl(
-      this.localStorage,
       this.salonsRemoteDataSource,
       this.authRemoteDataSource,
       this.userRemoteDataSource,
@@ -52,6 +51,7 @@ class RepositoryImpl implements Repository {
 
       return Right(response);
     } catch (error) {
+      debugPrint("signInWithFacebook error $error");
       return Left(Failure());
     }
   }
@@ -66,6 +66,7 @@ class RepositoryImpl implements Repository {
 
       return Right(response);
     } catch (error) {
+      debugPrint("signInWithGoogle error $error");
       return Left(Failure());
     }
   }
@@ -79,9 +80,7 @@ class RepositoryImpl implements Repository {
 
       return Right(result);
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
+      debugPrint("signInWithEmailAndPassword error $error");
       return Left(Failure());
     }
   }
@@ -95,9 +94,7 @@ class RepositoryImpl implements Repository {
 
       return Right(result);
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
+      debugPrint("signUpWithEmailAndPassword error $error");
       return Left(Failure());
     }
   }
@@ -107,7 +104,8 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await authRemoteDataSource.signOut());
     } catch (error) {
-      return Left(Failure());
+      debugPrint("signOut error $error");
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -118,7 +116,8 @@ class RepositoryImpl implements Repository {
       return Right(await salonsRemoteDataSource.getSalonsList(
           loadTop, searchKey, page, limit, searchFilters));
     } catch (error) {
-      return Left(Failure(message: "Get salons list error"));
+      debugPrint("getSalonsList error $error");
+      return Left(Failure(message:error.toString()));
     }
   }
 
@@ -127,7 +126,8 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await salonsRemoteDataSource.updateSalon(salonEntity));
     } catch (error) {
-      return Left(Failure(message: "Get salons list error: $error"));
+      debugPrint("updateSalon error $error");
+      return Left(Failure(message:error.toString()));
     }
   }
 
@@ -138,7 +138,9 @@ class RepositoryImpl implements Repository {
       return Right(
           await ordersRemoteDataSource.getOrdersList(id, orderForType, dateFor, dateFrom, dateTo));
     } catch (error) {
-      return Left(Failure(message: "Get orders list for $orderForType error"));
+      debugPrint("getOrdersList error $error");
+
+      return Left(Failure(message:error.toString()));
     }
   }
 
@@ -148,7 +150,9 @@ class RepositoryImpl implements Repository {
       return Right(
           await ordersRemoteDataSource.getAvailableTime(salonId, serviceId, masterId, date));
     } catch (error) {
-      return Left(Failure(message: "Get orders list for error"));
+      debugPrint("getAvailableTime error $error");
+
+      return Left(Failure(message:error.toString()));
     }
   }
 
@@ -158,10 +162,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await ordersRemoteDataSource.updateOrder(orderEntity));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "updateOrder error"));
+      debugPrint("updateOrder error $error");
+
+      return Left(Failure(message:error.toString()));
     }
   }
 
@@ -170,10 +173,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await ordersRemoteDataSource.addOrder(orderEntity));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "addOrder error"));
+      debugPrint("addOrder error $error");
+
+      return Left(Failure(message:error.toString()));
     }
   }
 
@@ -182,10 +184,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await ordersRemoteDataSource.removeOrder(orderId));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "removeOrder error"));
+      debugPrint("removeOrder error $error");
+
+      return Left(Failure(message:error.toString()));
     }
   }
 
@@ -194,7 +195,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await salonsRemoteDataSource.getSalonById(salonId));
     } catch (error) {
-      return Left(Failure(message: "Get salon by id error"));
+      debugPrint("getSalonById error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -208,10 +211,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await serviceRemoteDataSource.getServicesList(salonId, categoryId));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "getServicesList error"));
+      debugPrint("getServicesList error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -220,10 +222,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await serviceRemoteDataSource.removeService(serviceId));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "removeService error"));
+      debugPrint("removeService error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -232,10 +233,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await serviceRemoteDataSource.updateService(service));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "updateService error"));
+      debugPrint("updateService error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -244,8 +244,8 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await mastersRemoteDataSource.getMastersList(salonId));
     } catch (error) {
-      print("getMastersList error: ${error}");
-      return Left(Failure(message: "Get masters list error"));
+      debugPrint("getMastersList error: $error");
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -254,7 +254,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await mastersRemoteDataSource.removeMaster(masterId));
     } catch (error) {
-      return Left(Failure(message: "Remove master error"));
+      debugPrint("removeMaster error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -263,7 +265,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await mastersRemoteDataSource.updateMaster(master));
     } catch (error) {
-      return Left(Failure(message: "Update master error"));
+      debugPrint("updateMaster error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -272,7 +276,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await mastersRemoteDataSource.addMaster(master));
     } catch (error) {
-      return Left(Failure(message: "Add master error"));
+      debugPrint("addMaster error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -281,7 +287,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await authRemoteDataSource.signInWithPhone(phone));
     } catch (error) {
-      return Left(Failure(message: "Login with phone error"));
+      debugPrint("signInWithPhone error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -291,10 +299,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await authRemoteDataSource.verifyCode(code, phoneNumber));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "Verify code error"));
+      debugPrint("verifyCode error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -303,10 +310,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await userRemoteDataSource.getUser(userId));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "getUser error"));
+      debugPrint("getUser error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -315,10 +321,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await userRemoteDataSource.updateUser(user));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "updateUser error"));
+      debugPrint("updateUser error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -327,10 +332,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await serviceRemoteDataSource.addService(service));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "addService error"));
+      debugPrint("addService error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -339,10 +343,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await categoryRemoteDataSource.addCategory(category));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "Add category error"));
+      debugPrint("addCategory error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -352,10 +355,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await categoryRemoteDataSource.getCategoriesList(salonId));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "Get categories list error"));
+      debugPrint("getCategoryList error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -364,10 +366,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await categoryRemoteDataSource.removeCategory(categoryId));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "Remove category error"));
+      debugPrint("removeCategory error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -376,10 +377,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await categoryRemoteDataSource.updateCategory(category));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "Update category error"));
+      debugPrint("updateCategory error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -388,10 +388,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await filtersRemoteDataSource.addFilters(filters));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "Add filters error"));
+      debugPrint("addFilters error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -402,12 +401,9 @@ class RepositoryImpl implements Repository {
       print("getFilters succes: $filters");
       return Right(filters);
     } catch (error) {
-      print("getFilters error: $error");
+      debugPrint("getFilters error $error");
 
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "Get filters error"));
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -416,10 +412,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await filtersRemoteDataSource.removeFilters(filterId));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "Remove filters error"));
+      debugPrint("removeFilters error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -428,10 +423,9 @@ class RepositoryImpl implements Repository {
     try {
       return Right(await filtersRemoteDataSource.updateFilters(filters));
     } catch (error) {
-      if (error is Failure) {
-        return Left(error);
-      }
-      return Left(Failure(message: "Update filters error"));
+      debugPrint("updateFilters error $error");
+
+      return Left(Failure(message: error.toString()));
     }
   }
 }

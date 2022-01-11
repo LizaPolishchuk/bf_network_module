@@ -1,3 +1,4 @@
+import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/user_entity.dart';
 
 import '../../../salons_app_flutter_module.dart';
@@ -17,6 +18,8 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<UserEntity> updateUser(UserEntity user) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.updateUser(user);
 
     if (response.user == null) {
@@ -31,6 +34,8 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<UserEntity> getUser(String userId) async {
+    await ConnectivityManager.checkInternetConnection();
+
     final response = await _apiClient.getUser(userId);
 
     if (response.user == null) {

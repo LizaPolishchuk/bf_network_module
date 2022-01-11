@@ -46,3 +46,4 @@ export './src/domain/usecases/filters/update_filters_use_case.dart';
 export './src/domain/usecases/filters/get_filters_use_case.dart';
 export './src/domain/usecases/filters/remove_filters_use_case.dart';
 export './src/injection_container.dart';
+export './src/common/utils/connectivity_manager.dart';
