@@ -8,7 +8,8 @@ class ConnectivityManager {
         connectivityResult == ConnectivityResult.wifi) {
       return true;
     } else {
-      throw(NoInternetException.noInternetCode);
+      return false;
+      // throw(NoInternetException.noInternetCode);
     }
   }
 }

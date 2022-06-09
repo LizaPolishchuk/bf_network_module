@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
@@ -24,6 +26,7 @@ abstract class Repository {
   ///Users
   Future<Either<Failure, UserEntity>> getUser(String userId);
   Future<Either<Failure, UserEntity>> updateUser(UserEntity user);
+  Future<Either<Failure, String>> updateUserAvatar(File file);
 
   ///Salons
   Future<Either<Failure, List<Salon>>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit, SearchFilters? searchFilters);

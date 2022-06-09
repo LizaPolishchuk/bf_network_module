@@ -22,7 +22,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
 
   @override
   Future<List<Category>> getCategoriesList(String salonId) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.getCategoryList(salonId);
 
@@ -38,7 +38,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
 
   @override
   Future<Category> addCategory(Category category) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.addCategory(category);
 
@@ -52,7 +52,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
 
   @override
   Future<Category> updateCategory(Category category) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.updateCategory(category);
 
@@ -66,7 +66,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
 
   @override
   Future<void> removeCategory(String categoryId) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.deleteCategory(categoryId);
 

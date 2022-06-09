@@ -22,7 +22,7 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
 
   @override
   Future<List<Master>> getMastersList(String salonId) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.getMastersList(salonId);
 
@@ -37,7 +37,7 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
 
   @override
   Future<Master> updateMaster(Master master) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.updateMaster(master);
 
@@ -53,7 +53,7 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
 
   @override
   Future<void> removeMaster(String masterId) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.deleteMaster(masterId);
 
@@ -69,7 +69,7 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
 
   @override
   Future<Master> addMaster(Master master) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.addMaster(master);
 

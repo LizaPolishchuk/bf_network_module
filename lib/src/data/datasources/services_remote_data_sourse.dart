@@ -22,7 +22,7 @@ class ServicesRemoteDataSourceImpl implements ServiceRemoteDataSource {
 
   @override
   Future<List<Service>> getServicesList(String salonId, String categoryId) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.getServiceList(salonId, categoryId);
 
@@ -38,7 +38,7 @@ class ServicesRemoteDataSourceImpl implements ServiceRemoteDataSource {
 
   @override
   Future<Service> addService(Service service) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.addService(service);
 
@@ -52,7 +52,7 @@ class ServicesRemoteDataSourceImpl implements ServiceRemoteDataSource {
 
   @override
   Future<Service> updateService(Service service) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.updateService(service);
 
@@ -66,7 +66,7 @@ class ServicesRemoteDataSourceImpl implements ServiceRemoteDataSource {
 
   @override
   Future<void> removeService(String serviceId) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.deleteService(serviceId);
 

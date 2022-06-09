@@ -49,7 +49,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<UserEntity> loginWithGoogle() async {
     UserEntity userEntity;
     try {
-      await ConnectivityManager.checkInternetConnection();
+      // await ConnectivityManager.checkInternetConnection();
 
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -61,6 +61,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       userEntity = new UserEntity(googleUser.id, googleUser.displayName,
           googleUser.email, googleUser.photoUrl, null, null);
     } catch (e) {
+      if (e is FirebaseAuthException) {
+       print("${e.code}");
+      }
+      //sign_in_canceled
       print("Error in sign in with google: $e");
       throw (e);
     }
@@ -72,7 +76,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<UserEntity> loginWithFacebook() async {
     UserEntity userEntity;
     try {
-      await ConnectivityManager.checkInternetConnection();
+      // await ConnectivityManager.checkInternetConnection();
 
       final LoginResult result = await facebookLogin.login();
 
@@ -98,7 +102,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     bool? creator;
     UserEntity userFromResp;
     try {
-      await ConnectivityManager.checkInternetConnection();
+      // await ConnectivityManager.checkInternetConnection();
 
       final authResult = await apiClient.loginWithSocial(user);
 
@@ -129,7 +133,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       String email, String password) async {
     SalonResponse salonData;
     try {
-      await ConnectivityManager.checkInternetConnection();
+      // await ConnectivityManager.checkInternetConnection();
 
       final authResult = await apiClient.loginWeb(email, password);
 
@@ -171,7 +175,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       String email, String password) async {
     SalonResponse salonData;
     try {
-      await ConnectivityManager.checkInternetConnection();
+      // await ConnectivityManager.checkInternetConnection();
 
       final authResult = await apiClient.signUpWeb(email, password);
 
@@ -222,7 +226,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     final completer = Completer<void>();
 
     try {
-      await ConnectivityManager.checkInternetConnection();
+      // await ConnectivityManager.checkInternetConnection();
 
       await firebaseAuth.verifyPhoneNumber(
         phoneNumber: phone,
@@ -250,7 +254,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     bool isNewUser = true;
 
     try {
-      await ConnectivityManager.checkInternetConnection();
+      // await ConnectivityManager.checkInternetConnection();
 
       assert(verificationId != null);
 
@@ -272,11 +276,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } catch (e) {
       print("Error verifyCode: $e");
 
-      if (e is DioError) {
-        String? errorMessage = (e.response as Response).data["message"];
-
+      if (e is FirebaseAuthException) {
+        String? errorMessage = e.message;
         throw (Failure(
-            code: (e.response as Response).statusCode,
+            codeStr: e.code,
             message: "$errorMessage"));
       } else {
         throw (e);

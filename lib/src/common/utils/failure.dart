@@ -4,4 +4,9 @@ class Failure {
   final String message;
 
   Failure({this.code, this.message = "", this.codeStr});
+
+  @override
+  String toString() {
+    return message;
+  }
 }

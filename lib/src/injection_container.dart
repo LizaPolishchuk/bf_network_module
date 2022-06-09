@@ -106,6 +106,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => LoginWithPhoneVerifyCodeUseCase(getIt()));
   getIt.registerLazySingleton(() => LoginWithPhoneUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateUserUseCase(getIt()));
+  getIt.registerLazySingleton(() => UpdateUserAvatarUseCase(getIt()));
   getIt.registerLazySingleton(() => GetUserUseCase(getIt()));
   getIt.registerLazySingleton(() => AddMasterUseCase(getIt()));
   getIt.registerLazySingleton(() => AddServiceUseCase(getIt()));

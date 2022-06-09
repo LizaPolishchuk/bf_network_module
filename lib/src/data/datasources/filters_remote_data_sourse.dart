@@ -20,7 +20,7 @@ class FiltersRemoteDataSourceImpl implements FiltersRemoteDataSource {
 
   @override
   Future<Filters> getFilters() async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.getFilters();
 
@@ -34,7 +34,7 @@ class FiltersRemoteDataSourceImpl implements FiltersRemoteDataSource {
 
   @override
   Future<Filters> addFilters(Filters filtersEntity) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.addFilters(filtersEntity);
 
@@ -48,7 +48,7 @@ class FiltersRemoteDataSourceImpl implements FiltersRemoteDataSource {
 
   @override
   Future<Filters> updateFilters(Filters filtersEntity) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.updateFilters(filtersEntity);
 
@@ -62,7 +62,7 @@ class FiltersRemoteDataSourceImpl implements FiltersRemoteDataSource {
 
   @override
   Future<void> removeFilters(String filterId) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.deleteFilters(filterId);
 

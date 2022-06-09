@@ -22,7 +22,7 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
 
   @override
   Future<List<Salon>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit, SearchFilters? searchFilters) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.getSalonList(loadTop, searchKey, page, limit, searchFilters?.toJson());
 
@@ -36,7 +36,7 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
 
   @override
   Future<Salon> updateSalon(Salon salon) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.updateSalon(salon);
 
@@ -52,7 +52,7 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
 
   @override
   Future<Salon> getSalonById(String salonId) async {
-    await ConnectivityManager.checkInternetConnection();
+    // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.getSalon(salonId);
 

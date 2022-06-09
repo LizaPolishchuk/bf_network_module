@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
@@ -52,7 +54,7 @@ class RepositoryImpl implements Repository {
       return Right(response);
     } catch (error) {
       debugPrint("signInWithFacebook error $error");
-      return Left(Failure());
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -67,7 +69,7 @@ class RepositoryImpl implements Repository {
       return Right(response);
     } catch (error) {
       debugPrint("signInWithGoogle error $error");
-      return Left(Failure());
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -81,7 +83,7 @@ class RepositoryImpl implements Repository {
       return Right(result);
     } catch (error) {
       debugPrint("signInWithEmailAndPassword error $error");
-      return Left(Failure());
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -95,7 +97,7 @@ class RepositoryImpl implements Repository {
       return Right(result);
     } catch (error) {
       debugPrint("signUpWithEmailAndPassword error $error");
-      return Left(Failure());
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -301,6 +303,9 @@ class RepositoryImpl implements Repository {
     } catch (error) {
       debugPrint("verifyCode error $error");
 
+      if (error is Failure && error.codeStr == "invalid-verification-code") {
+        return Left(error);
+      }
       return Left(Failure(message: error.toString()));
     }
   }
@@ -322,6 +327,17 @@ class RepositoryImpl implements Repository {
       return Right(await userRemoteDataSource.updateUser(user));
     } catch (error) {
       debugPrint("updateUser error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> updateUserAvatar(File file) async {
+    try {
+      return Right(await userRemoteDataSource.updateUserAvatar(file));
+    } catch (error) {
+      debugPrint("updateUserAvatar error $error");
 
       return Left(Failure(message: error.toString()));
     }
