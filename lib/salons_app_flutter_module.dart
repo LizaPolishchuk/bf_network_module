@@ -48,3 +48,8 @@ export './src/domain/usecases/filters/remove_filters_use_case.dart';
 export './src/domain/usecases/users/update_user_avatar_use_case.dart';
 export './src/injection_container.dart';
 export './src/common/utils/connectivity_manager.dart';
+export 'package:firebase_auth/firebase_auth.dart';
+export 'package:firebase_core/firebase_core.dart';
+export 'package:either_dart/either.dart';
+
+

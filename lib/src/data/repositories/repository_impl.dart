@@ -1,9 +1,7 @@
 import 'dart:io';
 
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
-import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/auth_remote_data_source.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/categories_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/filters_remote_data_sourse.dart';
@@ -12,13 +10,6 @@ import 'package:salons_app_flutter_module/src/data/datasources/orders_remote_dat
 import 'package:salons_app_flutter_module/src/data/datasources/salons_remote_data_source.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/services_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/user_remote_data_source.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/category_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/filters_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/service_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/user_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/repositories/repository.dart';
 
 import '../../../salons_app_flutter_module.dart';

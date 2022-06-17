@@ -51,6 +51,7 @@ import 'domain/usecases/services/remove_service_use_case.dart';
 import 'domain/usecases/services/update_service_use_case.dart';
 
 final getIt = GetIt.instance;
+final String webClientId = "883762712602-6i0k9dj1t1mulse24pmgdnkcalsqg2rb.apps.googleusercontent.com";
 
 Future<void> init() async {
   ///Repository
@@ -126,10 +127,10 @@ Future<void> init() async {
 
   getIt.registerLazySingleton(() => LocalStorage());
 
-  getIt.registerLazySingleton(() => GoogleSignIn());
+  getIt.registerLazySingleton(() => GoogleSignIn(clientId: webClientId));
   getIt.registerLazySingleton(() => FacebookAuth.instance);
   getIt.registerLazySingleton(() => FirebaseAuth.instance);
-  getIt.registerLazySingleton(() => APIClient(getIt(),/* baseUrl: "http://localhost:3999/api"*/));
+  getIt.registerLazySingleton(() => APIClient(getIt(), baseUrl: "http://localhost:3999/api"));
 
   getIt.registerLazySingleton(() {
     Dio dio = Dio();

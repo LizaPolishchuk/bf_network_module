@@ -51,8 +51,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     try {
       // await ConnectivityManager.checkInternetConnection();
 
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser == null) {
         throw (Failure(
             message: "Error in sign in with google, googleUser is null"));
@@ -152,7 +151,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       localStorage.setAccessToken(authResult.accessToken);
       localStorage.setRefreshToken(authResult.refreshToken);
     } catch (e) {
-      print("Error sign up with email and password: $e");
+      print("Error sign in with email and password: $e");
 
       if (e is DioError) {
         String? errorMessage = (e.response as Response).data["message"];

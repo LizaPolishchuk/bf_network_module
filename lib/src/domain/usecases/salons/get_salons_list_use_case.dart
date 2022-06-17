@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/requests/search_filters.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';

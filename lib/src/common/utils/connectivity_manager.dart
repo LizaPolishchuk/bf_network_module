@@ -1,5 +1,4 @@
-import 'package:connectivity/connectivity.dart';
-import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ConnectivityManager {
   static Future<bool> checkInternetConnection() async {
