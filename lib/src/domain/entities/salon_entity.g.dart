@@ -23,14 +23,16 @@ class SalonAdapter extends TypeAdapter<Salon> {
       fields[3] as String?,
       fields[4] as String?,
       fields[5] as String?,
-      fields[6] as bool?,
+      fields[6] as String?,
+      fields[7] as String?,
+      fields[8] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Salon obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(9)
       ..writeByte(3)
       ..write(obj.photo)
       ..writeByte(4)
@@ -38,6 +40,10 @@ class SalonAdapter extends TypeAdapter<Salon> {
       ..writeByte(5)
       ..write(obj.ownerId)
       ..writeByte(6)
+      ..write(obj.address)
+      ..writeByte(7)
+      ..write(obj.phoneNumber)
+      ..writeByte(8)
       ..write(obj.isTop)
       ..writeByte(0)
       ..write(obj.id)
@@ -62,17 +68,17 @@ class SalonAdapter extends TypeAdapter<Salon> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-Salon _$SalonFromJson(Map<String, dynamic> json) {
-  return Salon(
-    json['id'],
-    json['name'],
-    json['description'],
-    json['photo'] as String?,
-    json['photoPath'] as String?,
-    json['ownerId'] as String?,
-    json['isTop'] as bool?,
-  );
-}
+Salon _$SalonFromJson(Map<String, dynamic> json) => Salon(
+      json['id'],
+      json['name'],
+      json['description'],
+      json['photo'] as String?,
+      json['photoPath'] as String?,
+      json['ownerId'] as String?,
+      json['address'] as String?,
+      json['phoneNumber'] as String?,
+      json['isTop'] as bool?,
+    );
 
 Map<String, dynamic> _$SalonToJson(Salon instance) => <String, dynamic>{
       'id': instance.id,
@@ -81,5 +87,7 @@ Map<String, dynamic> _$SalonToJson(Salon instance) => <String, dynamic>{
       'photo': instance.photo,
       'photoPath': instance.photoPath,
       'ownerId': instance.ownerId,
+      'address': instance.address,
+      'phoneNumber': instance.phoneNumber,
       'isTop': instance.isTop,
     };

@@ -80,22 +80,20 @@ class OrderEntityAdapter extends TypeAdapter<OrderEntity> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-OrderEntity _$OrderEntityFromJson(Map<String, dynamic> json) {
-  return OrderEntity(
-    json['id'] as String,
-    json['clientId'] as String?,
-    json['clientName'] as String?,
-    json['salonId'] as String,
-    json['salonName'] as String,
-    json['masterId'] as String,
-    json['masterName'] as String,
-    json['masterAvatar'] as String?,
-    json['serviceId'] as String,
-    json['serviceName'] as String,
-    DateTime.parse(json['date'] as String),
-    (json['price'] as num).toDouble(),
-  );
-}
+OrderEntity _$OrderEntityFromJson(Map<String, dynamic> json) => OrderEntity(
+      json['id'] as String,
+      json['clientId'] as String?,
+      json['clientName'] as String?,
+      json['salonId'] as String,
+      json['salonName'] as String,
+      json['masterId'] as String,
+      json['masterName'] as String,
+      json['masterAvatar'] as String?,
+      json['serviceId'] as String,
+      json['serviceName'] as String,
+      DateTime.parse(json['date'] as String),
+      (json['price'] as num).toDouble(),
+    );
 
 Map<String, dynamic> _$OrderEntityToJson(OrderEntity instance) =>
     <String, dynamic>{

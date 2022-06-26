@@ -6,14 +6,13 @@ part of 'search_filters.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SearchFilters _$SearchFiltersFromJson(Map<String, dynamic> json) {
-  return SearchFilters(
-    services:
-        (json['services'] as List<dynamic>?)?.map((e) => e as int).toList(),
-    priceFrom: json['priceFrom'] as int?,
-    priceTo: json['priceTo'] as int?,
-  );
-}
+SearchFilters _$SearchFiltersFromJson(Map<String, dynamic> json) =>
+    SearchFilters(
+      services:
+          (json['services'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      priceFrom: json['priceFrom'] as int?,
+      priceTo: json['priceTo'] as int?,
+    );
 
 Map<String, dynamic> _$SearchFiltersToJson(SearchFilters instance) =>
     <String, dynamic>{

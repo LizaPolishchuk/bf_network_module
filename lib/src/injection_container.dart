@@ -97,6 +97,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => AddOrderUseCase(getIt()));
   getIt.registerLazySingleton(() => RemoveOrderUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateSalonUseCase(getIt()));
+  getIt.registerLazySingleton(() => UpdateSalonPhotoUseCase(getIt()));
   getIt.registerLazySingleton(() => SignUpWithLinkAndEmailUseCase(getIt()));
   getIt.registerLazySingleton(() => GetServicesListUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateServiceUseCase(getIt()));

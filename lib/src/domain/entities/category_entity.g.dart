@@ -59,16 +59,14 @@ class CategoryAdapter extends TypeAdapter<Category> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-Category _$CategoryFromJson(Map<String, dynamic> json) {
-  return Category(
-    json['id'],
-    json['name'],
-    json['description'],
-    (json['priceFrom'] as num?)?.toDouble(),
-    (json['priceTo'] as num?)?.toDouble(),
-    json['creatorSalon'] as String?,
-  );
-}
+Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
+      json['id'],
+      json['name'],
+      json['description'],
+      (json['priceFrom'] as num?)?.toDouble(),
+      (json['priceTo'] as num?)?.toDouble(),
+      json['creatorSalon'] as String?,
+    );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
       'id': instance.id,

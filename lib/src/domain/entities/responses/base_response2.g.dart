@@ -9,12 +9,11 @@ part of 'base_response2.dart';
 BaseResponse2<T> _$BaseResponse2FromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
-) {
-  return BaseResponse2<T>(
-    json['message'] as String?,
-    _$nullableGenericFromJson(json['data'], fromJsonT),
-  );
-}
+) =>
+    BaseResponse2<T>(
+      json['message'] as String?,
+      _$nullableGenericFromJson(json['data'], fromJsonT),
+    );
 
 Map<String, dynamic> _$BaseResponse2ToJson<T>(
   BaseResponse2<T> instance,

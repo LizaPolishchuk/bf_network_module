@@ -1,7 +1,9 @@
 
 import 'dart:io';
+import 'dart:html' as html;
 
 import 'package:either_dart/either.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/category_entity.dart';
@@ -32,6 +34,8 @@ abstract class Repository {
   Future<Either<Failure, List<Salon>>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit, SearchFilters? searchFilters);
   Future<Either<Failure, Salon>> getSalonById(String salonId);
   Future<Either<Failure, Salon>> updateSalon(Salon salonEntity);
+  Future<Either<Failure, String>> updateSalonPhoto(PickedFile file);
+
 
   ///AvailableTime
   // Future<Either<Failure, List<AvailableTime>>> getAvailableTimesByMasterId(

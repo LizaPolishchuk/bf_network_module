@@ -35,6 +35,7 @@ export './src/domain/usecases/orders/get_available_time_usecase.dart';
 export './src/domain/usecases/salons/get_salon_by_id_use_case.dart';
 export './src/domain/usecases/salons/get_salons_list_use_case.dart';
 export './src/domain/usecases/salons/update_salon_use_case.dart';
+export './src/domain/usecases/salons/update_salon_photo_use_case.dart';
 export './src/domain/usecases/services/add_service_use_case.dart';
 export './src/domain/usecases/services/get_services_list_use_case.dart';
 export './src/domain/usecases/services/remove_service_use_case.dart';
@@ -51,5 +52,4 @@ export './src/common/utils/connectivity_manager.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:either_dart/either.dart';
-
 

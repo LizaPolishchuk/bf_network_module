@@ -6,20 +6,18 @@ part of 'auth_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AuthResponse _$AuthResponseFromJson(Map<String, dynamic> json) {
-  return AuthResponse(
-    json['user'] == null
-        ? null
-        : UserEntity.fromJson(json['user'] as Map<String, dynamic>),
-    json['data'] == null
-        ? null
-        : SalonResponse.fromJson(json['data'] as Map<String, dynamic>),
-    json['creator'] as bool?,
-    json['accessToken'] ?? '',
-    json['refreshToken'] ?? '',
-    json['message'],
-  );
-}
+AuthResponse _$AuthResponseFromJson(Map<String, dynamic> json) => AuthResponse(
+      json['user'] == null
+          ? null
+          : UserEntity.fromJson(json['user'] as Map<String, dynamic>),
+      json['data'] == null
+          ? null
+          : SalonResponse.fromJson(json['data'] as Map<String, dynamic>),
+      json['creator'] as bool?,
+      json['accessToken'] ?? '',
+      json['refreshToken'] ?? '',
+      json['message'],
+    );
 
 Map<String, dynamic> _$AuthResponseToJson(AuthResponse instance) =>
     <String, dynamic>{

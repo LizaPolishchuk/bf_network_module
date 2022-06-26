@@ -1,3 +1,8 @@
+import 'dart:html' as html;
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
@@ -5,30 +10,37 @@ import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/salon_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
+// import 'package:universal_html/prefer_universal/html.dart' as html;
 
 abstract class SalonsRemoteDataSource {
-  Future<List<Salon>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit, SearchFilters? searchFilters);
+  Future<List<Salon>> getSalonsList(
+      bool? loadTop, String? searchKey, int? page, int? limit, SearchFilters? searchFilters);
 
   Future<Salon> getSalonById(String salonId);
 
   Future<Salon> updateSalon(Salon salonEntity);
+
+  Future<String> updateSalonPhoto(PickedFile avatar);
 }
 
 class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
   LocalStorage _localStorage;
   APIClient _apiClient;
+  late FirebaseStorage _firebaseStorage;
 
-  SalonsRemoteDataSourceImpl(this._localStorage, this._apiClient);
+  SalonsRemoteDataSourceImpl(this._localStorage, this._apiClient) {
+    _firebaseStorage = FirebaseStorage.instance;
+  }
 
   @override
-  Future<List<Salon>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit, SearchFilters? searchFilters) async {
+  Future<List<Salon>> getSalonsList(
+      bool? loadTop, String? searchKey, int? page, int? limit, SearchFilters? searchFilters) async {
     // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.getSalonList(loadTop, searchKey, page, limit, searchFilters?.toJson());
 
     if (response.data == null) {
-      throw (Failure(
-          message: response.message ?? "getSalonsList error: data is null"));
+      throw (Failure(message: response.message ?? "getSalonsList error: data is null"));
     }
 
     return response.data!;
@@ -41,13 +53,29 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
     final response = await _apiClient.updateSalon(salon);
 
     if (response.salon == null) {
-      throw (Failure(
-          message: response.message ?? "updateSalon error: salon is null"));
+      throw (Failure(message: response.message ?? "updateSalon error: salon is null"));
     }
 
     _saveSalonToLocalStorage(response);
 
     return response.salon!;
+  }
+
+  @override
+  Future<String> updateSalonPhoto(PickedFile pickedFile) async {
+    String? currentSalonId = await _localStorage.getSalonId();
+
+    assert(currentSalonId != null);
+
+    var fileData = await pickedFile.readAsBytes();
+    UploadTask uploadTask = _firebaseStorage.ref().child('/salon/$currentSalonId/media/profile_pic.png').putData(
+          fileData,
+          SettableMetadata(contentType: 'image/jpeg'),
+        );
+
+    var url = await (await uploadTask).ref.getDownloadURL();
+
+    return url;
   }
 
   @override
@@ -57,8 +85,7 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
     final response = await _apiClient.getSalon(salonId);
 
     if (response.salon == null) {
-      throw (Failure(
-          message: response.message ?? "getSalonById error: salon is null"));
+      throw (Failure(message: response.message ?? "getSalonById error: salon is null"));
     }
 
     Salon salon = response.salon!;

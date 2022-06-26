@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:either_dart/either.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/auth_remote_data_source.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/categories_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/filters_remote_data_sourse.dart';
@@ -329,6 +330,17 @@ class RepositoryImpl implements Repository {
       return Right(await userRemoteDataSource.updateUserAvatar(file));
     } catch (error) {
       debugPrint("updateUserAvatar error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> updateSalonPhoto(PickedFile file) async {
+    try {
+      return Right(await salonsRemoteDataSource.updateSalonPhoto(file));
+    } catch (error) {
+      debugPrint("updateSalonPhoto error $error");
 
       return Left(Failure(message: error.toString()));
     }

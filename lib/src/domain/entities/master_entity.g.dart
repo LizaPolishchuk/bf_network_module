@@ -68,21 +68,21 @@ class MasterAdapter extends TypeAdapter<Master> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-Master _$MasterFromJson(Map<String, dynamic> json) {
-  return Master(
-    json['id'],
-    json['name'],
-    json['description'],
-    json['avatar'] as String?,
-    json['avatarPath'] as String?,
-    json['position'] as String?,
-    (json['workedInSalons'] as List<dynamic>).map((e) => e as String).toList(),
-    (json['providedServices'] as Map<String, dynamic>?)?.map(
-      (k, e) => MapEntry(k, e as String),
-    ),
-    json['status'] as String?,
-  );
-}
+Master _$MasterFromJson(Map<String, dynamic> json) => Master(
+      json['id'],
+      json['name'],
+      json['description'],
+      json['avatar'] as String?,
+      json['avatarPath'] as String?,
+      json['position'] as String?,
+      (json['workedInSalons'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      (json['providedServices'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      json['status'] as String?,
+    );
 
 Map<String, dynamic> _$MasterToJson(Master instance) => <String, dynamic>{
       'id': instance.id,

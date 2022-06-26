@@ -67,18 +67,16 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserEntity _$UserEntityFromJson(Map<String, dynamic> json) {
-  return UserEntity(
-    json['id'] as String,
-    json['name'] as String?,
-    json['email'] as String?,
-    json['avatar'] as String?,
-    json['phone'] as String?,
-    json['gender'] as int?,
-    isActivated: json['isActivated'] as bool?,
-    isRegistered: json['isRegistered'] as bool? ?? true,
-  )..isAdmin = json['isAdmin'] as bool? ?? false;
-}
+UserEntity _$UserEntityFromJson(Map<String, dynamic> json) => UserEntity(
+      json['id'] as String,
+      json['name'] as String?,
+      json['email'] as String?,
+      json['avatar'] as String?,
+      json['phone'] as String?,
+      json['gender'] as int?,
+      isActivated: json['isActivated'] as bool?,
+      isRegistered: json['isRegistered'] as bool? ?? true,
+    )..isAdmin = json['isAdmin'] as bool? ?? false;
 
 Map<String, dynamic> _$UserEntityToJson(UserEntity instance) =>
     <String, dynamic>{

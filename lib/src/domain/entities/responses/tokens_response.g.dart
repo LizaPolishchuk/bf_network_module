@@ -6,13 +6,12 @@ part of 'tokens_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TokensResponse _$TokensResponseFromJson(Map<String, dynamic> json) {
-  return TokensResponse(
-    json['accessToken'] as String? ?? '',
-    json['refreshToken'] as String? ?? '',
-    json['message'],
-  );
-}
+TokensResponse _$TokensResponseFromJson(Map<String, dynamic> json) =>
+    TokensResponse(
+      json['accessToken'] as String? ?? '',
+      json['refreshToken'] as String? ?? '',
+      json['message'],
+    );
 
 Map<String, dynamic> _$TokensResponseToJson(TokensResponse instance) =>
     <String, dynamic>{

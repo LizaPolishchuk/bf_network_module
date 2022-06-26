@@ -59,16 +59,14 @@ class ServiceAdapter extends TypeAdapter<Service> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-Service _$ServiceFromJson(Map<String, dynamic> json) {
-  return Service(
-    json['id'],
-    json['name'],
-    json['description'],
-    (json['price'] as num?)?.toDouble(),
-    json['creatorSalon'] as String?,
-    json['categoryId'] as String?,
-  );
-}
+Service _$ServiceFromJson(Map<String, dynamic> json) => Service(
+      json['id'],
+      json['name'],
+      json['description'],
+      (json['price'] as num?)?.toDouble(),
+      json['creatorSalon'] as String?,
+      json['categoryId'] as String?,
+    );
 
 Map<String, dynamic> _$ServiceToJson(Service instance) => <String, dynamic>{
       'id': instance.id,

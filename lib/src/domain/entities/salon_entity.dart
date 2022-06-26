@@ -18,6 +18,10 @@ class Salon extends BaseEntity {
   @HiveField(5)
   String? ownerId;
   @HiveField(6)
+  String? address;
+  @HiveField(7)
+  String? phoneNumber;
+  @HiveField(8)
   bool? isTop;
 
   @JsonKey(ignore: true)
@@ -25,7 +29,7 @@ class Salon extends BaseEntity {
   @JsonKey(ignore: true)
   List<Service> servicesList = [];
 
-  Salon([id, name, description, this.photo, this.photoPath, this.ownerId, this.isTop])
+  Salon([id, name, description, this.photo, this.photoPath, this.ownerId, this.address, this.phoneNumber, this.isTop])
       : super(id, name, description);
 
   factory Salon.fromJson(Map<String, dynamic> json) {
