@@ -5,7 +5,7 @@ import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/service_entity.dart';
 
 abstract class ServiceRemoteDataSource {
-  Future<List<Service>> getServicesList(String salonId, String categoryId);
+  Future<List<Service>> getServicesList(String salonId, String? categoryId);
 
   Future<Service> addService(Service service);
 
@@ -21,7 +21,7 @@ class ServicesRemoteDataSourceImpl implements ServiceRemoteDataSource {
   const ServicesRemoteDataSourceImpl(this._localStorage, this._apiClient);
 
   @override
-  Future<List<Service>> getServicesList(String salonId, String categoryId) async {
+  Future<List<Service>> getServicesList(String salonId, String? categoryId) async {
     // await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.getServiceList(salonId, categoryId);

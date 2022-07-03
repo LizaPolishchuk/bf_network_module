@@ -23,19 +23,22 @@ class CategoryAdapter extends TypeAdapter<Category> {
       fields[3] as double?,
       fields[4] as double?,
       fields[5] as String?,
+      fields[6] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Category obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(3)
       ..write(obj.priceFrom)
       ..writeByte(4)
       ..write(obj.priceTo)
       ..writeByte(5)
       ..write(obj.creatorSalon)
+      ..writeByte(6)
+      ..write(obj.color)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -66,6 +69,7 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
       (json['priceFrom'] as num?)?.toDouble(),
       (json['priceTo'] as num?)?.toDouble(),
       json['creatorSalon'] as String?,
+      json['color'] as int?,
     );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
@@ -75,4 +79,5 @@ Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
       'priceFrom': instance.priceFrom,
       'priceTo': instance.priceTo,
       'creatorSalon': instance.creatorSalon,
+      'color': instance.color,
     };

@@ -201,7 +201,7 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, List<Service>>> getServicesList(String salonId, String categoryId) async {
+  Future<Either<Failure, List<Service>>> getServicesList(String salonId, String? categoryId) async {
     try {
       return Right(await serviceRemoteDataSource.getServicesList(salonId, categoryId));
     } catch (error) {

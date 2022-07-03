@@ -23,19 +23,28 @@ class ServiceAdapter extends TypeAdapter<Service> {
       fields[3] as double?,
       fields[4] as String?,
       fields[5] as String?,
+      fields[6] as String?,
+      fields[7] as int?,
+      fields[8] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Service obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(9)
       ..writeByte(3)
       ..write(obj.price)
       ..writeByte(4)
       ..write(obj.creatorSalon)
       ..writeByte(5)
       ..write(obj.categoryId)
+      ..writeByte(6)
+      ..write(obj.categoryName)
+      ..writeByte(7)
+      ..write(obj.categoryColor)
+      ..writeByte(8)
+      ..write(obj.duration)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -66,6 +75,9 @@ Service _$ServiceFromJson(Map<String, dynamic> json) => Service(
       (json['price'] as num?)?.toDouble(),
       json['creatorSalon'] as String?,
       json['categoryId'] as String?,
+      json['categoryName'] as String?,
+      json['categoryColor'] as int?,
+      json['duration'] as int?,
     );
 
 Map<String, dynamic> _$ServiceToJson(Service instance) => <String, dynamic>{
@@ -75,4 +87,7 @@ Map<String, dynamic> _$ServiceToJson(Service instance) => <String, dynamic>{
       'price': instance.price,
       'creatorSalon': instance.creatorSalon,
       'categoryId': instance.categoryId,
+      'categoryName': instance.categoryName,
+      'categoryColor': instance.categoryColor,
+      'duration': instance.duration,
     };

@@ -93,7 +93,7 @@ abstract class APIClient {
 
   @GET("/service/{salonId}")
   Future<BaseResponse2<List<Service>>> getServiceList(
-      @Path("salonId") String salonId, @Query("categoryId") String categoryId);
+      @Path("salonId") String salonId, @Query("categoryId") String? categoryId);
 
   @POST("/service/create")
   Future<BaseResponse2<Service>> addService(@Body() Service service);

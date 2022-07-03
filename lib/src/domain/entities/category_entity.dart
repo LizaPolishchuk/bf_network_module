@@ -15,8 +15,10 @@ class Category extends BaseEntity {
   double? priceTo;
   @HiveField(5)
   String? creatorSalon;
+  @HiveField(6)
+  int? color;
 
-  Category(id, name,description, this.priceFrom, this.priceTo, this.creatorSalon) : super(id, name,description);
+  Category(id, name,description, this.priceFrom, this.priceTo, this.creatorSalon, this.color) : super(id, name,description);
 
   factory Category.fromJson(Map<String, dynamic> json) {
     json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
@@ -30,8 +32,8 @@ class Category extends BaseEntity {
     return json;
   }
 
-  Category copy({String? id, String? name, double? priceFrom, double? priceTo, String? creatorSalon}) {
-    return Category(id ?? this.id, name ?? this.name, description, priceFrom ?? this.priceFrom, priceTo ?? this.priceTo, creatorSalon ?? this.creatorSalon);
+  Category copy({String? id, String? name, double? priceFrom, double? priceTo, String? creatorSalon, int? color}) {
+    return Category(id ?? this.id, name ?? this.name, description, priceFrom ?? this.priceFrom, priceTo ?? this.priceTo, creatorSalon ?? this.creatorSalon, color ?? this.color);
   }
 
   @override

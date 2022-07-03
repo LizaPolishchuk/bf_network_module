@@ -15,8 +15,16 @@ class Service extends BaseEntity {
   String? creatorSalon;
   @HiveField(5)
   String? categoryId;
+  @HiveField(6)
+  String? categoryName;
+  @HiveField(7)
+  int? categoryColor;
+  @HiveField(8)
+  int? duration;
 
-  Service(id, name,description, this.price, this.creatorSalon, this.categoryId) : super(id, name,description);
+  Service(id, name, description, this.price, this.creatorSalon, this.categoryId, this.categoryName, this.categoryColor,
+      this.duration)
+      : super(id, name, description);
 
   factory Service.fromJson(Map<String, dynamic> json) {
     json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
@@ -30,8 +38,17 @@ class Service extends BaseEntity {
     return json;
   }
 
-  Service copy({String? id, String? name, double? price, String? creatorSalon, String? categoryId}) {
-    return Service(id ?? this.id, name ?? this.name, description, price ?? this.price, creatorSalon ?? this.creatorSalon, categoryId ?? this.categoryId);
+  Service copy(
+      {String? id,
+      String? name,
+      double? price,
+      String? creatorSalon,
+      String? categoryId,
+      String? categoryName,
+      int? categoryColor,
+      int? duration}) {
+    return Service(id ?? this.id, name ?? this.name, description, price ?? this.price,
+        creatorSalon ?? this.creatorSalon, categoryId ?? this.categoryId, categoryName ?? this.categoryName, categoryColor ?? this.categoryColor, duration ?? this.duration);
   }
 
   @override

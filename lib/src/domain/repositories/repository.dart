@@ -52,7 +52,7 @@ abstract class Repository {
   Future<Either<Failure, OrderEntity>> addOrder(OrderEntity orderEntity);
 
   ///Services
-  Future<Either<Failure, List<Service>>> getServicesList(String salonId, String categoryId);
+  Future<Either<Failure, List<Service>>> getServicesList(String salonId, String? categoryId);
   Future<Either<Failure, Service>> addService(Service service);
   Future<Either<Failure, Service>> updateService(Service service);
   Future<Either<Failure, void>> removeService(String serviceId);
