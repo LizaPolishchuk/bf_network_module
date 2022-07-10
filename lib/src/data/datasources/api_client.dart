@@ -60,7 +60,7 @@ abstract class APIClient {
 
   @GET("/master/{salonId}")
   Future<BaseResponse2<List<Master>>> getMastersList(
-      @Path("salonId") String salonId);
+      @Path("salonId") String salonId, @Query("serviceId") String? serviceId);
 
   @POST("/master/create")
   Future<BaseResponse2<Master>> addMaster(@Body() Master master);

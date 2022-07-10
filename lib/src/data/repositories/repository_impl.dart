@@ -234,9 +234,9 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, List<Master>>> getMastersList(String salonId) async {
+  Future<Either<Failure, List<Master>>> getMastersList(String salonId, String? serviceId) async {
     try {
-      return Right(await mastersRemoteDataSource.getMastersList(salonId));
+      return Right(await mastersRemoteDataSource.getMastersList(salonId, serviceId));
     } catch (error) {
       debugPrint("getMastersList error: $error");
       return Left(Failure(message: error.toString()));

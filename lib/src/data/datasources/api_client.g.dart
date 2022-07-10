@@ -198,9 +198,10 @@ class _APIClient implements APIClient {
   }
 
   @override
-  Future<BaseResponse2<List<Master>>> getMastersList(salonId) async {
+  Future<BaseResponse2<List<Master>>> getMastersList(salonId, serviceId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'serviceId': serviceId};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(

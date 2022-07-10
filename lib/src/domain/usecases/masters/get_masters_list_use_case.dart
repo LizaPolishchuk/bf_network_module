@@ -10,7 +10,7 @@ class GetMastersListUseCase {
 
   GetMastersListUseCase(this.repository);
 
-  Future<Either<Failure, List<Master>>> call(String salonId) async {
-    return await repository.getMastersList(salonId);
+  Future<Either<Failure, List<Master>>> call(String salonId, String? serviceId) async {
+    return await repository.getMastersList(salonId, serviceId);
   }
 }

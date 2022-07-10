@@ -5,7 +5,7 @@ import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
 
 abstract class MastersRemoteDataSource {
-  Future<List<Master>> getMastersList(String salonId);
+  Future<List<Master>> getMastersList(String salonId, String? serviceId);
 
   Future<Master> updateMaster(Master master);
 
@@ -21,10 +21,10 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
   const MastersRemoteDataSourceImpl(this._localStorage, this._apiClient);
 
   @override
-  Future<List<Master>> getMastersList(String salonId) async {
+  Future<List<Master>> getMastersList(String salonId, String? serviceId) async {
     // await ConnectivityManager.checkInternetConnection();
 
-    final response = await _apiClient.getMastersList(salonId);
+    final response = await _apiClient.getMastersList(salonId, serviceId);
 
     if (response.data == null) {
       throw(Failure(message: response.message ?? "getMastersList error: data is null"));

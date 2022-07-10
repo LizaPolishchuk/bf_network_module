@@ -26,13 +26,14 @@ class MasterAdapter extends TypeAdapter<Master> {
       (fields[6] as List).cast<String>(),
       (fields[7] as Map?)?.cast<String, String>(),
       fields[8] as String?,
+      fields[9] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Master obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(3)
       ..write(obj.avatar)
       ..writeByte(4)
@@ -45,6 +46,8 @@ class MasterAdapter extends TypeAdapter<Master> {
       ..write(obj.providedServices)
       ..writeByte(8)
       ..write(obj.status)
+      ..writeByte(9)
+      ..write(obj.phoneNumber)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -82,6 +85,7 @@ Master _$MasterFromJson(Map<String, dynamic> json) => Master(
         (k, e) => MapEntry(k, e as String),
       ),
       json['status'] as String?,
+      json['phoneNumber'] as String?,
     );
 
 Map<String, dynamic> _$MasterToJson(Master instance) => <String, dynamic>{
@@ -94,4 +98,5 @@ Map<String, dynamic> _$MasterToJson(Master instance) => <String, dynamic>{
       'workedInSalons': instance.workedInSalons,
       'providedServices': instance.providedServices,
       'status': instance.status,
+      'phoneNumber': instance.phoneNumber,
     };

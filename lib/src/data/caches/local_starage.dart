@@ -1,4 +1,3 @@
-
 import 'package:hive/hive.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/category_entity.dart';
@@ -38,8 +37,7 @@ class LocalStorage {
 
   bool isFirstLaunch() => _getValue(_firstLaunch) ?? true;
 
-  Future setFirstLaunch(bool firstLaunch) =>
-      _setValue(_firstLaunch, firstLaunch);
+  Future setFirstLaunch(bool firstLaunch) => _setValue(_firstLaunch, firstLaunch);
 
   getLanguage() => _getValue(_currentLanguage);
 
@@ -100,6 +98,4 @@ class LocalStorage {
   Future clear() {
     return _box.clear();
   }
-
-
 }
