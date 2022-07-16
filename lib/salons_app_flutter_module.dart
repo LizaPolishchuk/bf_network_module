@@ -8,6 +8,7 @@ export './src/domain/entities/master_entity.dart';
 export './src/domain/entities/order_entity.dart';
 export './src/domain/entities/salon_entity.dart';
 export './src/domain/entities/service_entity.dart';
+export './src/domain/entities/client_entity.dart';
 export './src/domain/entities/user_entity.dart';
 export './src/domain/entities/filters_entity.dart';
 export './src/domain/entities/requests/search_filters.dart';
