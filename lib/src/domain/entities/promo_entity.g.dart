@@ -1,47 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'client_entity.dart';
+part of 'promo_entity.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ClientAdapter extends TypeAdapter<Client> {
+class PromoAdapter extends TypeAdapter<Promo> {
   @override
-  final int typeId = 6;
+  final int typeId = 7;
 
   @override
-  Client read(BinaryReader reader) {
+  Promo read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Client(
+    return Promo(
       fields[0] as dynamic,
       fields[1] as dynamic,
       fields[2] as dynamic,
       fields[3] as String?,
-      fields[4] as String?,
-      fields[5] as String?,
-      fields[6] as String?,
-      (fields[7] as Map?)?.cast<String, String>(),
+      fields[4] as DateTime?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Client obj) {
+  void write(BinaryWriter writer, Promo obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(5)
       ..writeByte(3)
       ..write(obj.photoUrl)
       ..writeByte(4)
-      ..write(obj.city)
-      ..writeByte(5)
-      ..write(obj.status)
-      ..writeByte(6)
-      ..write(obj.phone)
-      ..writeByte(7)
-      ..write(obj.services)
+      ..write(obj.expiredDate)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -56,7 +47,7 @@ class ClientAdapter extends TypeAdapter<Client> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ClientAdapter &&
+      other is PromoAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
@@ -65,26 +56,20 @@ class ClientAdapter extends TypeAdapter<Client> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-Client _$ClientFromJson(Map<String, dynamic> json) => Client(
+Promo _$PromoFromJson(Map<String, dynamic> json) => Promo(
       json['id'],
       json['name'],
       json['description'],
       json['photoUrl'] as String?,
-      json['city'] as String?,
-      json['status'] as String?,
-      json['phone'] as String?,
-      (json['services'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
-      ),
+      json['expiredDate'] == null
+          ? null
+          : DateTime.parse(json['expiredDate'] as String),
     );
 
-Map<String, dynamic> _$ClientToJson(Client instance) => <String, dynamic>{
+Map<String, dynamic> _$PromoToJson(Promo instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
       'photoUrl': instance.photoUrl,
-      'city': instance.city,
-      'status': instance.status,
-      'phone': instance.phone,
-      'services': instance.services,
+      'expiredDate': instance.expiredDate?.toIso8601String(),
     };

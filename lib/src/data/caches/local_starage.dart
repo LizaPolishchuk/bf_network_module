@@ -12,6 +12,9 @@ const int hiveTypeMasters = 2;
 const int hiveTypeOrders = 3;
 const int hiveTypeServices = 4;
 const int hiveTypeCategories = 5;
+const int hiveTypeClients = 6;
+const int hiveTypePromos = 7;
+const int hiveTypeBonusCards = 8;
 
 class LocalStorage {
   late Box<dynamic> _box;

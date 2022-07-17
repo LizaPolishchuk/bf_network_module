@@ -6,7 +6,7 @@ import 'base_entity.dart';
 
 part 'client_entity.g.dart';
 
-@HiveType(typeId: hiveTypeCategories)
+@HiveType(typeId: hiveTypeClients)
 @JsonSerializable()
 class Client extends BaseEntity {
   @HiveField(3)
