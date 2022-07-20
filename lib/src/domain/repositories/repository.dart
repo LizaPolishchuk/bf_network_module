@@ -68,10 +68,32 @@ abstract class Repository {
   Future<Either<Failure, void>> removeMaster(String masterId);
   Future<Either<Failure, Master>> updateMaster(Master master);
   Future<Either<Failure, Master>> addMaster(Master master);
+  Future<Either<Failure, String>> updateMasterPhoto(String id, PickedFile file);
 
   ///Filters
   Future<Either<Failure, Filters>> addFilters(Filters filters);
   Future<Either<Failure, Filters>> getFilters();
   Future<Either<Failure, void>> removeFilters(String filterId) ;
-  Future<Either<Failure, Filters>> updateFilters(Filters filters) ;
+  Future<Either<Failure, Filters>> updateFilters(Filters filters);
+
+  ///Promo
+  Future<Either<Failure, List<Promo>>> getPromoList(String salonId);
+  Future<Either<Failure, Promo>> addPromo(Promo promo);
+  Future<Either<Failure, Promo>> updatePromo(Promo promo);
+  Future<Either<Failure, void>> removePromo(String promoId);
+  Future<Either<Failure, String>> updatePromoPhoto(String id, PickedFile file);
+
+  ///BonusCards
+  Future<Either<Failure, List<BonusCard>>> getBonusCardList(String salonId);
+  Future<Either<Failure, BonusCard>> addBonusCard(BonusCard bonusCard);
+  Future<Either<Failure, BonusCard>> updateBonusCard(BonusCard bonusCard);
+  Future<Either<Failure, void>> removeBonusCard(String cardId);
+
+  ///Clients
+  Future<Either<Failure, List<Client>>> getClientList(String salonId);
+  Future<Either<Failure, Client>> addClient(Client client);
+  Future<Either<Failure, Client>> updateClient(Client client);
+  Future<Either<Failure, void>> removeClient(String clientId);
+  Future<Either<Failure, String>> updateClientPhoto(String id, PickedFile file);
+
 }

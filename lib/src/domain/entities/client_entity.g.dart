@@ -25,13 +25,14 @@ class ClientAdapter extends TypeAdapter<Client> {
       fields[5] as String?,
       fields[6] as String?,
       (fields[7] as Map?)?.cast<String, String>(),
+      fields[8] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Client obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(3)
       ..write(obj.photoUrl)
       ..writeByte(4)
@@ -42,6 +43,8 @@ class ClientAdapter extends TypeAdapter<Client> {
       ..write(obj.phone)
       ..writeByte(7)
       ..write(obj.services)
+      ..writeByte(8)
+      ..write(obj.creatorSalon)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -76,6 +79,7 @@ Client _$ClientFromJson(Map<String, dynamic> json) => Client(
       (json['services'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as String),
       ),
+      json['creatorSalon'] as String?,
     );
 
 Map<String, dynamic> _$ClientToJson(Client instance) => <String, dynamic>{
@@ -87,4 +91,5 @@ Map<String, dynamic> _$ClientToJson(Client instance) => <String, dynamic>{
       'status': instance.status,
       'phone': instance.phone,
       'services': instance.services,
+      'creatorSalon': instance.creatorSalon,
     };

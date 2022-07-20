@@ -5,19 +5,25 @@ import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/bonus_card_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/categories_remote_data_sourse.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/client_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/filters_remote_data_sourse.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/promo_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/services_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/categories/add_category_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/categories/get_categories_list_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/categories/remove_category_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/categories/update_category_use_case.dart';
+import 'package:salons_app_flutter_module/src/domain/usecases/clients/update_client_photo_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/filters/add_filters_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/filters/get_filters_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/filters/remove_filters_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/filters/update_filters_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/masters/add_master_use_case.dart';
+import 'package:salons_app_flutter_module/src/domain/usecases/masters/update_master_photo_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/orders/add_order_use_case.dart';
+import 'package:salons_app_flutter_module/src/domain/usecases/promo/update_promo_photo_use_case.dart';
 
 import 'data/caches/local_starage.dart';
 import 'data/datasources/auth_remote_data_source.dart';
@@ -64,25 +70,24 @@ Future<void> init() async {
         getIt(),
         getIt(),
         getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
       ));
 
   ///Data sources
-  getIt.registerLazySingleton<SalonsRemoteDataSource>(
-      () => SalonsRemoteDataSourceImpl(getIt(), getIt()));
-  getIt.registerLazySingleton<UserRemoteDataSource>(
-      () => UserRemoteDataSourceImpl(getIt(), getIt()));
-  getIt.registerLazySingleton<AuthRemoteDataSource>(() =>
-      AuthRemoteDataSourceImpl(getIt(), getIt(), getIt(), getIt(), getIt()));
-  getIt.registerLazySingleton<OrdersRemoteDataSource>(
-      () => OrdersRemoteDataSourceImpl(getIt(), getIt()));
-  getIt.registerLazySingleton<MastersRemoteDataSource>(
-      () => MastersRemoteDataSourceImpl(getIt(), getIt()));
-  getIt.registerLazySingleton<ServiceRemoteDataSource>(
-      () => ServicesRemoteDataSourceImpl(getIt(), getIt()));
-  getIt.registerLazySingleton<CategoryRemoteDataSource>(
-      () => CategoryRemoteDataSourceImpl(getIt(), getIt()));
-  getIt.registerLazySingleton<FiltersRemoteDataSource>(
-      () => FiltersRemoteDataSourceImpl(getIt()));
+  getIt.registerLazySingleton<SalonsRemoteDataSource>(() => SalonsRemoteDataSourceImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<UserRemoteDataSource>(() => UserRemoteDataSourceImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<AuthRemoteDataSource>(
+      () => AuthRemoteDataSourceImpl(getIt(), getIt(), getIt(), getIt(), getIt()));
+  getIt.registerLazySingleton<OrdersRemoteDataSource>(() => OrdersRemoteDataSourceImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<MastersRemoteDataSource>(() => MastersRemoteDataSourceImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<ServiceRemoteDataSource>(() => ServicesRemoteDataSourceImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<CategoryRemoteDataSource>(() => CategoryRemoteDataSourceImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<FiltersRemoteDataSource>(() => FiltersRemoteDataSourceImpl(getIt()));
+  getIt.registerLazySingleton<PromoRemoteDataSource>(() => PromoRemoteDataSourceImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<BonusCardRemoteDataSource>(() => BonusCardRemoteDataSourceImpl(getIt()));
+  getIt.registerLazySingleton<ClientRemoteDataSource>(() => ClientRemoteDataSourceImpl(getIt(), getIt()));
 
   ///Use Cases
   getIt.registerLazySingleton(() => GetSalonsListUseCase(getIt()));
@@ -121,6 +126,21 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => UpdateFiltersUseCase(getIt()));
   getIt.registerLazySingleton(() => RemoveFiltersUseCase(getIt()));
   getIt.registerLazySingleton(() => GetFiltersUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetPromoListUseCase(getIt()));
+  getIt.registerLazySingleton(() => AddPromoUseCase(getIt()));
+  getIt.registerLazySingleton(() => RemovePromoUseCase(getIt()));
+  getIt.registerLazySingleton(() => UpdatePromoUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetBonusCardListUseCase(getIt()));
+  getIt.registerLazySingleton(() => AddBonusCardUseCase(getIt()));
+  getIt.registerLazySingleton(() => RemoveBonusCardUseCase(getIt()));
+  getIt.registerLazySingleton(() => UpdateBonusCardUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetClientListUseCase(getIt()));
+  getIt.registerLazySingleton(() => AddClientUseCase(getIt()));
+  getIt.registerLazySingleton(() => RemoveClientUseCase(getIt()));
+  getIt.registerLazySingleton(() => UpdateClientUseCase(getIt()));
+  getIt.registerLazySingleton(() => UpdateClientPhotoUseCase(getIt()));
+  getIt.registerLazySingleton(() => UpdateMasterPhotoUseCase(getIt()));
+  getIt.registerLazySingleton(() => UpdatePromoPhotoUseCase(getIt()));
 
   ///External
   // final sharedPreferences = await SharedPreferences.getInstance();
@@ -135,7 +155,7 @@ Future<void> init() async {
 
   getIt.registerLazySingleton(() {
     Dio dio = Dio();
-    dio.options.contentType= Headers.jsonContentType;
+    dio.options.contentType = Headers.jsonContentType;
     dio.interceptors.add(CustomInterceptors());
     return dio;
   });

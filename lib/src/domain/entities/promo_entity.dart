@@ -13,8 +13,10 @@ class Promo extends BaseEntity {
   String? photoUrl;
   @HiveField(4)
   DateTime? expiredDate;
+  @HiveField(5)
+  String? creatorSalon;
 
-  Promo(id, name, description, this.photoUrl, this.expiredDate) : super(id, name, description);
+  Promo(id, name, description, this.photoUrl, this.expiredDate, this.creatorSalon) : super(id, name, description);
 
   factory Promo.fromJson(Map<String, dynamic> json) {
     json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
@@ -28,8 +30,9 @@ class Promo extends BaseEntity {
     return json;
   }
 
-  Promo copy({String? name, String? description, String? photoUrl, DateTime? expiredDate}) {
-    return Promo(id, name ?? this.name, description ?? this.description, photoUrl ?? this.photoUrl, expiredDate ?? this.expiredDate);
+  Promo copy({String? name, String? description, String? photoUrl, DateTime? expiredDate, String? creatorSalon}) {
+    return Promo(id, name ?? this.name, description ?? this.description, photoUrl ?? this.photoUrl,
+        expiredDate ?? this.expiredDate, creatorSalon ?? this.creatorSalon);
   }
 
   @override

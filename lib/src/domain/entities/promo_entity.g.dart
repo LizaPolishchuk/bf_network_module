@@ -22,17 +22,20 @@ class PromoAdapter extends TypeAdapter<Promo> {
       fields[2] as dynamic,
       fields[3] as String?,
       fields[4] as DateTime?,
+      fields[5] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Promo obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(3)
       ..write(obj.photoUrl)
       ..writeByte(4)
       ..write(obj.expiredDate)
+      ..writeByte(5)
+      ..write(obj.creatorSalon)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -64,6 +67,7 @@ Promo _$PromoFromJson(Map<String, dynamic> json) => Promo(
       json['expiredDate'] == null
           ? null
           : DateTime.parse(json['expiredDate'] as String),
+      json['creatorSalon'] as String?,
     );
 
 Map<String, dynamic> _$PromoToJson(Promo instance) => <String, dynamic>{
@@ -72,4 +76,5 @@ Map<String, dynamic> _$PromoToJson(Promo instance) => <String, dynamic>{
       'description': instance.description,
       'photoUrl': instance.photoUrl,
       'expiredDate': instance.expiredDate?.toIso8601String(),
+      'creatorSalon': instance.creatorSalon,
     };

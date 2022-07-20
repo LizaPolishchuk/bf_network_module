@@ -13,8 +13,10 @@ class BonusCard extends BaseEntity {
   int? color;
   @HiveField(4)
   int? discount;
+  @HiveField(5)
+  String? creatorSalon;
 
-  BonusCard(id, name, description, this.color, this.discount) : super(id, name, description);
+  BonusCard(id, name, description, this.color, this.discount, this.creatorSalon) : super(id, name, description);
 
   factory BonusCard.fromJson(Map<String, dynamic> json) {
     json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
@@ -28,9 +30,9 @@ class BonusCard extends BaseEntity {
     return json;
   }
 
-  BonusCard copy({String? name, String? description, int? color, int? discount}) {
+  BonusCard copy({String? name, String? description, int? color, int? discount, String? creatorSalon}) {
     return BonusCard(
-        id, name ?? this.name, description ?? this.description, color ?? this.color, discount ?? this.discount);
+        id, name ?? this.name, description ?? this.description, color ?? this.color, discount ?? this.discount, creatorSalon ?? this.creatorSalon);
   }
 
   @override

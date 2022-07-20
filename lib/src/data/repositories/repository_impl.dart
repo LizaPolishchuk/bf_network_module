@@ -4,10 +4,13 @@ import 'package:either_dart/either.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/auth_remote_data_source.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/bonus_card_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/categories_remote_data_sourse.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/client_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/filters_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/masters_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/orders_remote_data_sourse.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/promo_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/salons_remote_data_source.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/services_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/user_remote_data_source.dart';
@@ -24,6 +27,9 @@ class RepositoryImpl implements Repository {
   MastersRemoteDataSource mastersRemoteDataSource;
   CategoryRemoteDataSource categoryRemoteDataSource;
   FiltersRemoteDataSource filtersRemoteDataSource;
+  PromoRemoteDataSource promoRemoteDataSource;
+  BonusCardRemoteDataSource bonusCardRemoteDataSource;
+  ClientRemoteDataSource clientRemoteDataSource;
 
   RepositoryImpl(
       this.salonsRemoteDataSource,
@@ -33,15 +39,17 @@ class RepositoryImpl implements Repository {
       this.serviceRemoteDataSource,
       this.mastersRemoteDataSource,
       this.categoryRemoteDataSource,
-      this.filtersRemoteDataSource);
+      this.filtersRemoteDataSource,
+      this.promoRemoteDataSource,
+      this.bonusCardRemoteDataSource,
+      this.clientRemoteDataSource);
 
   @override
   Future<Either<Failure, Map<UserEntity, bool?>>> signInWithFacebook() async {
     try {
       UserEntity? user = await authRemoteDataSource.loginWithFacebook();
 
-      Map<UserEntity, bool?> response =
-          await authRemoteDataSource.loginWithSocial(user);
+      Map<UserEntity, bool?> response = await authRemoteDataSource.loginWithSocial(user);
 
       return Right(response);
     } catch (error) {
@@ -55,8 +63,7 @@ class RepositoryImpl implements Repository {
     try {
       UserEntity? user = await authRemoteDataSource.loginWithGoogle();
 
-      Map<UserEntity, bool?> response =
-          await authRemoteDataSource.loginWithSocial(user);
+      Map<UserEntity, bool?> response = await authRemoteDataSource.loginWithSocial(user);
 
       return Right(response);
     } catch (error) {
@@ -66,11 +73,9 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, Salon>> signInWithEmailAndPassword(
-      String email, String password) async {
+  Future<Either<Failure, Salon>> signInWithEmailAndPassword(String email, String password) async {
     try {
-      final result = await authRemoteDataSource.signInWithEmailAndPassword(
-          email, password);
+      final result = await authRemoteDataSource.signInWithEmailAndPassword(email, password);
 
       return Right(result);
     } catch (error) {
@@ -80,11 +85,9 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, Salon>> signUpWithEmailAndPassword(
-      String email, String password) async {
+  Future<Either<Failure, Salon>> signUpWithEmailAndPassword(String email, String password) async {
     try {
-      final result = await authRemoteDataSource.signUpWithEmailAndPassword(
-          email, password);
+      final result = await authRemoteDataSource.signUpWithEmailAndPassword(email, password);
 
       return Right(result);
     } catch (error) {
@@ -107,11 +110,10 @@ class RepositoryImpl implements Repository {
   Future<Either<Failure, List<Salon>>> getSalonsList(
       bool? loadTop, String? searchKey, int? page, int? limit, SearchFilters? searchFilters) async {
     try {
-      return Right(await salonsRemoteDataSource.getSalonsList(
-          loadTop, searchKey, page, limit, searchFilters));
+      return Right(await salonsRemoteDataSource.getSalonsList(loadTop, searchKey, page, limit, searchFilters));
     } catch (error) {
       debugPrint("getSalonsList error $error");
-      return Left(Failure(message:error.toString()));
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -121,7 +123,7 @@ class RepositoryImpl implements Repository {
       return Right(await salonsRemoteDataSource.updateSalon(salonEntity));
     } catch (error) {
       debugPrint("updateSalon error $error");
-      return Left(Failure(message:error.toString()));
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -129,36 +131,34 @@ class RepositoryImpl implements Repository {
   Future<Either<Failure, List<OrderEntity>>> getOrdersList(
       String id, OrderForType orderForType, String? dateFor, String? dateFrom, String? dateTo) async {
     try {
-      return Right(
-          await ordersRemoteDataSource.getOrdersList(id, orderForType, dateFor, dateFrom, dateTo));
+      return Right(await ordersRemoteDataSource.getOrdersList(id, orderForType, dateFor, dateFrom, dateTo));
     } catch (error) {
       debugPrint("getOrdersList error $error");
 
-      return Left(Failure(message:error.toString()));
+      return Left(Failure(message: error.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, List<OrderEntity>>> getAvailableTime(String salonId, String serviceId, String masterId, String date) async {
+  Future<Either<Failure, List<OrderEntity>>> getAvailableTime(
+      String salonId, String serviceId, String masterId, String date) async {
     try {
-      return Right(
-          await ordersRemoteDataSource.getAvailableTime(salonId, serviceId, masterId, date));
+      return Right(await ordersRemoteDataSource.getAvailableTime(salonId, serviceId, masterId, date));
     } catch (error) {
       debugPrint("getAvailableTime error $error");
 
-      return Left(Failure(message:error.toString()));
+      return Left(Failure(message: error.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, OrderEntity>> updateOrder(
-      OrderEntity orderEntity) async {
+  Future<Either<Failure, OrderEntity>> updateOrder(OrderEntity orderEntity) async {
     try {
       return Right(await ordersRemoteDataSource.updateOrder(orderEntity));
     } catch (error) {
       debugPrint("updateOrder error $error");
 
-      return Left(Failure(message:error.toString()));
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -169,7 +169,7 @@ class RepositoryImpl implements Repository {
     } catch (error) {
       debugPrint("addOrder error $error");
 
-      return Left(Failure(message:error.toString()));
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -180,7 +180,7 @@ class RepositoryImpl implements Repository {
     } catch (error) {
       debugPrint("removeOrder error $error");
 
-      return Left(Failure(message:error.toString()));
+      return Left(Failure(message: error.toString()));
     }
   }
 
@@ -228,6 +228,17 @@ class RepositoryImpl implements Repository {
       return Right(await serviceRemoteDataSource.updateService(service));
     } catch (error) {
       debugPrint("updateService error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Service>> addService(Service service) async {
+    try {
+      return Right(await serviceRemoteDataSource.addService(service));
+    } catch (error) {
+      debugPrint("addService error $error");
 
       return Left(Failure(message: error.toString()));
     }
@@ -288,8 +299,7 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, Map<UserEntity, bool?>>> verifyCode(
-      String code, String phoneNumber) async {
+  Future<Either<Failure, Map<UserEntity, bool?>>> verifyCode(String code, String phoneNumber) async {
     try {
       return Right(await authRemoteDataSource.verifyCode(code, phoneNumber));
     } catch (error) {
@@ -346,12 +356,37 @@ class RepositoryImpl implements Repository {
     }
   }
 
+
   @override
-  Future<Either<Failure, Service>> addService(Service service) async {
+  Future<Either<Failure, String>> updateMasterPhoto(String id, PickedFile file) async {
     try {
-      return Right(await serviceRemoteDataSource.addService(service));
+      return Right(await mastersRemoteDataSource.updateMasterPhoto(id, file));
     } catch (error) {
-      debugPrint("addService error $error");
+      debugPrint("updateMasterPhoto error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+
+  @override
+  Future<Either<Failure, String>> updateClientPhoto(String id, PickedFile file) async {
+    try {
+      return Right(await clientRemoteDataSource.updateClientPhoto(id, file));
+    } catch (error) {
+      debugPrint("updateClientPhoto error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+
+  @override
+  Future<Either<Failure, String>> updatePromoPhoto(String id, PickedFile file) async {
+    try {
+      return Right(await promoRemoteDataSource.updatePromoPhoto(id, file));
+    } catch (error) {
+      debugPrint("updatePromoPhoto error $error");
 
       return Left(Failure(message: error.toString()));
     }
@@ -369,8 +404,7 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, List<Category>>> getCategoryList(
-      String salonId) async {
+  Future<Either<Failure, List<Category>>> getCategoryList(String salonId) async {
     try {
       return Right(await categoryRemoteDataSource.getCategoriesList(salonId));
     } catch (error) {
@@ -443,6 +477,138 @@ class RepositoryImpl implements Repository {
       return Right(await filtersRemoteDataSource.updateFilters(filters));
     } catch (error) {
       debugPrint("updateFilters error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Promo>>> getPromoList(String salonId) async {
+    try {
+      return Right(await promoRemoteDataSource.getPromoList(salonId));
+    } catch (error) {
+      debugPrint("getPromoList error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> removePromo(String promoId) async {
+    try {
+      return Right(await promoRemoteDataSource.removePromo(promoId));
+    } catch (error) {
+      debugPrint("removePromo error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Promo>> updatePromo(Promo promo) async {
+    try {
+      return Right(await promoRemoteDataSource.updatePromo(promo));
+    } catch (error) {
+      debugPrint("updatePromo error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Promo>> addPromo(Promo promo) async {
+    try {
+      return Right(await promoRemoteDataSource.addPromo(promo));
+    } catch (error) {
+      debugPrint("addPromo error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<BonusCard>>> getBonusCardList(String salonId) async {
+    try {
+      return Right(await bonusCardRemoteDataSource.getBonusCardList(salonId));
+    } catch (error) {
+      debugPrint("getBonusCardList error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> removeBonusCard(String cardId) async {
+    try {
+      return Right(await bonusCardRemoteDataSource.removeBonusCard(cardId));
+    } catch (error) {
+      debugPrint("removeBonusCard error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, BonusCard>> updateBonusCard(BonusCard bonusCard) async {
+    try {
+      return Right(await bonusCardRemoteDataSource.updateBonusCard(bonusCard));
+    } catch (error) {
+      debugPrint("updateBonusCard error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, BonusCard>> addBonusCard(BonusCard bonusCard) async {
+    try {
+      return Right(await bonusCardRemoteDataSource.addBonusCard(bonusCard));
+    } catch (error) {
+      debugPrint("addBonusCard error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Client>>> getClientList(String salonId) async {
+    try {
+      return Right(await clientRemoteDataSource.getClientList(salonId));
+    } catch (error) {
+      debugPrint("getClientList error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> removeClient(String clientId) async {
+    try {
+      return Right(await clientRemoteDataSource.removeClient(clientId));
+    } catch (error) {
+      debugPrint("removeClient error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Client>> updateClient(Client client) async {
+    try {
+      return Right(await clientRemoteDataSource.updateClient(client));
+    } catch (error) {
+      debugPrint("updateClient error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Client>> addClient(Client client) async {
+    try {
+      return Right(await clientRemoteDataSource.addClient(client));
+    } catch (error) {
+      debugPrint("addClient error $error");
 
       return Left(Failure(message: error.toString()));
     }

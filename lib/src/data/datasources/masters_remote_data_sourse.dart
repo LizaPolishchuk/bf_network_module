@@ -1,3 +1,5 @@
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
@@ -9,6 +11,8 @@ abstract class MastersRemoteDataSource {
 
   Future<Master> updateMaster(Master master);
 
+  Future<String> updateMasterPhoto(String id, PickedFile pickedFile);
+
   Future<Master> addMaster(Master master);
 
   Future<void> removeMaster(String masterId);
@@ -17,8 +21,11 @@ abstract class MastersRemoteDataSource {
 class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
   final LocalStorage _localStorage;
   final APIClient _apiClient;
+  late FirebaseStorage _firebaseStorage;
 
-  const MastersRemoteDataSourceImpl(this._localStorage, this._apiClient);
+  MastersRemoteDataSourceImpl(this._localStorage, this._apiClient) {
+    _firebaseStorage = FirebaseStorage.instance;
+  }
 
   @override
   Future<List<Master>> getMastersList(String salonId, String? serviceId) async {
@@ -27,7 +34,7 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
     final response = await _apiClient.getMastersList(salonId, serviceId);
 
     if (response.data == null) {
-      throw(Failure(message: response.message ?? "getMastersList error: data is null"));
+      throw (Failure(message: response.message ?? "getMastersList error: data is null"));
     }
 
     _localStorage.setMastersList(response.data ?? []);
@@ -42,7 +49,7 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
     final response = await _apiClient.updateMaster(master);
 
     if (response.data == null) {
-      throw(Failure(message: response.message ?? "updateMaster error: master is null"));
+      throw (Failure(message: response.message ?? "updateMaster error: master is null"));
     }
 
     // _localStorage.setMastersList(response.masters ?? []);
@@ -50,6 +57,24 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
 
     return response.data!;
   }
+
+  @override
+  Future<String> updateMasterPhoto(String id, PickedFile pickedFile) async {
+    String? currentSalonId = await _localStorage.getSalonId();
+
+    assert(currentSalonId != null);
+
+    var fileData = await pickedFile.readAsBytes();
+    UploadTask uploadTask = _firebaseStorage.ref().child('/salon/$currentSalonId/masters/$id.png').putData(
+      fileData,
+      SettableMetadata(contentType: 'image/jpeg'),
+    );
+
+    var url = await (await uploadTask).ref.getDownloadURL();
+
+    return url;
+  }
+
 
   @override
   Future<void> removeMaster(String masterId) async {
@@ -74,7 +99,7 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
     final response = await _apiClient.addMaster(master);
 
     if (response.data == null) {
-      throw(Failure(message: response.message ?? "addMaster error: master is null"));
+      throw (Failure(message: response.message ?? "addMaster error: master is null"));
     }
 
     // _localStorage.setMastersList(response.masters ?? []);

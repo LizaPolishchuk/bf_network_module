@@ -21,18 +21,15 @@ abstract class APIClient {
 
   @POST("/authWeb/register")
   @FormUrlEncoded()
-  Future<AuthResponse> signUpWeb(
-      @Field("email") String email, @Field("password") String password);
+  Future<AuthResponse> signUpWeb(@Field("email") String email, @Field("password") String password);
 
   @POST("/authWeb/login")
   @FormUrlEncoded()
-  Future<AuthResponse> loginWeb(
-      @Field("email") String email, @Field("password") String password);
+  Future<AuthResponse> loginWeb(@Field("email") String email, @Field("password") String password);
 
   @POST("/authWeb/refresh")
   @FormUrlEncoded()
-  Future<TokensResponse> refreshTokenWeb(
-      @Field("refreshToken") String refreshToken);
+  Future<TokensResponse> refreshTokenWeb(@Field("refreshToken") String refreshToken);
 
   @POST("/authWeb/forgot")
   @FormUrlEncoded()
@@ -59,8 +56,8 @@ abstract class APIClient {
   Future<BaseResponse> deleteUser(@Path() String userId);
 
   @GET("/master/{salonId}")
-  Future<BaseResponse2<List<Master>>> getMastersList(
-      @Path("salonId") String salonId, @Query("serviceId") String? serviceId);
+  Future<BaseResponse2<List<Master>>> getMastersList(@Path("salonId") String salonId,
+      @Query("serviceId") String? serviceId);
 
   @POST("/master/create")
   Future<BaseResponse2<Master>> addMaster(@Body() Master master);
@@ -72,28 +69,24 @@ abstract class APIClient {
   Future<BaseResponse2> deleteMaster(@Path("masterId") String masterId);
 
   @GET("/order/list")
-  Future<BaseResponse2<List<OrderEntity>>> getOrdersList( @Queries() Map<String, String?> options);
+  Future<BaseResponse2<List<OrderEntity>>> getOrdersList(@Queries() Map<String, String?> options);
 
   @GET("/order")
-  Future<BaseResponse2<List<OrderEntity>>> getAvailableTimeList(
-      @Query("salonId") String salonId,
-      @Query("masterId") String masterId,
-      @Query("serviceId") String serviceId,
-      @Query("date") String date);
+  Future<BaseResponse2<List<OrderEntity>>> getAvailableTimeList(@Query("salonId") String salonId,
+      @Query("masterId") String masterId, @Query("serviceId") String serviceId, @Query("date") String date);
 
   @POST("/order/create")
   Future<BaseResponse2<OrderEntity>> addOrder(@Body() OrderEntity orderEntity);
 
   @POST("/order/update")
-  Future<BaseResponse2<OrderEntity>> updateOrder(
-      @Body() OrderEntity orderEntity);
+  Future<BaseResponse2<OrderEntity>> updateOrder(@Body() OrderEntity orderEntity);
 
   @DELETE("/order/delete/{orderId}")
   Future<BaseResponse2> deleteOrder(@Path("orderId") String orderId);
 
   @GET("/service/{salonId}")
-  Future<BaseResponse2<List<Service>>> getServiceList(
-      @Path("salonId") String salonId, @Query("categoryId") String? categoryId);
+  Future<BaseResponse2<List<Service>>> getServiceList(@Path("salonId") String salonId,
+      @Query("categoryId") String? categoryId);
 
   @POST("/service/create")
   Future<BaseResponse2<Service>> addService(@Body() Service service);
@@ -104,9 +97,44 @@ abstract class APIClient {
   @DELETE("/service/delete/{serviceId}")
   Future<BaseResponse2> deleteService(@Path("serviceId") String serviceId);
 
+  @GET("/client/{salonId}")
+  Future<BaseResponse2<List<Client>>> getClientList(@Path("salonId") String salonId);
+
+  @POST("/client/create")
+  Future<BaseResponse2<Client>> addClient(@Body() Client client);
+
+  @POST("/client/update")
+  Future<BaseResponse2<Client>> updateClient(@Body() Client client);
+
+  @DELETE("/client/delete/{clientId}")
+  Future<BaseResponse2> deleteClient(@Path("clientId") String clientId);
+
+  @GET("/promo/{salonId}")
+  Future<BaseResponse2<List<Promo>>> getPromoList(@Path("salonId") String salonId);
+
+  @POST("/promo/create")
+  Future<BaseResponse2<Promo>> addPromo(@Body() Promo promo);
+
+  @POST("/promo/update")
+  Future<BaseResponse2<Promo>> updatePromo(@Body() Promo promo);
+
+  @DELETE("/promo/delete/{promoId}")
+  Future<BaseResponse2> deletePromo(@Path("promoId") String promoId);
+
+  @GET("/bonusCard/{salonId}")
+  Future<BaseResponse2<List<BonusCard>>> getBonusCardList(@Path("salonId") String salonId);
+
+  @POST("/bonusCard/create")
+  Future<BaseResponse2<BonusCard>> addBonusCard(@Body() BonusCard bonusCard);
+
+  @POST("/bonusCard/update")
+  Future<BaseResponse2<BonusCard>> updateBonusCard(@Body() BonusCard bonusCard);
+
+  @DELETE("/bonusCard/delete/{cardId}")
+  Future<BaseResponse2> deleteBonusCard(@Path("cardId") String cardId);
+
   @GET("/salon")
-  Future<BaseResponse2<List<Salon>>> getSalonList(
-      @Query("loadTop") bool? loadTop,
+  Future<BaseResponse2<List<Salon>>> getSalonList(@Query("loadTop") bool? loadTop,
       @Query("searchKey") String? searchKey,
       @Query("page") int? page,
       @Query("limit") int? limit,
@@ -127,8 +155,7 @@ abstract class APIClient {
   Future<BaseResponse> deleteSalon(@Path() String salonId);
 
   @GET("/category/{salonId}")
-  Future<BaseResponse2<List<Category>>> getCategoryList(
-      @Path("salonId") String salonId);
+  Future<BaseResponse2<List<Category>>> getCategoryList(@Path("salonId") String salonId);
 
   @POST("/category/create")
   Future<BaseResponse2<Category>> addCategory(@Body() Category category);

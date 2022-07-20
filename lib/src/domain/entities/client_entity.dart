@@ -19,8 +19,10 @@ class Client extends BaseEntity {
   String? phone;
   @HiveField(7)
   Map<String, String>? services;
+  @HiveField(8)
+  String? creatorSalon;
 
-  Client(id, name, description, this.photoUrl, this.city, this.status, this.phone,  this.services) : super(id, name, description);
+  Client(id, name, description, this.photoUrl, this.city, this.status, this.phone, this.services, this.creatorSalon) : super(id, name, description);
 
   factory Client.fromJson(Map<String, dynamic> json) {
     json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
@@ -34,9 +36,9 @@ class Client extends BaseEntity {
     return json;
   }
 
-  Client copy({String? name, String? photoUrl, String? city, String? status, String? phone, Map<String, String>? services}) {
+  Client copy({String? name, String? photoUrl, String? city, String? status, String? phone, Map<String, String>? service, String? creatorSalon}) {
     return Client(id, name ?? this.name, description, photoUrl ?? this.photoUrl, city ?? this.city,
-        status ?? this.status, phone ?? this.phone, services ?? this.services);
+        status ?? this.status, phone ?? this.phone, services ?? this.services, creatorSalon ?? this.creatorSalon);
   }
 
   @override
