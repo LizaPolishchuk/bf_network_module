@@ -299,6 +299,17 @@ class RepositoryImpl implements Repository {
   }
 
   @override
+  Future<Either<Failure, void>> changePassword(String oldPassword, String newPassword) async {
+  try {
+      return Right(await authRemoteDataSource.changePassword(oldPassword, newPassword));
+    } catch (error) {
+      debugPrint("changePassword error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, Map<UserEntity, bool?>>> verifyCode(String code, String phoneNumber) async {
     try {
       return Right(await authRemoteDataSource.verifyCode(code, phoneNumber));

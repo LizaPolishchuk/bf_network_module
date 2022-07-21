@@ -21,8 +21,7 @@ abstract class AuthRemoteDataSource {
 
   Future<Salon> signInWithEmailAndPassword(String email, String password);
 
-  Future<Salon> signUpWithEmailAndPassword(
-      String email, String password);
+  Future<Salon> signUpWithEmailAndPassword(String email, String password);
 
   // Future<User?> signInWithFacebook();
 
@@ -31,6 +30,8 @@ abstract class AuthRemoteDataSource {
   Future<void> signInWithPhone(String phone);
 
   Future<Map<UserEntity, bool?>> verifyCode(String code, String phoneNumber);
+
+  Future<void> changePassword(String oldPassword, String newPassword);
 
   Future<void> signOut();
 }
@@ -42,8 +43,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final LocalStorage localStorage;
   final APIClient apiClient;
 
-  AuthRemoteDataSourceImpl(this.googleSignIn, this.firebaseAuth,
-      this.facebookLogin, this.localStorage, this.apiClient);
+  AuthRemoteDataSourceImpl(this.googleSignIn, this.firebaseAuth, this.facebookLogin, this.localStorage, this.apiClient);
 
   @override
   Future<UserEntity> loginWithGoogle() async {
@@ -53,15 +53,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser == null) {
-        throw (Failure(
-            message: "Error in sign in with google, googleUser is null"));
+        throw (Failure(message: "Error in sign in with google, googleUser is null"));
       }
 
-      userEntity = new UserEntity(googleUser.id, googleUser.displayName,
-          googleUser.email, googleUser.photoUrl, null, null);
+      userEntity =
+          new UserEntity(googleUser.id, googleUser.displayName, googleUser.email, googleUser.photoUrl, null, null);
     } catch (e) {
       if (e is FirebaseAuthException) {
-       print("${e.code}");
+        print("${e.code}");
       }
       //sign_in_canceled
       print("Error in sign in with google: $e");
@@ -82,11 +81,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (result.status == LoginStatus.success) {
         final fbUser = await facebookLogin.getUserData();
 
-        userEntity = UserEntity(fbUser["id"], fbUser["name"], fbUser["email"],
-            fbUser["picture"]["data"]["url"], null, null);
+        userEntity =
+            UserEntity(fbUser["id"], fbUser["name"], fbUser["email"], fbUser["picture"]["data"]["url"], null, null);
       } else {
-        throw (Failure(
-            message: "Error in sign in with facebook, facebookUser is null"));
+        throw (Failure(message: "Error in sign in with facebook, facebookUser is null"));
       }
     } catch (e) {
       print("Error login with facebook: $e");
@@ -106,8 +104,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       final authResult = await apiClient.loginWithSocial(user);
 
       if (authResult.user == null) {
-        throw Failure(
-            message: "Error login with social: ${authResult.message}");
+        throw Failure(message: "Error login with social: ${authResult.message}");
       }
 
       creator = authResult.creator;
@@ -128,8 +125,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<Salon> signInWithEmailAndPassword(
-      String email, String password) async {
+  Future<Salon> signInWithEmailAndPassword(String email, String password) async {
     SalonResponse salonData;
     try {
       // await ConnectivityManager.checkInternetConnection();
@@ -160,7 +156,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           errorMessage = "Something went wrong";
         }
 
-        throw(Failure(message: errorMessage!));
+        throw (Failure(message: errorMessage!));
       }
 
       throw (e);
@@ -170,8 +166,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<Salon> signUpWithEmailAndPassword(
-      String email, String password) async {
+  Future<Salon> signUpWithEmailAndPassword(String email, String password) async {
     SalonResponse salonData;
     try {
       // await ConnectivityManager.checkInternetConnection();
@@ -202,7 +197,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           errorMessage = "Something went wrong";
         }
 
-        throw(Failure(message: errorMessage!));
+        throw (Failure(message: errorMessage!));
       }
       throw (e);
     }
@@ -220,6 +215,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   String? verificationId;
+
   @override
   Future<void> signInWithPhone(String phone) async {
     final completer = Completer<void>();
@@ -248,6 +244,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
+  Future<void> changePassword(String oldPassword, String newPassword) async {
+    // await ConnectivityManager.checkInternetConnection();
+  }
+
+  @override
   Future<Map<UserEntity, bool?>> verifyCode(String code, String phoneNumber) async {
     UserCredential loggedInUser;
     bool isNewUser = true;
@@ -257,8 +258,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       assert(verificationId != null);
 
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(
-          verificationId: verificationId!, smsCode: code);
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId!, smsCode: code);
 
       loggedInUser = await firebaseAuth.signInWithCredential(credential);
       isNewUser = loggedInUser.additionalUserInfo?.isNewUser ?? true;
@@ -277,9 +277,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       if (e is FirebaseAuthException) {
         String? errorMessage = e.message;
-        throw (Failure(
-            codeStr: e.code,
-            message: "$errorMessage"));
+        throw (Failure(codeStr: e.code, message: "$errorMessage"));
       } else {
         throw (e);
       }

@@ -65,6 +65,7 @@ export './src/domain/usecases/bonus_cards/get_bonus_card_list_use_case.dart';
 export './src/domain/usecases/promo/update_promo_photo_use_case.dart';
 export './src/domain/usecases/masters/update_master_photo_use_case.dart';
 export './src/domain/usecases/clients/update_client_photo_use_case.dart';
+export './src/domain/usecases/login/change_password_use_case.dart';
 export './src/injection_container.dart';
 export './src/common/utils/connectivity_manager.dart';
 export 'package:firebase_auth/firebase_auth.dart';

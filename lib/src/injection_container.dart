@@ -20,6 +20,7 @@ import 'package:salons_app_flutter_module/src/domain/usecases/filters/add_filter
 import 'package:salons_app_flutter_module/src/domain/usecases/filters/get_filters_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/filters/remove_filters_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/filters/update_filters_use_case.dart';
+import 'package:salons_app_flutter_module/src/domain/usecases/login/change_password_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/masters/add_master_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/masters/update_master_photo_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/orders/add_order_use_case.dart';
@@ -141,6 +142,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => UpdateClientPhotoUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateMasterPhotoUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdatePromoPhotoUseCase(getIt()));
+  getIt.registerLazySingleton(() => ChangePasswordUseCase(getIt()));
 
   ///External
   // final sharedPreferences = await SharedPreferences.getInstance();
