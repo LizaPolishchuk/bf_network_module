@@ -34,6 +34,10 @@ class OrderEntity {
   @HiveField(11)
   double price;
   @HiveField(12)
+  int durationInMin;
+  @HiveField(13)
+  int? categoryColor;
+  @HiveField(14)
   @JsonKey(ignore: true)
   bool isPinned;
 
@@ -49,6 +53,8 @@ class OrderEntity {
       this.serviceId,
       this.serviceName,
       this.date,
+      this.durationInMin,
+      this.categoryColor,
       this.price,
       {this.isPinned = false});
 
@@ -74,6 +80,8 @@ class OrderEntity {
     String? serviceName,
     bool? isPinned,
     double? price,
+    int? durationInMin,
+    int? categoryColor,
   }) {
     return OrderEntity(
       id,
@@ -87,6 +95,8 @@ class OrderEntity {
       serviceId ?? this.serviceId,
       serviceName ?? this.serviceName,
       date,
+      durationInMin ?? this.durationInMin,
+      categoryColor ?? this.categoryColor,
       price ?? this.price,
       isPinned: isPinned ?? this.isPinned,
     );

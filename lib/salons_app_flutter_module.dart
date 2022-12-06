@@ -13,6 +13,7 @@ export './src/domain/entities/user_entity.dart';
 export './src/domain/entities/filters_entity.dart';
 export './src/domain/entities/promo_entity.dart';
 export './src/domain/entities/bonus_card_entity.dart';
+export './src/domain/entities/feedback_entity.dart';
 export './src/domain/entities/requests/search_filters.dart';
 export './src/domain/usecases/categories/add_category_use_case.dart';
 export './src/domain/usecases/categories/get_categories_list_use_case.dart';

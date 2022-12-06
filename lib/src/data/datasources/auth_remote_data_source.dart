@@ -49,7 +49,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<UserEntity> loginWithGoogle() async {
     UserEntity userEntity;
     try {
-      // await ConnectivityManager.checkInternetConnection();
+      await ConnectivityManager.checkInternetConnection();
 
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser == null) {

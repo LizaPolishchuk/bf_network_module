@@ -1,6 +1,5 @@
 
 import 'dart:io';
-import 'dart:html' as html;
 
 import 'package:either_dart/either.dart';
 import 'package:image_picker/image_picker.dart';

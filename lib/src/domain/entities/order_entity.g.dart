@@ -28,15 +28,17 @@ class OrderEntityAdapter extends TypeAdapter<OrderEntity> {
       fields[8] as String,
       fields[9] as String,
       fields[10] as DateTime,
+      fields[12] as int,
+      fields[13] as int?,
       fields[11] as double,
-      isPinned: fields[12] as bool,
+      isPinned: fields[14] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, OrderEntity obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -62,6 +64,10 @@ class OrderEntityAdapter extends TypeAdapter<OrderEntity> {
       ..writeByte(11)
       ..write(obj.price)
       ..writeByte(12)
+      ..write(obj.durationInMin)
+      ..writeByte(13)
+      ..write(obj.categoryColor)
+      ..writeByte(14)
       ..write(obj.isPinned);
   }
 
@@ -92,6 +98,8 @@ OrderEntity _$OrderEntityFromJson(Map<String, dynamic> json) => OrderEntity(
       json['serviceId'] as String,
       json['serviceName'] as String,
       DateTime.parse(json['date'] as String),
+      json['durationInMin'] as int,
+      json['categoryColor'] as int?,
       (json['price'] as num).toDouble(),
     );
 
@@ -109,4 +117,6 @@ Map<String, dynamic> _$OrderEntityToJson(OrderEntity instance) =>
       'serviceName': instance.serviceName,
       'date': instance.date.toIso8601String(),
       'price': instance.price,
+      'durationInMin': instance.durationInMin,
+      'categoryColor': instance.categoryColor,
     };
