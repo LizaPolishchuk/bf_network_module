@@ -51,6 +51,8 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
 
     final response = await _apiClient.updateSalon(salon);
 
+    print("response: ${response.toJson()}");
+
     if (response.salon == null) {
       throw (Failure(message: response.message ?? "updateSalon error: salon is null"));
     }

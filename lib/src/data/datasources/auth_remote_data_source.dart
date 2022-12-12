@@ -207,9 +207,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<void> signOut() async {
-    facebookLogin.logOut();
-    googleSignIn.signOut();
+    // facebookLogin.logOut();
+    // googleSignIn.signOut();
     // apiClient.logout();
+    firebaseAuth.signOut();
     localStorage.clear();
     return;
   }

@@ -23,13 +23,15 @@ class Salon extends BaseEntity {
   String? phoneNumber;
   @HiveField(8)
   bool? isTop;
+  @HiveField(9)
+  bool isFavourite;
 
   @JsonKey(ignore: true)
   List<Master> mastersList = [];
   @JsonKey(ignore: true)
   List<Service> servicesList = [];
 
-  Salon([id, name, description, this.photo, this.photoPath, this.ownerId, this.address, this.phoneNumber, this.isTop])
+  Salon([id, name, description, this.photo, this.photoPath, this.ownerId, this.address, this.phoneNumber, this.isTop, this.isFavourite = false])
       : super(id, name, description);
 
   factory Salon.fromJson(Map<String, dynamic> json) {
@@ -44,7 +46,4 @@ class Salon extends BaseEntity {
     return json;
   }
 
-  Salon.defaultSalon() : super("example_salon_id", "", "") {
-    Salon("example_salon_id");
-  }
 }
