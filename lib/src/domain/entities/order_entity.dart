@@ -32,12 +32,10 @@ class OrderEntity {
   @HiveField(10)
   DateTime date;
   @HiveField(11)
-  double price;
-  @HiveField(12)
   int durationInMin;
-  @HiveField(13)
+  @HiveField(12)
   int? categoryColor;
-  @HiveField(14)
+  @HiveField(13)
   @JsonKey(ignore: true)
   bool isPinned;
 
@@ -55,7 +53,6 @@ class OrderEntity {
       this.date,
       this.durationInMin,
       this.categoryColor,
-      this.price,
       {this.isPinned = false});
 
   factory OrderEntity.fromJson(Map<String, dynamic> json) {
@@ -79,9 +76,9 @@ class OrderEntity {
     String? serviceId,
     String? serviceName,
     bool? isPinned,
-    double? price,
     int? durationInMin,
     int? categoryColor,
+    DateTime? date,
   }) {
     return OrderEntity(
       id,
@@ -94,10 +91,9 @@ class OrderEntity {
       masterAvatar ?? this.masterAvatar,
       serviceId ?? this.serviceId,
       serviceName ?? this.serviceName,
-      date,
+      date ?? this.date,
       durationInMin ?? this.durationInMin,
       categoryColor ?? this.categoryColor,
-      price ?? this.price,
       isPinned: isPinned ?? this.isPinned,
     );
   }
