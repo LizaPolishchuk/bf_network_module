@@ -153,7 +153,9 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => GoogleSignIn(clientId: webClientId));
   getIt.registerLazySingleton(() => FacebookAuth.instance);
   getIt.registerLazySingleton(() => FirebaseAuth.instance);
-  getIt.registerLazySingleton(() => APIClient(getIt(), /*baseUrl: "http://localhost:3999/api"*/));
+  getIt.registerLazySingleton(() => APIClient(
+        getIt(), /*baseUrl: "http://localhost:3999/api"*/
+      ));
 
   getIt.registerLazySingleton(() {
     Dio dio = Dio();

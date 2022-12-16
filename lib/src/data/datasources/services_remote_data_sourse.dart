@@ -27,8 +27,7 @@ class ServicesRemoteDataSourceImpl implements ServiceRemoteDataSource {
     final response = await _apiClient.getServiceList(salonId, categoryId);
 
     if (response.data == null) {
-      throw (Failure(
-          message: response.message ?? "getServicesList error: data is null"));
+      throw (Failure(message: response.message ?? "getServicesList error: data is null"));
     }
 
     _localStorage.setServicesList(response.data ?? []);
@@ -43,8 +42,7 @@ class ServicesRemoteDataSourceImpl implements ServiceRemoteDataSource {
     final response = await _apiClient.addService(service);
 
     if (response.data == null) {
-      throw (Failure(
-          message: response.message ?? "addMaster error: master is null"));
+      throw (Failure(message: response.message ?? "addMaster error: master is null"));
     }
 
     return response.data!;
@@ -57,8 +55,7 @@ class ServicesRemoteDataSourceImpl implements ServiceRemoteDataSource {
     final response = await _apiClient.updateService(service);
 
     if (response.data == null) {
-      throw (Failure(
-          message: response.message ?? "updateService error: data is null"));
+      throw (Failure(message: response.message ?? "updateService error: data is null"));
     }
 
     return response.data!;

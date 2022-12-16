@@ -9,11 +9,9 @@ class BaseResponse2<T> {
 
   BaseResponse2(this.message, this.data);
 
-  factory BaseResponse2.fromJson(
-      Map<String, dynamic> json, T Function(Object? json) fromJsonT) {
+  factory BaseResponse2.fromJson(Map<String, dynamic> json, T Function(Object? json) fromJsonT) {
     return _$BaseResponse2FromJson(json, fromJsonT);
   }
 
-  Map<String, dynamic> toJson(Object Function(T value) toJsonT) =>
-      _$BaseResponse2ToJson(this, toJsonT);
+  Map<String, dynamic> toJson(Object Function(T value) toJsonT) => _$BaseResponse2ToJson(this, toJsonT);
 }

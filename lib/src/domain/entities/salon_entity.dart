@@ -31,7 +31,17 @@ class Salon extends BaseEntity {
   @JsonKey(ignore: true)
   List<Service> servicesList = [];
 
-  Salon([id, name, description, this.photo, this.photoPath, this.ownerId, this.address, this.phoneNumber, this.isTop, this.isFavourite = false])
+  Salon(
+      [id,
+      name,
+      description,
+      this.photo,
+      this.photoPath,
+      this.ownerId,
+      this.address,
+      this.phoneNumber,
+      this.isTop,
+      this.isFavourite = false])
       : super(id, name, description);
 
   factory Salon.fromJson(Map<String, dynamic> json) {
@@ -45,5 +55,4 @@ class Salon extends BaseEntity {
     json.remove("id");
     return json;
   }
-
 }

@@ -8,7 +8,8 @@ class GetAvailableTimeUseCase {
 
   GetAvailableTimeUseCase(this.repository);
 
-  Future<Either<Failure, List<OrderEntity>>> call(String salonId, String serviceId, String masterId, String date) async {
+  Future<Either<Failure, List<OrderEntity>>> call(
+      String salonId, String serviceId, String masterId, String date) async {
     return await repository.getAvailableTime(salonId, serviceId, masterId, date);
   }
 }

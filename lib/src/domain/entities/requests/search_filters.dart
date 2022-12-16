@@ -21,4 +21,3 @@ class SearchFilters {
 
   Map<String, dynamic> toJson() => _$SearchFiltersToJson(this);
 }
-

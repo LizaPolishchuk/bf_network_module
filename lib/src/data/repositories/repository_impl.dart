@@ -300,7 +300,7 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<Either<Failure, void>> changePassword(String oldPassword, String newPassword) async {
-  try {
+    try {
       return Right(await authRemoteDataSource.changePassword(oldPassword, newPassword));
     } catch (error) {
       debugPrint("changePassword error $error");
@@ -367,7 +367,6 @@ class RepositoryImpl implements Repository {
     }
   }
 
-
   @override
   Future<Either<Failure, String>> updateMasterPhoto(String id, PickedFile file) async {
     try {
@@ -379,7 +378,6 @@ class RepositoryImpl implements Repository {
     }
   }
 
-
   @override
   Future<Either<Failure, String>> updateClientPhoto(String id, PickedFile file) async {
     try {
@@ -390,7 +388,6 @@ class RepositoryImpl implements Repository {
       return Left(Failure(message: error.toString()));
     }
   }
-
 
   @override
   Future<Either<Failure, String>> updatePromoPhoto(String id, PickedFile file) async {

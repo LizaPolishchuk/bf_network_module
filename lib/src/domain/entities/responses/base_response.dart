@@ -13,5 +13,4 @@ class BaseResponse {
   }
 
   Map<String, dynamic> toJson() => _$BaseResponseToJson(this);
-
 }

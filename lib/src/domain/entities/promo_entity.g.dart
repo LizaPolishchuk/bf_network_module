@@ -49,10 +49,7 @@ class PromoAdapter extends TypeAdapter<Promo> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is PromoAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      identical(this, other) || other is PromoAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 // **************************************************************************
@@ -64,9 +61,7 @@ Promo _$PromoFromJson(Map<String, dynamic> json) => Promo(
       json['name'],
       json['description'],
       json['photoUrl'] as String?,
-      json['expiredDate'] == null
-          ? null
-          : DateTime.parse(json['expiredDate'] as String),
+      json['expiredDate'] == null ? null : DateTime.parse(json['expiredDate'] as String),
       json['creatorSalon'] as String?,
     );
 

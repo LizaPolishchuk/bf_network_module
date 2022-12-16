@@ -58,9 +58,7 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is UserEntityAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is UserEntityAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 // **************************************************************************
@@ -78,8 +76,7 @@ UserEntity _$UserEntityFromJson(Map<String, dynamic> json) => UserEntity(
       isRegistered: json['isRegistered'] as bool? ?? true,
     )..isAdmin = json['isAdmin'] as bool? ?? false;
 
-Map<String, dynamic> _$UserEntityToJson(UserEntity instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$UserEntityToJson(UserEntity instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'email': instance.email,

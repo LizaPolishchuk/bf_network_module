@@ -25,8 +25,7 @@ class FiltersRemoteDataSourceImpl implements FiltersRemoteDataSource {
     final response = await _apiClient.getFilters();
 
     if (response.data == null) {
-      throw (Failure(
-          message: response.message ?? "getFilters error: data is null"));
+      throw (Failure(message: response.message ?? "getFilters error: data is null"));
     }
 
     return response.data!;
@@ -39,8 +38,7 @@ class FiltersRemoteDataSourceImpl implements FiltersRemoteDataSource {
     final response = await _apiClient.addFilters(filtersEntity);
 
     if (response.data == null) {
-      throw (Failure(
-          message: response.message ?? "addFilters error: master is null"));
+      throw (Failure(message: response.message ?? "addFilters error: master is null"));
     }
 
     return response.data!;
@@ -53,8 +51,7 @@ class FiltersRemoteDataSourceImpl implements FiltersRemoteDataSource {
     final response = await _apiClient.updateFilters(filtersEntity);
 
     if (response.data == null) {
-      throw (Failure(
-          message: response.message ?? "updateFilters error: data is null"));
+      throw (Failure(message: response.message ?? "updateFilters error: data is null"));
     }
 
     return response.data!;

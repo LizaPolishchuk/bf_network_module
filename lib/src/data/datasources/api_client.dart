@@ -13,6 +13,7 @@ part 'api_client.g.dart';
 
 ///prod
 @RestApi(baseUrl: "https://salonsliza.herokuapp.com/api")
+
 ///local
 // @RestApi(baseUrl: "http://localhost:3999/api")
 
@@ -56,8 +57,8 @@ abstract class APIClient {
   Future<BaseResponse> deleteUser(@Path() String userId);
 
   @GET("/master/{salonId}")
-  Future<BaseResponse2<List<Master>>> getMastersList(@Path("salonId") String salonId,
-      @Query("serviceId") String? serviceId);
+  Future<BaseResponse2<List<Master>>> getMastersList(
+      @Path("salonId") String salonId, @Query("serviceId") String? serviceId);
 
   @POST("/master/create")
   Future<BaseResponse2<Master>> addMaster(@Body() Master master);
@@ -85,8 +86,8 @@ abstract class APIClient {
   Future<BaseResponse2> deleteOrder(@Path("orderId") String orderId);
 
   @GET("/service/{salonId}")
-  Future<BaseResponse2<List<Service>>> getServiceList(@Path("salonId") String salonId,
-      @Query("categoryId") String? categoryId);
+  Future<BaseResponse2<List<Service>>> getServiceList(
+      @Path("salonId") String salonId, @Query("categoryId") String? categoryId);
 
   @POST("/service/create")
   Future<BaseResponse2<Service>> addService(@Body() Service service);
@@ -134,13 +135,14 @@ abstract class APIClient {
   Future<BaseResponse2> deleteBonusCard(@Path("cardId") String cardId);
 
   @GET("/salon")
-  Future<BaseResponse2<List<Salon>>> getSalonList(@Query("loadTop") bool? loadTop,
-      @Query("searchKey") String? searchKey,
-      @Query("page") int? page,
-      @Query("limit") int? limit,
-      @Queries() Map<String, dynamic>? searchFilters,
-      // @Body() SearchFilters? searchFilters
-      );
+  Future<BaseResponse2<List<Salon>>> getSalonList(
+    @Query("loadTop") bool? loadTop,
+    @Query("searchKey") String? searchKey,
+    @Query("page") int? page,
+    @Query("limit") int? limit,
+    @Queries() Map<String, dynamic>? searchFilters,
+    // @Body() SearchFilters? searchFilters
+  );
 
   @GET("/salon/{salonId}")
   Future<SalonResponse> getSalon(@Path("salonId") String salonId);
