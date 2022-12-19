@@ -28,17 +28,16 @@ class OrderEntityAdapter extends TypeAdapter<OrderEntity> {
       fields[8] as String,
       fields[9] as String,
       fields[10] as DateTime,
-      fields[12] as int,
-      fields[13] as int?,
-      fields[11] as double,
-      isPinned: fields[14] as bool,
+      fields[11] as int,
+      fields[12] as int?,
+      isPinned: fields[13] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, OrderEntity obj) {
     writer
-      ..writeByte(15)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -62,12 +61,10 @@ class OrderEntityAdapter extends TypeAdapter<OrderEntity> {
       ..writeByte(10)
       ..write(obj.date)
       ..writeByte(11)
-      ..write(obj.price)
-      ..writeByte(12)
       ..write(obj.durationInMin)
-      ..writeByte(13)
+      ..writeByte(12)
       ..write(obj.categoryColor)
-      ..writeByte(14)
+      ..writeByte(13)
       ..write(obj.isPinned);
   }
 
@@ -100,7 +97,6 @@ OrderEntity _$OrderEntityFromJson(Map<String, dynamic> json) => OrderEntity(
       DateTime.parse(json['date'] as String),
       json['durationInMin'] as int,
       json['categoryColor'] as int?,
-      (json['price'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$OrderEntityToJson(OrderEntity instance) =>
@@ -116,7 +112,6 @@ Map<String, dynamic> _$OrderEntityToJson(OrderEntity instance) =>
       'serviceId': instance.serviceId,
       'serviceName': instance.serviceName,
       'date': instance.date.toIso8601String(),
-      'price': instance.price,
       'durationInMin': instance.durationInMin,
       'categoryColor': instance.categoryColor,
     };
