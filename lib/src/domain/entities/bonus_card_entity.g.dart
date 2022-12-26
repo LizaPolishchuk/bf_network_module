@@ -49,10 +49,7 @@ class BonusCardAdapter extends TypeAdapter<BonusCard> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BonusCardAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      identical(this, other) || other is BonusCardAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 // **************************************************************************

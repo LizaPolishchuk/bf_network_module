@@ -56,8 +56,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         throw (Failure(message: "Error in sign in with google, googleUser is null"));
       }
 
-      userEntity =
-          new UserEntity(googleUser.id, googleUser.displayName, googleUser.email, googleUser.photoUrl, null, null);
+      userEntity = UserEntity(googleUser.id, googleUser.displayName, googleUser.email, googleUser.photoUrl, null, null);
     } catch (e) {
       if (e is FirebaseAuthException) {
         print("${e.code}");

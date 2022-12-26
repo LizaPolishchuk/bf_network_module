@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:either_dart/either.dart';
@@ -31,11 +30,11 @@ abstract class Repository {
   Future<Either<Failure, String>> updateUserAvatar(File file);
 
   ///Salons
-  Future<Either<Failure, List<Salon>>> getSalonsList(bool? loadTop, String? searchKey, int? page, int? limit, SearchFilters? searchFilters);
+  Future<Either<Failure, List<Salon>>> getSalonsList(
+      bool? loadTop, String? searchKey, int? page, int? limit, SearchFilters? searchFilters);
   Future<Either<Failure, Salon>> getSalonById(String salonId);
   Future<Either<Failure, Salon>> updateSalon(Salon salonEntity);
   Future<Either<Failure, String>> updateSalonPhoto(PickedFile file);
-
 
   ///AvailableTime
   // Future<Either<Failure, List<AvailableTime>>> getAvailableTimesByMasterId(
@@ -45,8 +44,10 @@ abstract class Repository {
   //     String salonId, String serviceId);
 
   ///Orders
-  Future<Either<Failure, List<OrderEntity>>> getOrdersList(String id, OrderForType orderForType, String? dateFor, String? dateFrom, String? dateTo);
-  Future<Either<Failure, List<OrderEntity>>> getAvailableTime(String salonId, String serviceId, String masterId, String date);
+  Future<Either<Failure, List<OrderEntity>>> getOrdersList(
+      String id, OrderForType orderForType, String? dateFor, String? dateFrom, String? dateTo);
+  Future<Either<Failure, List<OrderEntity>>> getAvailableTime(
+      String salonId, String serviceId, String masterId, String date);
   Future<Either<Failure, void>> removeOrder(String orderId);
   Future<Either<Failure, OrderEntity>> updateOrder(OrderEntity orderEntity);
   Future<Either<Failure, OrderEntity>> addOrder(OrderEntity orderEntity);
@@ -73,7 +74,7 @@ abstract class Repository {
   ///Filters
   Future<Either<Failure, Filters>> addFilters(Filters filters);
   Future<Either<Failure, Filters>> getFilters();
-  Future<Either<Failure, void>> removeFilters(String filterId) ;
+  Future<Either<Failure, void>> removeFilters(String filterId);
   Future<Either<Failure, Filters>> updateFilters(Filters filters);
 
   ///Promo
@@ -95,5 +96,4 @@ abstract class Repository {
   Future<Either<Failure, Client>> updateClient(Client client);
   Future<Either<Failure, void>> removeClient(String clientId);
   Future<Either<Failure, String>> updateClientPhoto(String id, PickedFile file);
-
 }

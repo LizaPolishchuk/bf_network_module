@@ -47,8 +47,16 @@ class Service extends BaseEntity {
       String? categoryName,
       int? categoryColor,
       int? duration}) {
-    return Service(id ?? this.id, name ?? this.name, description, price ?? this.price,
-        creatorSalon ?? this.creatorSalon, categoryId ?? this.categoryId, categoryName ?? this.categoryName, categoryColor ?? this.categoryColor, duration ?? this.duration);
+    return Service(
+        id ?? this.id,
+        name ?? this.name,
+        description,
+        price ?? this.price,
+        creatorSalon ?? this.creatorSalon,
+        categoryId ?? this.categoryId,
+        categoryName ?? this.categoryName,
+        categoryColor ?? this.categoryColor,
+        duration ?? this.duration);
   }
 
   @override

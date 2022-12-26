@@ -8,8 +8,7 @@ class GetOrdersListUseCase {
 
   GetOrdersListUseCase(this.repository);
 
-  Future<Either<Failure, List<OrderEntity>>> call(String id,
-      OrderForType orderForType,
+  Future<Either<Failure, List<OrderEntity>>> call(String id, OrderForType orderForType,
       {String? dateFor, String? dateFrom, String? dateTo}) async {
     return await repository.getOrdersList(id, orderForType, dateFor, dateFrom, dateTo);
   }

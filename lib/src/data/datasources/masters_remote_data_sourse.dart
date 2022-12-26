@@ -66,15 +66,14 @@ class MastersRemoteDataSourceImpl implements MastersRemoteDataSource {
 
     var fileData = await pickedFile.readAsBytes();
     UploadTask uploadTask = _firebaseStorage.ref().child('/salon/$currentSalonId/masters/$id.png').putData(
-      fileData,
-      SettableMetadata(contentType: 'image/jpeg'),
-    );
+          fileData,
+          SettableMetadata(contentType: 'image/jpeg'),
+        );
 
     var url = await (await uploadTask).ref.getDownloadURL();
 
     return url;
   }
-
 
   @override
   Future<void> removeMaster(String masterId) async {

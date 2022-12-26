@@ -74,9 +74,7 @@ class OrderEntityAdapter extends TypeAdapter<OrderEntity> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is OrderEntityAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is OrderEntityAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 // **************************************************************************
@@ -99,8 +97,7 @@ OrderEntity _$OrderEntityFromJson(Map<String, dynamic> json) => OrderEntity(
       json['categoryColor'] as int?,
     );
 
-Map<String, dynamic> _$OrderEntityToJson(OrderEntity instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$OrderEntityToJson(OrderEntity instance) => <String, dynamic>{
       'id': instance.id,
       'clientId': instance.clientId,
       'clientName': instance.clientName,

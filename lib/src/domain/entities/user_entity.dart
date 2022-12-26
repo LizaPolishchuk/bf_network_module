@@ -45,7 +45,8 @@ class UserEntity {
   }
 
   UserEntity copy({String? name, String? email, String? avatar, String? phone, int? gender}) {
-    return UserEntity(id, name ?? this.name, email ?? this.email,
-        avatar ?? this.avatar, phone ?? this.phone, gender ?? this.gender, isActivated: this.isActivated);
+    return UserEntity(
+        id, name ?? this.name, email ?? this.email, avatar ?? this.avatar, phone ?? this.phone, gender ?? this.gender,
+        isActivated: this.isActivated);
   }
 }

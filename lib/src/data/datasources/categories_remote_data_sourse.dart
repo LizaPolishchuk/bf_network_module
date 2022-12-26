@@ -27,8 +27,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
     final response = await _apiClient.getCategoryList(salonId);
 
     if (response.data == null) {
-      throw (Failure(
-          message: response.message ?? "getCategoriesList error: data is null"));
+      throw (Failure(message: response.message ?? "getCategoriesList error: data is null"));
     }
 
     _localStorage.setCategoriesList(response.data ?? []);
@@ -43,8 +42,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
     final response = await _apiClient.addCategory(category);
 
     if (response.data == null) {
-      throw (Failure(
-          message: response.message ?? "addMaster error: master is null"));
+      throw (Failure(message: response.message ?? "addMaster error: master is null"));
     }
 
     return response.data!;
@@ -57,8 +55,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
     final response = await _apiClient.updateCategory(category);
 
     if (response.data == null) {
-      throw (Failure(
-          message: response.message ?? "updateCategory error: data is null"));
+      throw (Failure(message: response.message ?? "updateCategory error: data is null"));
     }
 
     return response.data!;

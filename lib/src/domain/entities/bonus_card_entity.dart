@@ -31,8 +31,8 @@ class BonusCard extends BaseEntity {
   }
 
   BonusCard copy({String? name, String? description, int? color, int? discount, String? creatorSalon}) {
-    return BonusCard(
-        id, name ?? this.name, description ?? this.description, color ?? this.color, discount ?? this.discount, creatorSalon ?? this.creatorSalon);
+    return BonusCard(id, name ?? this.name, description ?? this.description, color ?? this.color,
+        discount ?? this.discount, creatorSalon ?? this.creatorSalon);
   }
 
   @override

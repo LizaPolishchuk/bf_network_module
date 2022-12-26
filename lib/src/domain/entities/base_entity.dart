@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
 
-
 class BaseEntity {
   @HiveField(0)
   late String id;

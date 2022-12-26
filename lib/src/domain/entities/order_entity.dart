@@ -39,20 +39,8 @@ class OrderEntity {
   @JsonKey(ignore: true)
   bool isPinned;
 
-  OrderEntity(
-      this.id,
-      this.clientId,
-      this.clientName,
-      this.salonId,
-      this.salonName,
-      this.masterId,
-      this.masterName,
-      this.masterAvatar,
-      this.serviceId,
-      this.serviceName,
-      this.date,
-      this.durationInMin,
-      this.categoryColor,
+  OrderEntity(this.id, this.clientId, this.clientName, this.salonId, this.salonName, this.masterId, this.masterName,
+      this.masterAvatar, this.serviceId, this.serviceName, this.date, this.durationInMin, this.categoryColor,
       {this.isPinned = false});
 
   factory OrderEntity.fromJson(Map<String, dynamic> json) {

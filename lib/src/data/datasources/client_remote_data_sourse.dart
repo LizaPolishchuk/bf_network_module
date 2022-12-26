@@ -65,7 +65,6 @@ class ClientRemoteDataSourceImpl implements ClientRemoteDataSource {
     return response.data!;
   }
 
-
   @override
   Future<String> updateClientPhoto(String id, PickedFile pickedFile) async {
     String? currentSalonId = await _localStorage.getSalonId();
@@ -74,15 +73,14 @@ class ClientRemoteDataSourceImpl implements ClientRemoteDataSource {
 
     var fileData = await pickedFile.readAsBytes();
     UploadTask uploadTask = _firebaseStorage.ref().child('/salon/$currentSalonId/clients/$id.png').putData(
-      fileData,
-      SettableMetadata(contentType: 'image/jpeg'),
-    );
+          fileData,
+          SettableMetadata(contentType: 'image/jpeg'),
+        );
 
     var url = await (await uploadTask).ref.getDownloadURL();
 
     return url;
   }
-
 
   @override
   Future<void> removeClient(String clientId) async {

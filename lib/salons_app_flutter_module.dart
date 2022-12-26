@@ -72,4 +72,3 @@ export './src/common/utils/connectivity_manager.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:either_dart/either.dart';
-

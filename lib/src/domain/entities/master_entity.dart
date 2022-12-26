@@ -40,7 +40,8 @@ class Master extends BaseEntity {
     return json;
   }
 
-  Master copy({String? name, String? position, String? phoneNumber, String? status, Map<String, String>? providedServices}) {
+  Master copy(
+      {String? name, String? position, String? phoneNumber, String? status, Map<String, String>? providedServices}) {
     return Master(id, name ?? this.name, description, avatar, avatarPath, position ?? this.position, workedInSalons,
         providedServices ?? this.providedServices, status ?? this.status, phoneNumber ?? this.phoneNumber);
   }

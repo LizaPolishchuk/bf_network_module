@@ -7,7 +7,7 @@ class SignOutUseCase {
 
   SignOutUseCase(this.repository);
 
-  Future<Either<Failure, void>> call(){
-      return repository.signOut();
+  Future<Either<Failure, void>> call() {
+    return repository.signOut();
   }
 }

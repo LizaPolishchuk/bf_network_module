@@ -61,10 +61,7 @@ class SalonAdapter extends TypeAdapter<Salon> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SalonAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      identical(this, other) || other is SalonAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 // **************************************************************************

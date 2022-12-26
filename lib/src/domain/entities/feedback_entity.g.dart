@@ -56,17 +56,14 @@ class FeedbackEntityAdapter extends TypeAdapter<FeedbackEntity> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is FeedbackEntityAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is FeedbackEntityAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-FeedbackEntity _$FeedbackEntityFromJson(Map<String, dynamic> json) =>
-    FeedbackEntity(
+FeedbackEntity _$FeedbackEntityFromJson(Map<String, dynamic> json) => FeedbackEntity(
       json['id'],
       json['name'],
       json['description'],
@@ -77,8 +74,7 @@ FeedbackEntity _$FeedbackEntityFromJson(Map<String, dynamic> json) =>
       json['points'] as int,
     );
 
-Map<String, dynamic> _$FeedbackEntityToJson(FeedbackEntity instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$FeedbackEntityToJson(FeedbackEntity instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,

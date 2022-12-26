@@ -61,10 +61,7 @@ class MasterAdapter extends TypeAdapter<Master> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MasterAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      identical(this, other) || other is MasterAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 // **************************************************************************
@@ -78,9 +75,7 @@ Master _$MasterFromJson(Map<String, dynamic> json) => Master(
       json['avatar'] as String?,
       json['avatarPath'] as String?,
       json['position'] as String?,
-      (json['workedInSalons'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      (json['workedInSalons'] as List<dynamic>).map((e) => e as String).toList(),
       (json['providedServices'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as String),
       ),

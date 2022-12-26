@@ -31,8 +31,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     final response = await _apiClient.updateUser(user);
 
     if (response.user == null) {
-      throw (Failure(
-          message: response.message ?? "updateUser error: user is null"));
+      throw (Failure(message: response.message ?? "updateUser error: user is null"));
     }
 
     _localStorage.setCurrentUserId(response.user!.id);
@@ -48,8 +47,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     final response = await _apiClient.getUser(userId);
 
     if (response.user == null) {
-      throw (Failure(
-          message: response.message ?? "getUser error: user is null"));
+      throw (Failure(message: response.message ?? "getUser error: user is null"));
     }
 
     _localStorage.setCurrentUserId(response.user!.id);
@@ -64,10 +62,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
     assert(currentUserId != null);
 
-    UploadTask uploadTask = _firebaseStorage
-        .ref()
-        .child('/user/$currentUserId/media/profile_pic.png')
-        .putFile(avatar);
+    UploadTask uploadTask = _firebaseStorage.ref().child('/user/$currentUserId/media/profile_pic.png').putFile(avatar);
 
     var url = await (await uploadTask).ref.getDownloadURL();
 
