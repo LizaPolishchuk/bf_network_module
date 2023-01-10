@@ -34,6 +34,7 @@ class LocalStorage {
   static const _user = '_user';
   static const accessToken = '_accessToken';
   static const _refreshToken = '_refreshToken';
+  static const themeMode = '_themeMode';
 
   Future openBox() async {
     this._box = await Hive.openBox<dynamic>(preferencesBox);
@@ -90,6 +91,10 @@ class LocalStorage {
   getRefreshToken() => _getValue(_refreshToken);
 
   Future setRefreshToken(String refreshToken) => _setValue(_refreshToken, refreshToken);
+
+  bool get getThemeMode => _getValue<bool?>(themeMode) ?? true;
+
+  Future switchThemeMode() => _setValue(themeMode, !getThemeMode);
 
   T _getValue<T>(dynamic key, {T? defaultValue}) {
     return _box.get(key, defaultValue: defaultValue) as T;
