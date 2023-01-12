@@ -13,6 +13,8 @@ abstract class UserRemoteDataSource {
   Future<UserEntity> updateUser(UserEntity user);
 
   Future<String> updateUserAvatar(File avatar);
+
+  Future<void> switchThemeMode();
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
@@ -67,5 +69,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     var url = await (await uploadTask).ref.getDownloadURL();
 
     return url;
+  }
+
+  @override
+  Future<void> switchThemeMode() async {
+    _localStorage.switchThemeMode();
   }
 }

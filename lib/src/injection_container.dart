@@ -25,6 +25,7 @@ import 'package:salons_app_flutter_module/src/domain/usecases/masters/add_master
 import 'package:salons_app_flutter_module/src/domain/usecases/masters/update_master_photo_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/orders/add_order_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/promo/update_promo_photo_use_case.dart';
+import 'package:salons_app_flutter_module/src/domain/usecases/users/switch_theme_mode_use_case.dart';
 
 import 'data/caches/local_starage.dart';
 import 'data/datasources/auth_remote_data_source.dart';
@@ -114,6 +115,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => LoginWithPhoneVerifyCodeUseCase(getIt()));
   getIt.registerLazySingleton(() => LoginWithPhoneUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateUserUseCase(getIt()));
+  getIt.registerLazySingleton(() => SwitchThemeModeUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateUserAvatarUseCase(getIt()));
   getIt.registerLazySingleton(() => GetUserUseCase(getIt()));
   getIt.registerLazySingleton(() => AddMasterUseCase(getIt()));

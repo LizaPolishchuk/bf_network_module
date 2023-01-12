@@ -621,4 +621,9 @@ class RepositoryImpl implements Repository {
       return Left(Failure(message: error.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> switchThemeMode() async {
+    return Right(await userRemoteDataSource.switchThemeMode());
+  }
 }

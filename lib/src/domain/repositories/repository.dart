@@ -24,6 +24,8 @@ abstract class Repository {
 
   Future<Either<Failure, void>> signOut();
 
+  Future<Either<Failure, void>> switchThemeMode();
+
   ///Users
   Future<Either<Failure, UserEntity>> getUser(String userId);
   Future<Either<Failure, UserEntity>> updateUser(UserEntity user);
