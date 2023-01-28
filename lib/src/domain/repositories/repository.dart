@@ -26,6 +26,9 @@ abstract class Repository {
 
   Future<Either<Failure, void>> switchThemeMode();
 
+  Future<Either<Failure, void>> registerToken(String authToken, String pushToken);
+  Future<Either<Failure, void>> unregisterToken(String authToken, String pushToken);
+
   ///Users
   Future<Either<Failure, UserEntity>> getUser(String userId);
   Future<Either<Failure, UserEntity>> updateUser(UserEntity user);

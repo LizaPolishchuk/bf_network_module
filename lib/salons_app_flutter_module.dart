@@ -68,6 +68,8 @@ export './src/domain/usecases/promo/update_promo_photo_use_case.dart';
 export './src/domain/usecases/masters/update_master_photo_use_case.dart';
 export './src/domain/usecases/clients/update_client_photo_use_case.dart';
 export './src/domain/usecases/login/change_password_use_case.dart';
+export './src/domain/usecases/notifications/register_token_use_case.dart';
+export './src/domain/usecases/notifications/unregister_token_use_case.dart';
 export './src/injection_container.dart';
 export './src/common/utils/connectivity_manager.dart';
 export 'package:firebase_auth/firebase_auth.dart';

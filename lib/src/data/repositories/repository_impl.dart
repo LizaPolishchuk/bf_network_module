@@ -310,6 +310,30 @@ class RepositoryImpl implements Repository {
   }
 
   @override
+  Future<Either<Failure, void>> registerToken(String authToken, String pushToken) async {
+  try {
+      // return Right(await authRemoteDataSource.registerToken(authToken, pushToken));
+      return Right(null);
+    } catch (error) {
+      debugPrint("registerToken error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> unregisterToken(String authToken, String pushToken) async {
+  try {
+      // return Right(await authRemoteDataSource.unregisterToken(authToken, pushToken));
+      return Right(null);
+    } catch (error) {
+      debugPrint("unregisterToken error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, Map<UserEntity, bool?>>> verifyCode(String code, String phoneNumber) async {
     try {
       return Right(await authRemoteDataSource.verifyCode(code, phoneNumber));

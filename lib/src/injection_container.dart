@@ -145,6 +145,8 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => UpdateMasterPhotoUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdatePromoPhotoUseCase(getIt()));
   getIt.registerLazySingleton(() => ChangePasswordUseCase(getIt()));
+  getIt.registerLazySingleton(() => RegisterTokenUseCase(getIt()));
+  getIt.registerLazySingleton(() => UnregisterTokenUseCase(getIt()));
 
   ///External
   // final sharedPreferences = await SharedPreferences.getInstance();
