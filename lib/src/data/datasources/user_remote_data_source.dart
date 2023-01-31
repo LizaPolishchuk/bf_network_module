@@ -15,6 +15,8 @@ abstract class UserRemoteDataSource {
   Future<String> updateUserAvatar(File avatar);
 
   Future<void> switchThemeMode();
+
+  Future<void> switchMasterMode(bool masterMode);
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
@@ -74,5 +76,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
   Future<void> switchThemeMode() async {
     _localStorage.switchThemeMode();
+  }
+
+  @override
+  Future<void> switchMasterMode(bool masterMode) async {
+    _localStorage.setMasterMode(masterMode);
   }
 }

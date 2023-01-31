@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
@@ -23,8 +22,10 @@ import 'package:salons_app_flutter_module/src/domain/usecases/filters/update_fil
 import 'package:salons_app_flutter_module/src/domain/usecases/login/change_password_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/masters/add_master_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/masters/update_master_photo_use_case.dart';
+import 'package:salons_app_flutter_module/src/domain/usecases/notifications/get_notifications_list_usecase.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/orders/add_order_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/promo/update_promo_photo_use_case.dart';
+import 'package:salons_app_flutter_module/src/domain/usecases/users/switch_master_mode_use_case.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/users/switch_theme_mode_use_case.dart';
 
 import 'data/caches/local_starage.dart';
@@ -81,7 +82,7 @@ Future<void> init() async {
   getIt.registerLazySingleton<SalonsRemoteDataSource>(() => SalonsRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<UserRemoteDataSource>(() => UserRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<AuthRemoteDataSource>(
-      () => AuthRemoteDataSourceImpl(getIt(), getIt(), getIt(), getIt(), getIt()));
+      () => AuthRemoteDataSourceImpl(getIt(), getIt(), getIt(), getIt()));
   getIt.registerLazySingleton<OrdersRemoteDataSource>(() => OrdersRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<MastersRemoteDataSource>(() => MastersRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<ServiceRemoteDataSource>(() => ServicesRemoteDataSourceImpl(getIt(), getIt()));
@@ -116,6 +117,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => LoginWithPhoneUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateUserUseCase(getIt()));
   getIt.registerLazySingleton(() => SwitchThemeModeUseCase(getIt()));
+  getIt.registerLazySingleton(() => SwitchMasterModeUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateUserAvatarUseCase(getIt()));
   getIt.registerLazySingleton(() => GetUserUseCase(getIt()));
   getIt.registerLazySingleton(() => AddMasterUseCase(getIt()));
@@ -147,6 +149,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => ChangePasswordUseCase(getIt()));
   getIt.registerLazySingleton(() => RegisterTokenUseCase(getIt()));
   getIt.registerLazySingleton(() => UnregisterTokenUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetNotificationsListUseCase(getIt()));
 
   ///External
   // final sharedPreferences = await SharedPreferences.getInstance();
@@ -155,7 +158,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => LocalStorage());
 
   getIt.registerLazySingleton(() => GoogleSignIn(clientId: webClientId));
-  getIt.registerLazySingleton(() => FacebookAuth.instance);
+  // getIt.registerLazySingleton(() => FacebookAuth.instance);
   getIt.registerLazySingleton(() => FirebaseAuth.instance);
   getIt.registerLazySingleton(() => APIClient(
         getIt(), /*baseUrl: "http://localhost:3999/api"*/

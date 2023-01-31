@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
@@ -15,7 +14,7 @@ abstract class AuthRemoteDataSource {
 
   Future<UserEntity> loginWithGoogle();
 
-  Future<UserEntity> loginWithFacebook();
+  // Future<UserEntity> loginWithFacebook();
 
   Future<Map<UserEntity, bool?>> loginWithSocial(UserEntity user);
 
@@ -39,11 +38,11 @@ abstract class AuthRemoteDataSource {
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth firebaseAuth;
   final GoogleSignIn googleSignIn;
-  final FacebookAuth facebookLogin;
+  // final FacebookAuth facebookLogin;
   final LocalStorage localStorage;
   final APIClient apiClient;
 
-  AuthRemoteDataSourceImpl(this.googleSignIn, this.firebaseAuth, this.facebookLogin, this.localStorage, this.apiClient);
+  AuthRemoteDataSourceImpl(this.googleSignIn, this.firebaseAuth, this.localStorage, this.apiClient);
 
   @override
   Future<UserEntity> loginWithGoogle() async {
@@ -69,29 +68,29 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     return userEntity;
   }
 
-  @override
-  Future<UserEntity> loginWithFacebook() async {
-    UserEntity userEntity;
-    try {
-      // await ConnectivityManager.checkInternetConnection();
-
-      final LoginResult result = await facebookLogin.login();
-
-      if (result.status == LoginStatus.success) {
-        final fbUser = await facebookLogin.getUserData();
-
-        userEntity =
-            UserEntity(fbUser["id"], fbUser["name"], fbUser["email"], fbUser["picture"]["data"]["url"], null, null);
-      } else {
-        throw (Failure(message: "Error in sign in with facebook, facebookUser is null"));
-      }
-    } catch (e) {
-      print("Error login with facebook: $e");
-      throw (e);
-    }
-
-    return userEntity;
-  }
+  // @override
+  // Future<UserEntity> loginWithFacebook() async {
+    // UserEntity userEntity;
+    // try {
+    //   // await ConnectivityManager.checkInternetConnection();
+    //
+    //   final LoginResult result = await facebookLogin.login();
+    //
+    //   if (result.status == LoginStatus.success) {
+    //     final fbUser = await facebookLogin.getUserData();
+    //
+    //     userEntity =
+    //         UserEntity(fbUser["id"], fbUser["name"], fbUser["email"], fbUser["picture"]["data"]["url"], null, null);
+    //   } else {
+    //     throw (Failure(message: "Error in sign in with facebook, facebookUser is null"));
+    //   }
+    // } catch (e) {
+    //   print("Error login with facebook: $e");
+    //   throw (e);
+    // }
+    //
+    // return userEntity;
+  // }
 
   @override
   Future<Map<UserEntity, bool?>> loginWithSocial(UserEntity user) async {

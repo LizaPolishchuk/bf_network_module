@@ -44,19 +44,19 @@ class RepositoryImpl implements Repository {
       this.bonusCardRemoteDataSource,
       this.clientRemoteDataSource);
 
-  @override
-  Future<Either<Failure, Map<UserEntity, bool?>>> signInWithFacebook() async {
-    try {
-      UserEntity? user = await authRemoteDataSource.loginWithFacebook();
-
-      Map<UserEntity, bool?> response = await authRemoteDataSource.loginWithSocial(user);
-
-      return Right(response);
-    } catch (error) {
-      debugPrint("signInWithFacebook error $error");
-      return Left(Failure(message: error.toString()));
-    }
-  }
+  // @override
+  // Future<Either<Failure, Map<UserEntity, bool?>>> signInWithFacebook() async {
+  //   try {
+  //     UserEntity? user = await authRemoteDataSource.loginWithFacebook();
+  //
+  //     Map<UserEntity, bool?> response = await authRemoteDataSource.loginWithSocial(user);
+  //
+  //     return Right(response);
+  //   } catch (error) {
+  //     debugPrint("signInWithFacebook error $error");
+  //     return Left(Failure(message: error.toString()));
+  //   }
+  // }
 
   @override
   Future<Either<Failure, Map<UserEntity, bool?>>> signInWithGoogle() async {
@@ -649,5 +649,9 @@ class RepositoryImpl implements Repository {
   @override
   Future<Either<Failure, void>> switchThemeMode() async {
     return Right(await userRemoteDataSource.switchThemeMode());
+  }
+  @override
+  Future<Either<Failure, void>> switchMasterMode(bool masterMode) async {
+    return Right(await userRemoteDataSource.switchMasterMode(masterMode));
   }
 }

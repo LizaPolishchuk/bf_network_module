@@ -14,7 +14,7 @@ import 'package:salons_app_flutter_module/src/domain/entities/service_entity.dar
 abstract class Repository {
   ///Login
   Future<Either<Failure, Map<UserEntity, bool?>>> signInWithGoogle();
-  Future<Either<Failure, Map<UserEntity, bool?>>> signInWithFacebook();
+  // Future<Either<Failure, Map<UserEntity, bool?>>> signInWithFacebook();
   Future<Either<Failure, Salon>> signInWithEmailAndPassword(String email, String password);
   Future<Either<Failure, Salon>> signUpWithEmailAndPassword(String email, String password);
   Future<Either<Failure, String>> signUpWithLinkAndEmail(String email);
@@ -25,6 +25,7 @@ abstract class Repository {
   Future<Either<Failure, void>> signOut();
 
   Future<Either<Failure, void>> switchThemeMode();
+  Future<Either<Failure, void>> switchMasterMode(bool masterMode);
 
   Future<Either<Failure, void>> registerToken(String authToken, String pushToken);
   Future<Either<Failure, void>> unregisterToken(String authToken, String pushToken);

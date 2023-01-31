@@ -8,7 +8,8 @@ class LoginWithFacebookUseCase {
 
   LoginWithFacebookUseCase(this.repository);
 
-  Future<Either<Failure, Map<UserEntity, bool?>>> call() {
-    return repository.signInWithFacebook();
+  Future<Either<Failure, Map<UserEntity, bool?>>>? call() {
+    return null;
+    // return repository.signInWithFacebook();
   }
 }
