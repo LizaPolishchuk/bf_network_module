@@ -10,10 +10,12 @@ import 'package:salons_app_flutter_module/src/data/datasources/client_remote_dat
 import 'package:salons_app_flutter_module/src/data/datasources/filters_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/masters_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/orders_remote_data_sourse.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/places_remote_data_source.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/promo_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/salons_remote_data_source.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/services_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/user_remote_data_source.dart';
+import 'package:salons_app_flutter_module/src/domain/entities/place_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/repositories/repository.dart';
 
 import '../../../salons_app_flutter_module.dart';
@@ -30,6 +32,7 @@ class RepositoryImpl implements Repository {
   PromoRemoteDataSource promoRemoteDataSource;
   BonusCardRemoteDataSource bonusCardRemoteDataSource;
   ClientRemoteDataSource clientRemoteDataSource;
+  PlacesRemoteDataSource placesRemoteDataSource;
 
   RepositoryImpl(
       this.salonsRemoteDataSource,
@@ -42,7 +45,8 @@ class RepositoryImpl implements Repository {
       this.filtersRemoteDataSource,
       this.promoRemoteDataSource,
       this.bonusCardRemoteDataSource,
-      this.clientRemoteDataSource);
+      this.clientRemoteDataSource,
+      this.placesRemoteDataSource);
 
   // @override
   // Future<Either<Failure, Map<UserEntity, bool?>>> signInWithFacebook() async {
@@ -641,6 +645,28 @@ class RepositoryImpl implements Repository {
       return Right(await clientRemoteDataSource.addClient(client));
     } catch (error) {
       debugPrint("addClient error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<SuggestionPlace>>> fetchPlaceSuggestions(String input, String locale) async {
+    try {
+      return Right(await placesRemoteDataSource.fetchPlaceSuggestions(input, locale));
+    } catch (error) {
+      debugPrint("fetchPlaceSuggestions error $error");
+
+      return Left(Failure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Place>> getPlaceDetailFromId(String placeId) async {
+    try {
+      return Right(await placesRemoteDataSource.getPlaceDetailFromId(placeId));
+    } catch (error) {
+      debugPrint("getPlaceDetailFromId error $error");
 
       return Left(Failure(message: error.toString()));
     }

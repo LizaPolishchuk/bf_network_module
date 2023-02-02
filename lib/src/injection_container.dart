@@ -8,6 +8,7 @@ import 'package:salons_app_flutter_module/src/data/datasources/bonus_card_remote
 import 'package:salons_app_flutter_module/src/data/datasources/categories_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/client_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/filters_remote_data_sourse.dart';
+import 'package:salons_app_flutter_module/src/data/datasources/places_remote_data_source.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/promo_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/data/datasources/services_remote_data_sourse.dart';
 import 'package:salons_app_flutter_module/src/domain/usecases/categories/add_category_use_case.dart';
@@ -58,6 +59,7 @@ import 'domain/usecases/services/add_service_use_case.dart';
 import 'domain/usecases/services/get_services_list_use_case.dart';
 import 'domain/usecases/services/remove_service_use_case.dart';
 import 'domain/usecases/services/update_service_use_case.dart';
+import 'package:uuid/uuid.dart';
 
 final getIt = GetIt.instance;
 final String webClientId = "883762712602-6i0k9dj1t1mulse24pmgdnkcalsqg2rb.apps.googleusercontent.com";
@@ -65,6 +67,7 @@ final String webClientId = "883762712602-6i0k9dj1t1mulse24pmgdnkcalsqg2rb.apps.g
 Future<void> init() async {
   ///Repository
   getIt.registerLazySingleton<Repository>(() => RepositoryImpl(
+        getIt(),
         getIt(),
         getIt(),
         getIt(),
@@ -91,6 +94,7 @@ Future<void> init() async {
   getIt.registerLazySingleton<PromoRemoteDataSource>(() => PromoRemoteDataSourceImpl(getIt(), getIt()));
   getIt.registerLazySingleton<BonusCardRemoteDataSource>(() => BonusCardRemoteDataSourceImpl(getIt()));
   getIt.registerLazySingleton<ClientRemoteDataSource>(() => ClientRemoteDataSourceImpl(getIt(), getIt()));
+  getIt.registerLazySingleton<PlacesRemoteDataSource>(() => PlacesRemoteDataSource(Uuid().v4()));
 
   ///Use Cases
   getIt.registerLazySingleton(() => GetSalonsListUseCase(getIt()));
@@ -151,6 +155,8 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => UnregisterTokenUseCase(getIt()));
   getIt.registerLazySingleton(() => GetNotificationsListUseCase(getIt()));
   getIt.registerLazySingleton(() => SwitchLanguageUseCase(getIt()));
+  getIt.registerLazySingleton(() => SearchPlacesUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetPlaceDetailsUseCase(getIt()));
 
   ///External
   // final sharedPreferences = await SharedPreferences.getInstance();
