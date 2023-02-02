@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:either_dart/either.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
@@ -26,6 +27,7 @@ abstract class Repository {
 
   Future<Either<Failure, void>> switchThemeMode();
   Future<Either<Failure, void>> switchMasterMode(bool masterMode);
+  Future<Either<Failure, void>> setCurrentLanguage(String locale);
 
   Future<Either<Failure, void>> registerToken(String authToken, String pushToken);
   Future<Either<Failure, void>> unregisterToken(String authToken, String pushToken);

@@ -150,6 +150,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => RegisterTokenUseCase(getIt()));
   getIt.registerLazySingleton(() => UnregisterTokenUseCase(getIt()));
   getIt.registerLazySingleton(() => GetNotificationsListUseCase(getIt()));
+  getIt.registerLazySingleton(() => SwitchLanguageUseCase(getIt()));
 
   ///External
   // final sharedPreferences = await SharedPreferences.getInstance();

@@ -49,6 +49,7 @@ export './src/domain/usecases/users/get_user_by_id_use_case.dart';
 export './src/domain/usecases/users/update_user_use_case.dart';
 export './src/domain/usecases/users/switch_theme_mode_use_case.dart';
 export './src/domain/usecases/users/switch_master_mode_use_case.dart';
+export './src/domain/usecases/users/switch_language_use_case.dart';
 export './src/domain/usecases/filters/add_filters_use_case.dart';
 export './src/domain/usecases/filters/update_filters_use_case.dart';
 export './src/domain/usecases/filters/get_filters_use_case.dart';

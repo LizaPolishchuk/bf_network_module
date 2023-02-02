@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:hive/hive.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/category_entity.dart';
@@ -22,7 +24,7 @@ class LocalStorage {
 
   static const preferencesBox = '_preferencesBox';
   static const _firstLaunch = '_firstLaunch';
-  static const _currentLanguage = '_currentLanguage';
+  static const currentLanguage = '_currentLanguage';
   static const _dataVersions = '_dataVersions';
   static const _salon = '_salon';
   static const _salonId = '_salonId';
@@ -45,9 +47,9 @@ class LocalStorage {
 
   Future setFirstLaunch(bool firstLaunch) => _setValue(_firstLaunch, firstLaunch);
 
-  getLanguage() => _getValue(_currentLanguage);
+  getLanguage() => _getValue(currentLanguage);
 
-  Future setLanguage(String language) => _setValue(_currentLanguage, language);
+  Future setLanguage(String locale) => _setValue(currentLanguage, locale);
 
   getSalon() => _getValue(_salon);
 

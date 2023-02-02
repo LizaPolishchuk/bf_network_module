@@ -311,7 +311,7 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<Either<Failure, void>> registerToken(String authToken, String pushToken) async {
-  try {
+    try {
       // return Right(await authRemoteDataSource.registerToken(authToken, pushToken));
       return Right(null);
     } catch (error) {
@@ -323,7 +323,7 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<Either<Failure, void>> unregisterToken(String authToken, String pushToken) async {
-  try {
+    try {
       // return Right(await authRemoteDataSource.unregisterToken(authToken, pushToken));
       return Right(null);
     } catch (error) {
@@ -650,8 +650,14 @@ class RepositoryImpl implements Repository {
   Future<Either<Failure, void>> switchThemeMode() async {
     return Right(await userRemoteDataSource.switchThemeMode());
   }
+
   @override
   Future<Either<Failure, void>> switchMasterMode(bool masterMode) async {
     return Right(await userRemoteDataSource.switchMasterMode(masterMode));
+  }
+
+  @override
+  Future<Either<Failure, void>> setCurrentLanguage(String locale) async {
+    return Right(await userRemoteDataSource.setCurrentLanguage(locale));
   }
 }

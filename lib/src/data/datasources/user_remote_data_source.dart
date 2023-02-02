@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/user_entity.dart';
 
@@ -17,6 +18,8 @@ abstract class UserRemoteDataSource {
   Future<void> switchThemeMode();
 
   Future<void> switchMasterMode(bool masterMode);
+
+  Future<void> setCurrentLanguage(String locale);
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
@@ -76,6 +79,11 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
   Future<void> switchThemeMode() async {
     _localStorage.switchThemeMode();
+  }
+
+  @override
+  Future<void> setCurrentLanguage(String locale) async {
+    _localStorage.setLanguage(locale);
   }
 
   @override
