@@ -15,5 +15,6 @@ Filters _$FiltersFromJson(Map<String, dynamic> json) => Filters(
 
 Map<String, dynamic> _$FiltersToJson(Filters instance) => <String, dynamic>{
       'id': instance.id,
-      'popularServices': instance.popularServices?.map((k, e) => MapEntry(k.toString(), e)),
+      'popularServices':
+          instance.popularServices?.map((k, e) => MapEntry(k.toString(), e)),
     };

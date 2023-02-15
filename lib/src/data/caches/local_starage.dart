@@ -4,14 +4,14 @@ import 'package:hive/hive.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/category_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
+import 'package:salons_app_flutter_module/src/domain/entities/appointment_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/service_entity.dart';
 
 const int hiveTypeSalons = 0;
 const int hiveTypeUsers = 1;
 const int hiveTypeMasters = 2;
-const int hiveTypeOrders = 3;
+const int hiveTypeAppointments = 3;
 const int hiveTypeServices = 4;
 const int hiveTypeCategories = 5;
 const int hiveTypeClients = 6;
@@ -73,7 +73,7 @@ class LocalStorage {
 
   getOrdersList() => _getValue(_orders);
 
-  Future setOrdersList(List<OrderEntity> orders) => _setValue(_orders, orders);
+  Future setOrdersList(List<AppointmentEntity> orders) => _setValue(_orders, orders);
 
   getCategoriesList() => _getValue(_categories);
 

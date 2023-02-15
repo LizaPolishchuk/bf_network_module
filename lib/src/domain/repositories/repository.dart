@@ -8,7 +8,7 @@ import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/category_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/filters_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
+import 'package:salons_app_flutter_module/src/domain/entities/appointment_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/place_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/service_entity.dart';
@@ -53,13 +53,13 @@ abstract class Repository {
   //     String salonId, String serviceId);
 
   ///Orders
-  Future<Either<Failure, List<OrderEntity>>> getOrdersList(
-      String id, OrderForType orderForType, String? dateFor, String? dateFrom, String? dateTo);
-  Future<Either<Failure, List<OrderEntity>>> getAvailableTime(
+  Future<Either<Failure, List<AppointmentEntity>>> getOrdersList(
+      String id, AppointmentForType orderForType, String? dateFor, String? dateFrom, String? dateTo);
+  Future<Either<Failure, List<AppointmentEntity>>> getAvailableTime(
       String salonId, String serviceId, String masterId, String date);
   Future<Either<Failure, void>> removeOrder(String orderId);
-  Future<Either<Failure, OrderEntity>> updateOrder(OrderEntity orderEntity);
-  Future<Either<Failure, OrderEntity>> addOrder(OrderEntity orderEntity);
+  Future<Either<Failure, AppointmentEntity>> updateOrder(AppointmentEntity orderEntity);
+  Future<Either<Failure, AppointmentEntity>> addOrder(AppointmentEntity orderEntity);
 
   ///Services
   Future<Either<Failure, List<Service>>> getServicesList(String salonId, String? categoryId);

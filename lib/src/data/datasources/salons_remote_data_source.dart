@@ -90,8 +90,8 @@ class SalonsRemoteDataSourceImpl implements SalonsRemoteDataSource {
     }
 
     Salon salon = response.salon!;
-    salon.mastersList = response.masters ?? [];
-    salon.servicesList = response.services ?? [];
+    // salon.mastersList = response.masters ?? [];
+    // salon.servicesList = response.services ?? [];
 
     return salon;
   }

@@ -14,26 +14,20 @@ class FeedbackEntity extends BaseEntity {
   @HiveField(4)
   String authorName;
   @HiveField(5)
+  @JsonKey(name: "text")
   String feedbackText;
   @HiveField(6)
   DateTime date;
   @HiveField(7)
+  @JsonKey(name: "rate")
   int points;
 
   FeedbackEntity(id, name, description, this.authorName, this.authorAvatar, this.feedbackText, this.date, this.points)
       : super(id, name, description);
 
-  factory FeedbackEntity.fromJson(Map<String, dynamic> json) {
-    json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
-    return _$FeedbackEntityFromJson(json);
-  }
+  factory FeedbackEntity.fromJson(Map<String, dynamic> json) => _$FeedbackEntityFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = _$FeedbackEntityToJson(this);
-    json["_id"] = json["id"];
-    json.remove("id");
-    return json;
-  }
+  Map<String, dynamic> toJson() => _$FeedbackEntityToJson(this);
 
   FeedbackEntity copy({String? authorName, String? authorAvatar, String? feedback, DateTime? date, int? points}) {
     return FeedbackEntity(id, name, description, authorName ?? this.authorName, authorAvatar ?? this.authorAvatar,

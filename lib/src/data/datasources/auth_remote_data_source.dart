@@ -38,6 +38,7 @@ abstract class AuthRemoteDataSource {
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth firebaseAuth;
   final GoogleSignIn googleSignIn;
+
   // final FacebookAuth facebookLogin;
   final LocalStorage localStorage;
   final APIClient apiClient;
@@ -46,50 +47,61 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<UserEntity> loginWithGoogle() async {
-    UserEntity userEntity;
-    try {
-      await ConnectivityManager.checkInternetConnection();
+    throw (Failure(message: "Not implemented logic"));
 
-      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-      if (googleUser == null) {
-        throw (Failure(message: "Error in sign in with google, googleUser is null"));
-      }
-
-      userEntity = UserEntity(googleUser.id, googleUser.displayName, googleUser.email, googleUser.photoUrl, null, null);
-    } catch (e) {
-      if (e is FirebaseAuthException) {
-        print("${e.code}");
-      }
-      //sign_in_canceled
-      print("Error in sign in with google: $e");
-      throw (e);
-    }
-
-    return userEntity;
-  }
-
-  // @override
-  // Future<UserEntity> loginWithFacebook() async {
     // UserEntity userEntity;
     // try {
-    //   // await ConnectivityManager.checkInternetConnection();
+    //   await ConnectivityManager.checkInternetConnection();
     //
-    //   final LoginResult result = await facebookLogin.login();
-    //
-    //   if (result.status == LoginStatus.success) {
-    //     final fbUser = await facebookLogin.getUserData();
-    //
-    //     userEntity =
-    //         UserEntity(fbUser["id"], fbUser["name"], fbUser["email"], fbUser["picture"]["data"]["url"], null, null);
-    //   } else {
-    //     throw (Failure(message: "Error in sign in with facebook, facebookUser is null"));
+    //   final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+    //   if (googleUser == null) {
+    //     throw (Failure(message: "Error in sign in with google, googleUser is null"));
     //   }
+    //
+    //   userEntity = UserEntity(
+    //     id: googleUser.id,
+    //     firstname: googleUser.displayName,
+    //     lastname: "",
+    //     p
+    //     googleUser.email,
+    //     phone: googleUser.photoUrl,
+    //     null,
+    //     null,
+    //   );
     // } catch (e) {
-    //   print("Error login with facebook: $e");
+    //   if (e is FirebaseAuthException) {
+    //     print("${e.code}");
+    //   }
+    //   //sign_in_canceled
+    //   print("Error in sign in with google: $e");
     //   throw (e);
     // }
     //
     // return userEntity;
+  }
+
+  // @override
+  // Future<UserEntity> loginWithFacebook() async {
+  // UserEntity userEntity;
+  // try {
+  //   // await ConnectivityManager.checkInternetConnection();
+  //
+  //   final LoginResult result = await facebookLogin.login();
+  //
+  //   if (result.status == LoginStatus.success) {
+  //     final fbUser = await facebookLogin.getUserData();
+  //
+  //     userEntity =
+  //         UserEntity(fbUser["id"], fbUser["name"], fbUser["email"], fbUser["picture"]["data"]["url"], null, null);
+  //   } else {
+  //     throw (Failure(message: "Error in sign in with facebook, facebookUser is null"));
+  //   }
+  // } catch (e) {
+  //   print("Error login with facebook: $e");
+  //   throw (e);
+  // }
+  //
+  // return userEntity;
   // }
 
   @override
@@ -106,7 +118,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }
 
       creator = authResult.creator;
-      userFromResp = authResult.user!..isRegistered = !creator!;
+      userFromResp = authResult.user!;
+      // ..isRegistered = !creator!;
 
       print("loginWithSocial success, token: ${authResult.accessToken}");
 
@@ -266,7 +279,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       debugPrint("User success logged in uid: ${loggedInUser.user!.uid}");
 
-      UserEntity userEntity = UserEntity(loggedInUser.user!.uid, "", "", "", phoneNumber, null);
+      UserEntity userEntity = UserEntity(
+        id: loggedInUser.user!.uid,
+        firstname: '',
+        lastname: '',
+        phone: phoneNumber,
+        locale: '',
+        gender: '',
+      );
 
       var response = await loginWithSocial(userEntity);
 

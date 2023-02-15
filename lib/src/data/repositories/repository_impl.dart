@@ -132,8 +132,8 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, List<OrderEntity>>> getOrdersList(
-      String id, OrderForType orderForType, String? dateFor, String? dateFrom, String? dateTo) async {
+  Future<Either<Failure, List<AppointmentEntity>>> getOrdersList(
+      String id, AppointmentForType orderForType, String? dateFor, String? dateFrom, String? dateTo) async {
     try {
       return Right(await ordersRemoteDataSource.getOrdersList(id, orderForType, dateFor, dateFrom, dateTo));
     } catch (error) {
@@ -144,7 +144,7 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, List<OrderEntity>>> getAvailableTime(
+  Future<Either<Failure, List<AppointmentEntity>>> getAvailableTime(
       String salonId, String serviceId, String masterId, String date) async {
     try {
       return Right(await ordersRemoteDataSource.getAvailableTime(salonId, serviceId, masterId, date));
@@ -156,7 +156,7 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, OrderEntity>> updateOrder(OrderEntity orderEntity) async {
+  Future<Either<Failure, AppointmentEntity>> updateOrder(AppointmentEntity orderEntity) async {
     try {
       return Right(await ordersRemoteDataSource.updateOrder(orderEntity));
     } catch (error) {
@@ -167,7 +167,7 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<Failure, OrderEntity>> addOrder(OrderEntity orderEntity) async {
+  Future<Either<Failure, AppointmentEntity>> addOrder(AppointmentEntity orderEntity) async {
     try {
       return Right(await ordersRemoteDataSource.addOrder(orderEntity));
     } catch (error) {

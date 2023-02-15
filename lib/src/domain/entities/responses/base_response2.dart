@@ -6,6 +6,7 @@ part 'base_response2.g.dart';
 class BaseResponse2<T> {
   final String? message;
   final T? data;
+  // final List<ErrorDetails> detail;
 
   BaseResponse2(this.message, this.data);
 
@@ -14,4 +15,11 @@ class BaseResponse2<T> {
   }
 
   Map<String, dynamic> toJson(Object Function(T value) toJsonT) => _$BaseResponse2ToJson(this, toJsonT);
+}
+
+class ErrorDetails{
+  final String msg;
+  final String string;
+
+  ErrorDetails(this.msg, this.string);
 }

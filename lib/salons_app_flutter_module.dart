@@ -5,7 +5,7 @@ export './src/data/caches/local_starage.dart';
 export './src/domain/entities/base_entity.dart';
 export './src/domain/entities/category_entity.dart';
 export './src/domain/entities/master_entity.dart';
-export './src/domain/entities/order_entity.dart';
+export './src/domain/entities/appointment_entity.dart';
 export './src/domain/entities/salon_entity.dart';
 export './src/domain/entities/service_entity.dart';
 export './src/domain/entities/client_entity.dart';

@@ -10,29 +10,52 @@ part 'bonus_card_entity.g.dart';
 @JsonSerializable()
 class BonusCard extends BaseEntity {
   @HiveField(3)
-  int? color;
+  final int? color;
   @HiveField(4)
-  int? discount;
+  final int? discount;
   @HiveField(5)
-  String? creatorSalon;
+  @JsonKey(name: "salon_uuid")
+  final String? creatorSalon;
+  @HiveField(6)
+  @JsonKey(name: "promo_type")
+  final String promoType;
+  @HiveField(7)
+  @JsonKey(name: "day_expire")
+  final String? expiredDate;
 
-  BonusCard(id, name, description, this.color, this.discount, this.creatorSalon) : super(id, name, description);
+  BonusCard(
+      {id,
+      name,
+      description,
+      required this.promoType,
+      required this.discount,
+      this.color,
+      this.expiredDate,
+      required this.creatorSalon})
+      : super(id, name, description);
 
-  factory BonusCard.fromJson(Map<String, dynamic> json) {
-    json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
-    return _$BonusCardFromJson(json);
-  }
+  factory BonusCard.fromJson(Map<String, dynamic> json) => _$BonusCardFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = _$BonusCardToJson(this);
-    json["_id"] = json["id"];
-    json.remove("id");
-    return json;
-  }
+  Map<String, dynamic> toJson() => _$BonusCardToJson(this);
 
-  BonusCard copy({String? name, String? description, int? color, int? discount, String? creatorSalon}) {
-    return BonusCard(id, name ?? this.name, description ?? this.description, color ?? this.color,
-        discount ?? this.discount, creatorSalon ?? this.creatorSalon);
+  BonusCard copy(
+      {String? name,
+      String? description,
+      String? promoType,
+      int? color,
+      int? discount,
+      String? creatorSalon,
+      String? expiredDate}) {
+    return BonusCard(
+      id: id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      color: color ?? this.color,
+      discount: discount ?? this.discount,
+      creatorSalon: creatorSalon ?? this.creatorSalon,
+      expiredDate: expiredDate ?? this.expiredDate,
+      promoType: promoType ?? this.promoType,
+    );
   }
 
   @override

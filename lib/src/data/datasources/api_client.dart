@@ -70,17 +70,17 @@ abstract class APIClient {
   Future<BaseResponse2> deleteMaster(@Path("masterId") String masterId);
 
   @GET("/order/list")
-  Future<BaseResponse2<List<OrderEntity>>> getOrdersList(@Queries() Map<String, String?> options);
+  Future<BaseResponse2<List<AppointmentEntity>>> getOrdersList(@Queries() Map<String, String?> options);
 
   @GET("/order")
-  Future<BaseResponse2<List<OrderEntity>>> getAvailableTimeList(@Query("salonId") String salonId,
+  Future<BaseResponse2<List<AppointmentEntity>>> getAvailableTimeList(@Query("salonId") String salonId,
       @Query("masterId") String masterId, @Query("serviceId") String serviceId, @Query("date") String date);
 
   @POST("/order/create")
-  Future<BaseResponse2<OrderEntity>> addOrder(@Body() OrderEntity orderEntity);
+  Future<BaseResponse2<AppointmentEntity>> addOrder(@Body() AppointmentEntity orderEntity);
 
   @POST("/order/update")
-  Future<BaseResponse2<OrderEntity>> updateOrder(@Body() OrderEntity orderEntity);
+  Future<BaseResponse2<AppointmentEntity>> updateOrder(@Body() AppointmentEntity orderEntity);
 
   @DELETE("/order/delete/{orderId}")
   Future<BaseResponse2> deleteOrder(@Path("orderId") String orderId);

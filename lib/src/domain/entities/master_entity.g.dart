@@ -17,37 +17,55 @@ class MasterAdapter extends TypeAdapter<Master> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Master(
-      fields[0] as dynamic,
-      fields[1] as dynamic,
-      fields[2] as dynamic,
-      fields[3] as String?,
-      fields[4] as String?,
-      fields[5] as String?,
-      (fields[6] as List).cast<String>(),
-      (fields[7] as Map?)?.cast<String, String>(),
-      fields[8] as String?,
-      fields[9] as String?,
+      id: fields[0] as dynamic,
+      name: fields[1] as dynamic,
+      description: fields[2] as dynamic,
+      avatar: fields[10] as String?,
+      position: fields[12] as String?,
+      status: fields[13] as String?,
+      firstname: fields[3] as String,
+      lastname: fields[4] as String,
+      email: fields[6] as String?,
+      country: fields[8] as String?,
+      city: fields[7] as String?,
+      locale: fields[9] as String,
+      gender: fields[11] as String,
+      startWorkTime: fields[14] as String,
+      endWorkTime: fields[15] as String,
+      phoneNumber: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Master obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(16)
       ..writeByte(3)
-      ..write(obj.avatar)
+      ..write(obj.firstname)
       ..writeByte(4)
-      ..write(obj.avatarPath)
+      ..write(obj.lastname)
       ..writeByte(5)
-      ..write(obj.position)
-      ..writeByte(6)
-      ..write(obj.workedInSalons)
-      ..writeByte(7)
-      ..write(obj.providedServices)
-      ..writeByte(8)
-      ..write(obj.status)
-      ..writeByte(9)
       ..write(obj.phoneNumber)
+      ..writeByte(6)
+      ..write(obj.email)
+      ..writeByte(7)
+      ..write(obj.city)
+      ..writeByte(8)
+      ..write(obj.country)
+      ..writeByte(9)
+      ..write(obj.locale)
+      ..writeByte(10)
+      ..write(obj.avatar)
+      ..writeByte(11)
+      ..write(obj.gender)
+      ..writeByte(12)
+      ..write(obj.position)
+      ..writeByte(13)
+      ..write(obj.status)
+      ..writeByte(14)
+      ..write(obj.startWorkTime)
+      ..writeByte(15)
+      ..write(obj.endWorkTime)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -61,7 +79,10 @@ class MasterAdapter extends TypeAdapter<Master> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is MasterAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
+      identical(this, other) ||
+      other is MasterAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }
 
 // **************************************************************************
@@ -69,29 +90,39 @@ class MasterAdapter extends TypeAdapter<Master> {
 // **************************************************************************
 
 Master _$MasterFromJson(Map<String, dynamic> json) => Master(
-      json['id'],
-      json['name'],
-      json['description'],
-      json['avatar'] as String?,
-      json['avatarPath'] as String?,
-      json['position'] as String?,
-      (json['workedInSalons'] as List<dynamic>).map((e) => e as String).toList(),
-      (json['providedServices'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
-      ),
-      json['status'] as String?,
-      json['phoneNumber'] as String?,
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      avatar: json['photo_url'] as String?,
+      position: json['position'] as String?,
+      status: json['status'] as String?,
+      firstname: json['firstname'] as String,
+      lastname: json['lastname'] as String,
+      email: json['email'] as String?,
+      country: json['country'] as String?,
+      city: json['city'] as String?,
+      locale: json['locale'] as String,
+      gender: json['gender'] as String,
+      startWorkTime: json['start_work_time'] as String,
+      endWorkTime: json['end_work_time'] as String,
+      phoneNumber: json['phone_number'] as String,
     );
 
 Map<String, dynamic> _$MasterToJson(Master instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
-      'avatar': instance.avatar,
-      'avatarPath': instance.avatarPath,
+      'firstname': instance.firstname,
+      'lastname': instance.lastname,
+      'phone_number': instance.phoneNumber,
+      'email': instance.email,
+      'city': instance.city,
+      'country': instance.country,
+      'locale': instance.locale,
+      'photo_url': instance.avatar,
+      'gender': instance.gender,
       'position': instance.position,
-      'workedInSalons': instance.workedInSalons,
-      'providedServices': instance.providedServices,
       'status': instance.status,
-      'phoneNumber': instance.phoneNumber,
+      'start_work_time': instance.startWorkTime,
+      'end_work_time': instance.endWorkTime,
     };

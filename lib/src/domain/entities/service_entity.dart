@@ -10,53 +10,39 @@ part 'service_entity.g.dart';
 @JsonSerializable()
 class Service extends BaseEntity {
   @HiveField(3)
-  double? price;
+  double price;
   @HiveField(4)
-  String? creatorSalon;
-  @HiveField(5)
-  String? categoryId;
-  @HiveField(6)
+  @JsonKey(name: "category")
   String? categoryName;
-  @HiveField(7)
+  @HiveField(5)
+  @JsonKey(name: "category_color")
   int? categoryColor;
-  @HiveField(8)
-  int? duration;
+  @HiveField(6)
+  int duration;
 
-  Service(id, name, description, this.price, this.creatorSalon, this.categoryId, this.categoryName, this.categoryColor,
-      this.duration)
+  // @HiveField(4)
+  // String? creatorSalon;
+  // @HiveField(5)
+  // String? categoryId;
+
+  Service({id, name, description, required this.price, this.categoryName, this.categoryColor, required this.duration})
       : super(id, name, description);
 
   factory Service.fromJson(Map<String, dynamic> json) {
-    json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
     return _$ServiceFromJson(json);
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = _$ServiceToJson(this);
-    json["_id"] = json["id"];
-    json.remove("id");
-    return json;
-  }
+  Map<String, dynamic> toJson() => _$ServiceToJson(this);
 
-  Service copy(
-      {String? id,
-      String? name,
-      double? price,
-      String? creatorSalon,
-      String? categoryId,
-      String? categoryName,
-      int? categoryColor,
-      int? duration}) {
+  Service copy({String? id, String? name, double? price, String? categoryName, int? categoryColor, int? duration}) {
     return Service(
-        id ?? this.id,
-        name ?? this.name,
-        description,
-        price ?? this.price,
-        creatorSalon ?? this.creatorSalon,
-        categoryId ?? this.categoryId,
-        categoryName ?? this.categoryName,
-        categoryColor ?? this.categoryColor,
-        duration ?? this.duration);
+        id: id ?? this.id,
+        name: name ?? this.name,
+        description: description,
+        price: price ?? this.price,
+        categoryName: categoryName ?? this.categoryName,
+        categoryColor: categoryColor ?? this.categoryColor,
+        duration: duration ?? this.duration);
   }
 
   @override

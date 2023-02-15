@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
@@ -9,44 +8,77 @@ part 'user_entity.g.dart';
 @JsonSerializable()
 class UserEntity {
   @HiveField(0)
-  String id;
+  final String id;
   @HiveField(1)
-  String? name;
+  final String firstname;
   @HiveField(2)
-  String? email;
+  final String lastname;
   @HiveField(3)
-  String? avatar;
+  final String? email;
   @HiveField(4)
-  String? phone;
+  @JsonKey(name: "phone_number")
+  final String phone;
   @HiveField(5)
-  int? gender; // 0 - man, 1 - woman
+  final String? city;
   @HiveField(6)
-  @JsonKey(defaultValue: false)
-  bool? isAdmin;
+  final String? country;
   @HiveField(7)
-  bool? isActivated;
+  final String locale;
   @HiveField(8)
-  @JsonKey(defaultValue: true)
-  bool? isRegistered;
+  @JsonKey(name: "photo_url")
+  final String? avatar;
+  @HiveField(9)
+  final String gender; //
 
-  UserEntity(this.id, this.name, this.email, this.avatar, this.phone, this.gender,
-      {this.isActivated, this.isRegistered});
+  // @HiveField(6)
+  // @JsonKey(defaultValue: false)
+  // bool? isAdmin;
+  // @HiveField(7)
+  // bool? isActivated;
+  // @HiveField(8)
+  // @JsonKey(defaultValue: true)
+  // bool? isRegistered;
+
+  UserEntity({
+    required this.id,
+    required this.firstname,
+    required this.lastname,
+    required this.phone,
+    this.email,
+    this.avatar,
+    this.city,
+    this.country,
+    required this.locale,
+    required this.gender,
+  });
 
   factory UserEntity.fromJson(Map<String, dynamic> json) {
-    json["id"] = (json["id"] as String?) ?? json["_id"] ?? "";
     return _$UserEntityFromJson(json);
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = _$UserEntityToJson(this);
-    json["_id"] = json["id"];
-    json.remove("id");
-    return json;
-  }
+  Map<String, dynamic> toJson() => _$UserEntityToJson(this);
 
-  UserEntity copy({String? name, String? email, String? avatar, String? phone, int? gender}) {
+  UserEntity copy(
+      {String? firstname,
+      String? lastname,
+      String? phone,
+      String? email,
+      String? avatar,
+      String? city,
+      String? country,
+      String? locale,
+      String? gender}) {
     return UserEntity(
-        id, name ?? this.name, email ?? this.email, avatar ?? this.avatar, phone ?? this.phone, gender ?? this.gender,
-        isActivated: this.isActivated);
+      id: id,
+      firstname: firstname ?? this.firstname,
+      lastname: lastname ?? this.lastname,
+      phone: phone ?? this.phone,
+      email: email ?? this.email,
+      avatar: avatar ?? this.avatar,
+      city: city ?? this.city,
+      country: country ?? this.country,
+      locale: locale ?? this.locale,
+      gender: gender ?? this.gender,
+    );
   }
 }

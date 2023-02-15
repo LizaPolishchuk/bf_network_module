@@ -17,25 +17,31 @@ class BonusCardAdapter extends TypeAdapter<BonusCard> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return BonusCard(
-      fields[0] as dynamic,
-      fields[1] as dynamic,
-      fields[2] as dynamic,
-      fields[3] as int?,
-      fields[4] as int?,
-      fields[5] as String?,
+      id: fields[0] as dynamic,
+      name: fields[1] as dynamic,
+      description: fields[2] as dynamic,
+      promoType: fields[6] as String,
+      discount: fields[4] as int?,
+      color: fields[3] as int?,
+      expiredDate: fields[7] as String?,
+      creatorSalon: fields[5] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, BonusCard obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(8)
       ..writeByte(3)
       ..write(obj.color)
       ..writeByte(4)
       ..write(obj.discount)
       ..writeByte(5)
       ..write(obj.creatorSalon)
+      ..writeByte(6)
+      ..write(obj.promoType)
+      ..writeByte(7)
+      ..write(obj.expiredDate)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -49,7 +55,10 @@ class BonusCardAdapter extends TypeAdapter<BonusCard> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is BonusCardAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
+      identical(this, other) ||
+      other is BonusCardAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }
 
 // **************************************************************************
@@ -57,12 +66,14 @@ class BonusCardAdapter extends TypeAdapter<BonusCard> {
 // **************************************************************************
 
 BonusCard _$BonusCardFromJson(Map<String, dynamic> json) => BonusCard(
-      json['id'],
-      json['name'],
-      json['description'],
-      json['color'] as int?,
-      json['discount'] as int?,
-      json['creatorSalon'] as String?,
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      promoType: json['promo_type'] as String,
+      discount: json['discount'] as int?,
+      color: json['color'] as int?,
+      expiredDate: json['day_expire'] as String?,
+      creatorSalon: json['salon_uuid'] as String?,
     );
 
 Map<String, dynamic> _$BonusCardToJson(BonusCard instance) => <String, dynamic>{
@@ -71,5 +82,7 @@ Map<String, dynamic> _$BonusCardToJson(BonusCard instance) => <String, dynamic>{
       'description': instance.description,
       'color': instance.color,
       'discount': instance.discount,
-      'creatorSalon': instance.creatorSalon,
+      'salon_uuid': instance.creatorSalon,
+      'promo_type': instance.promoType,
+      'day_expire': instance.expiredDate,
     };

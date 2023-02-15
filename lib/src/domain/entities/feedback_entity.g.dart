@@ -56,31 +56,35 @@ class FeedbackEntityAdapter extends TypeAdapter<FeedbackEntity> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is FeedbackEntityAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
+      other is FeedbackEntityAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-FeedbackEntity _$FeedbackEntityFromJson(Map<String, dynamic> json) => FeedbackEntity(
+FeedbackEntity _$FeedbackEntityFromJson(Map<String, dynamic> json) =>
+    FeedbackEntity(
       json['id'],
       json['name'],
       json['description'],
       json['authorName'] as String,
       json['authorAvatar'] as String?,
-      json['feedbackText'] as String,
+      json['text'] as String,
       DateTime.parse(json['date'] as String),
-      json['points'] as int,
+      json['rate'] as int,
     );
 
-Map<String, dynamic> _$FeedbackEntityToJson(FeedbackEntity instance) => <String, dynamic>{
+Map<String, dynamic> _$FeedbackEntityToJson(FeedbackEntity instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
       'authorAvatar': instance.authorAvatar,
       'authorName': instance.authorName,
-      'feedbackText': instance.feedbackText,
+      'text': instance.feedbackText,
       'date': instance.date.toIso8601String(),
-      'points': instance.points,
+      'rate': instance.points,
     };

@@ -17,16 +17,16 @@ class SalonAdapter extends TypeAdapter<Salon> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Salon(
-      fields[0] as dynamic,
-      fields[1] as dynamic,
-      fields[2] as dynamic,
-      fields[3] as String?,
-      fields[4] as String?,
-      fields[5] as String?,
-      fields[6] as String?,
-      fields[7] as String?,
-      fields[8] as bool?,
-      fields[9] as bool,
+      id: fields[0] as dynamic,
+      name: fields[1] as dynamic,
+      description: fields[2] as dynamic,
+      photo: fields[3] as String?,
+      email: fields[4] as String?,
+      city: fields[5] as String?,
+      country: fields[6] as String?,
+      address: fields[8] as String?,
+      locale: fields[7] as String,
+      phoneNumber: fields[9] as String,
     );
   }
 
@@ -37,17 +37,17 @@ class SalonAdapter extends TypeAdapter<Salon> {
       ..writeByte(3)
       ..write(obj.photo)
       ..writeByte(4)
-      ..write(obj.photoPath)
+      ..write(obj.email)
       ..writeByte(5)
-      ..write(obj.ownerId)
+      ..write(obj.city)
       ..writeByte(6)
-      ..write(obj.address)
+      ..write(obj.country)
       ..writeByte(7)
-      ..write(obj.phoneNumber)
+      ..write(obj.locale)
       ..writeByte(8)
-      ..write(obj.isTop)
+      ..write(obj.address)
       ..writeByte(9)
-      ..write(obj.isFavourite)
+      ..write(obj.phoneNumber)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -61,7 +61,10 @@ class SalonAdapter extends TypeAdapter<Salon> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is SalonAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
+      identical(this, other) ||
+      other is SalonAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }
 
 // **************************************************************************
@@ -69,27 +72,27 @@ class SalonAdapter extends TypeAdapter<Salon> {
 // **************************************************************************
 
 Salon _$SalonFromJson(Map<String, dynamic> json) => Salon(
-      json['id'],
-      json['name'],
-      json['description'],
-      json['photo'] as String?,
-      json['photoPath'] as String?,
-      json['ownerId'] as String?,
-      json['address'] as String?,
-      json['phoneNumber'] as String?,
-      json['isTop'] as bool?,
-      json['isFavourite'] as bool? ?? false,
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      photo: json['photo_url'] as String?,
+      email: json['email'] as String?,
+      city: json['city'] as String?,
+      country: json['country'] as String?,
+      address: json['address'] as String?,
+      locale: json['locale'] as String,
+      phoneNumber: json['phone_number'] as String,
     );
 
 Map<String, dynamic> _$SalonToJson(Salon instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
-      'photo': instance.photo,
-      'photoPath': instance.photoPath,
-      'ownerId': instance.ownerId,
+      'photo_url': instance.photo,
+      'email': instance.email,
+      'city': instance.city,
+      'country': instance.country,
+      'locale': instance.locale,
       'address': instance.address,
-      'phoneNumber': instance.phoneNumber,
-      'isTop': instance.isTop,
-      'isFavourite': instance.isFavourite,
+      'phone_number': instance.phoneNumber,
     };

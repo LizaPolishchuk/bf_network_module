@@ -17,33 +17,27 @@ class ServiceAdapter extends TypeAdapter<Service> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Service(
-      fields[0] as dynamic,
-      fields[1] as dynamic,
-      fields[2] as dynamic,
-      fields[3] as double?,
-      fields[4] as String?,
-      fields[5] as String?,
-      fields[6] as String?,
-      fields[7] as int?,
-      fields[8] as int?,
+      id: fields[0] as dynamic,
+      name: fields[1] as dynamic,
+      description: fields[2] as dynamic,
+      price: fields[3] as double,
+      categoryName: fields[4] as String?,
+      categoryColor: fields[5] as int?,
+      duration: fields[6] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Service obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(7)
       ..writeByte(3)
       ..write(obj.price)
       ..writeByte(4)
-      ..write(obj.creatorSalon)
-      ..writeByte(5)
-      ..write(obj.categoryId)
-      ..writeByte(6)
       ..write(obj.categoryName)
-      ..writeByte(7)
+      ..writeByte(5)
       ..write(obj.categoryColor)
-      ..writeByte(8)
+      ..writeByte(6)
       ..write(obj.duration)
       ..writeByte(0)
       ..write(obj.id)
@@ -58,7 +52,10 @@ class ServiceAdapter extends TypeAdapter<Service> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is ServiceAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
+      identical(this, other) ||
+      other is ServiceAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }
 
 // **************************************************************************
@@ -66,15 +63,13 @@ class ServiceAdapter extends TypeAdapter<Service> {
 // **************************************************************************
 
 Service _$ServiceFromJson(Map<String, dynamic> json) => Service(
-      json['id'],
-      json['name'],
-      json['description'],
-      (json['price'] as num?)?.toDouble(),
-      json['creatorSalon'] as String?,
-      json['categoryId'] as String?,
-      json['categoryName'] as String?,
-      json['categoryColor'] as int?,
-      json['duration'] as int?,
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      price: (json['price'] as num).toDouble(),
+      categoryName: json['category'] as String?,
+      categoryColor: json['category_color'] as int?,
+      duration: json['duration'] as int,
     );
 
 Map<String, dynamic> _$ServiceToJson(Service instance) => <String, dynamic>{
@@ -82,9 +77,7 @@ Map<String, dynamic> _$ServiceToJson(Service instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'price': instance.price,
-      'creatorSalon': instance.creatorSalon,
-      'categoryId': instance.categoryId,
-      'categoryName': instance.categoryName,
-      'categoryColor': instance.categoryColor,
+      'category': instance.categoryName,
+      'category_color': instance.categoryColor,
       'duration': instance.duration,
     };
