@@ -6,16 +6,19 @@ import 'package:salons_app_flutter_module/src/domain/entities/responses/base_res
 import 'package:salons_app_flutter_module/src/domain/entities/responses/salon_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/tokens_response.dart';
 import 'package:salons_app_flutter_module/src/domain/entities/responses/user_response.dart';
+import 'package:salons_app_flutter_module/src/utils/constants.dart';
 
 import '../../../salons_app_flutter_module.dart';
 
 part 'api_client.g.dart';
 
 ///prod
-@RestApi(baseUrl: "https://salonsliza.herokuapp.com/api")
+// @RestApi(baseUrl: "https://salonsliza.herokuapp.com/api")
 
 ///local
 // @RestApi(baseUrl: "http://localhost:3999/api")
+
+@RestApi(baseUrl: "http://${Constants.API_HOST}:${Constants.API_PORT}/api")
 
 abstract class APIClient {
   factory APIClient(Dio dio, {String baseUrl}) = _APIClient;
