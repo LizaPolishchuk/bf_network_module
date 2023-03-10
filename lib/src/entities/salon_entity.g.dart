@@ -8,8 +8,8 @@ part of 'salon_entity.dart';
 
 Salon _$SalonFromJson(Map<String, dynamic> json) => Salon(
       id: json['id'],
-      name: json['name'],
-      description: json['description'],
+      name: json['name'] as String,
+      description: json['description'] as String,
       photo: json['photo_url'] as String?,
       email: json['email'] as String?,
       city: json['city'] as String?,

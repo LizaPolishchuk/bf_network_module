@@ -6,6 +6,8 @@ part 'client_entity.g.dart';
 
 @JsonSerializable()
 class Client extends BaseEntity {
+  String name;
+
   String? photoUrl;
 
   String? city;
@@ -18,8 +20,8 @@ class Client extends BaseEntity {
 
   String? creatorSalon;
 
-  Client(id, name, description, this.photoUrl, this.city, this.status, this.phone, this.services, this.creatorSalon)
-      : super(id, name, description);
+  Client(id, this.name, this.photoUrl, this.city, this.status, this.phone, this.services, this.creatorSalon)
+      : super(id);
 
   factory Client.fromJson(Map<String, dynamic> json) {
     return _$ClientFromJson(json);
@@ -37,7 +39,7 @@ class Client extends BaseEntity {
       String? phone,
       Map<String, String>? service,
       String? creatorSalon}) {
-    return Client(id, name ?? this.name, description, photoUrl ?? this.photoUrl, city ?? this.city,
+    return Client(id, name ?? this.name, photoUrl ?? this.photoUrl, city ?? this.city,
         status ?? this.status, phone ?? this.phone, services ?? this.services, creatorSalon ?? this.creatorSalon);
   }
 

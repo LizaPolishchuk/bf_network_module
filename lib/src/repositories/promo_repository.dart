@@ -32,6 +32,14 @@ class PromoRepository {
     return response;
   }
 
+  Future<List<Promo>> getSalonPromos(String uuid) async {
+    await ConnectivityManager.checkInternetConnection();
+
+    final response = await _apiClient.getSalonPromos(uuid);
+
+    return response;
+  }
+
   Future<BaseResponse> deletePromo(String userId) async {
     await ConnectivityManager.checkInternetConnection();
 

@@ -1,4 +1,5 @@
 import 'package:salons_app_flutter_module/src/api/api_client.dart';
+import 'package:salons_app_flutter_module/src/entities/requests/create_appointment_request.dart';
 import 'package:salons_app_flutter_module/src/utils/connectivity_manager.dart';
 import 'package:salons_app_flutter_module/src/entities/appointment_entity.dart';
 import 'package:salons_app_flutter_module/src/entities/responses/base_response.dart';
@@ -8,10 +9,10 @@ class AppointmentRepository {
 
   AppointmentRepository(this._apiClient);
 
-  Future<BaseResponse> createAppointment(AppointmentEntity appointment) async {
+  Future<AppointmentEntity> createAppointment(CreateAppointmentRequest request) async {
     await ConnectivityManager.checkInternetConnection();
 
-    final response = await _apiClient.createAppointment(appointment);
+    final response = await _apiClient.createAppointment(request);
 
     return response;
   }
@@ -24,10 +25,10 @@ class AppointmentRepository {
     return response;
   }
 
-  Future<BaseResponse> updateAppointment(AppointmentEntity appointment) async {
+  Future<AppointmentEntity> updateAppointment(String appointmentId, CreateAppointmentRequest request) async {
     await ConnectivityManager.checkInternetConnection();
 
-    final response = await _apiClient.updateAppointment(appointment.id, appointment);
+    final response = await _apiClient.updateAppointment(appointmentId, request);
 
     return response;
   }
@@ -36,6 +37,30 @@ class AppointmentRepository {
     await ConnectivityManager.checkInternetConnection();
 
     final response = await _apiClient.deleteAppointment(uuid);
+
+    return response;
+  }
+
+  Future<List<AppointmentEntity>> getSalonAppointments(String uuid) async {
+    await ConnectivityManager.checkInternetConnection();
+
+    final response = await _apiClient.getSalonAppointments(uuid);
+
+    return response;
+  }
+
+  Future<List<AppointmentEntity>> getUserAppointments(String userId) async {
+    await ConnectivityManager.checkInternetConnection();
+
+    final response = await _apiClient.getUserAppointments(userId);
+
+    return response;
+  }
+
+  Future<List<AppointmentEntity>> getMasterAppointments(String uuid) async {
+    await ConnectivityManager.checkInternetConnection();
+
+    final response = await _apiClient.getMasterAppointments(uuid);
 
     return response;
   }

@@ -47,14 +47,6 @@ class UserRepository {
     return response;
   }
 
-  Future<List<AppointmentEntity>> getUserAppointments(String userId) async {
-    await ConnectivityManager.checkInternetConnection();
-
-    final response = await _apiClient.getUserAppointments(userId);
-
-    return response;
-  }
-
   Future<List<Master>> getUserMasters(String userId) async {
     await ConnectivityManager.checkInternetConnection();
 

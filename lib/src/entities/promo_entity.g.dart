@@ -8,8 +8,8 @@ part of 'promo_entity.dart';
 
 Promo _$PromoFromJson(Map<String, dynamic> json) => Promo(
       id: json['id'],
-      name: json['name'],
-      description: json['description'],
+      name: json['name'] as String,
+      description: json['description'] as String,
       promoType: json['promo_type'] as String,
       photoUrl: json['photo_url'] as String?,
       expiredDate: json['day_expire'] == null

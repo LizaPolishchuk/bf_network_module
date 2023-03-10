@@ -1,5 +1,6 @@
-
 import 'package:json_annotation/json_annotation.dart';
+
+part 'get_free_slots_request.g.dart';
 
 @JsonSerializable()
 class GetFreeSlotsRequest {
@@ -13,4 +14,13 @@ class GetFreeSlotsRequest {
   final String? dateTo;
 
   GetFreeSlotsRequest(this.masterId, this.serviceId, this.dateFrom, this.dateTo);
+
+
+  factory GetFreeSlotsRequest.fromJson(Map<String, dynamic> json) {
+    return _$GetFreeSlotsRequestFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$GetFreeSlotsRequestToJson(this);
+  }
 }

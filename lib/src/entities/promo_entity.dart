@@ -4,9 +4,14 @@ import 'base_entity.dart';
 
 part 'promo_entity.g.dart';
 
+enum PromoType {bonus_card, temporary_promo}
+
 @JsonSerializable()
 class Promo extends BaseEntity {
-  //
+  String name;
+
+  String description;
+
   @JsonKey(name: "promo_type")
   final String promoType;
 
@@ -28,15 +33,15 @@ class Promo extends BaseEntity {
 
   Promo({
     id,
-    name,
-    description,
+    required this.name,
+    required this.description,
     required this.promoType,
     this.photoUrl,
     this.expiredDate,
     required this.creatorSalon,
     this.color,
     this.discount,
-  }) : super(id, name, description);
+  }) : super(id);
 
   factory Promo.fromJson(Map<String, dynamic> json) => _$PromoFromJson(json);
 
@@ -47,6 +52,7 @@ class Promo extends BaseEntity {
     String? description,
     String? promoType,
     String? photoUrl,
+    int? discount,
     DateTime? expiredDate,
     String? creatorSalon,
   }) {
@@ -58,6 +64,7 @@ class Promo extends BaseEntity {
       expiredDate: expiredDate ?? this.expiredDate,
       creatorSalon: creatorSalon ?? this.creatorSalon,
       promoType: promoType ?? this.promoType,
+      discount: discount ?? this.discount,
     );
   }
 

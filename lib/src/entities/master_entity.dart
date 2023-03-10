@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 
 import 'base_entity.dart';
 
@@ -38,6 +39,8 @@ class Master extends BaseEntity {
   @JsonKey(name: "end_work_time")
   String endWorkTime;
 
+  List<Service>? services;
+
   //
   // List<String> workedInSalons;
   //
@@ -59,14 +62,19 @@ class Master extends BaseEntity {
       required this.gender,
       required this.startWorkTime,
       required this.endWorkTime,
-      required this.phoneNumber})
-      : super(id, name, description);
+      required this.phoneNumber,
+      this.services})
+      : super(id);
 
   factory Master.fromJson(Map<String, dynamic> json) {
     return _$MasterFromJson(json);
   }
 
   Map<String, dynamic> toJson() => _$MasterToJson(this);
+
+  String get name {
+    return "$firstname $lastname";
+  }
 
   Master copy(
       {String? avatar,
@@ -84,8 +92,6 @@ class Master extends BaseEntity {
       String? phoneNumber}) {
     return Master(
       id: id,
-      name: name,
-      description: description,
       avatar: avatar ?? this.avatar,
       position: position ?? this.position,
       status: status ?? this.status,
@@ -99,6 +105,7 @@ class Master extends BaseEntity {
       startWorkTime: startWorkTime ?? this.startWorkTime,
       endWorkTime: endWorkTime ?? this.endWorkTime,
       phoneNumber: phoneNumber ?? this.phoneNumber,
+      services: this.services,
     );
   }
 

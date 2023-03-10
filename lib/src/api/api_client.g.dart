@@ -475,7 +475,8 @@ class _APIClient implements APIClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = getFreeSlotsRequest;
+    final _data = <String, dynamic>{};
+    _data.addAll(getFreeSlotsRequest.toJson());
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<BaseResponse>(Options(
       method: 'GET',
@@ -769,14 +770,14 @@ class _APIClient implements APIClient {
   }
 
   @override
-  Future<BaseResponse> createAppointment(appointment) async {
+  Future<AppointmentEntity> createAppointment(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(appointment.toJson());
+    _data.addAll(request.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<BaseResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<AppointmentEntity>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -788,7 +789,7 @@ class _APIClient implements APIClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = AppointmentEntity.fromJson(_result.data!);
     return value;
   }
 
@@ -816,17 +817,17 @@ class _APIClient implements APIClient {
   }
 
   @override
-  Future<BaseResponse> updateAppointment(
+  Future<AppointmentEntity> updateAppointment(
     uuid,
-    appointment,
+    request,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(appointment.toJson());
+    _data.addAll(request.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<BaseResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<AppointmentEntity>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -838,7 +839,7 @@ class _APIClient implements APIClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
+    final value = AppointmentEntity.fromJson(_result.data!);
     return value;
   }
 
@@ -924,7 +925,8 @@ class _APIClient implements APIClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = likeSalonRequest;
+    final _data = <String, dynamic>{};
+    _data.addAll(likeSalonRequest.toJson());
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<BaseResponse>(Options(
       method: 'POST',
@@ -1164,7 +1166,8 @@ class _APIClient implements APIClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = uploadPhotoRequest;
+    final _data = <String, dynamic>{};
+    _data.addAll(uploadPhotoRequest.toJson());
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<BaseResponse>(Options(
       method: 'POST',
@@ -1284,7 +1287,8 @@ class _APIClient implements APIClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = addPushRequest;
+    final _data = <String, dynamic>{};
+    _data.addAll(addPushRequest.toJson());
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<BaseResponse>(Options(
       method: 'POST',

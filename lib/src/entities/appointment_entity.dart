@@ -11,7 +11,7 @@ class AppointmentEntity {
   final String serviceName;
   
   @JsonKey(name: "service_duration")
-  final int? serviceDuration;
+  final int serviceDuration;
   
   @JsonKey(name: "master_name")
   final String masterName;
@@ -26,7 +26,7 @@ class AppointmentEntity {
   final String? clientLastname;
 
   @JsonKey(name: "start_time")
-  final String startTime;
+  final int startTime;
 
   @JsonKey(name: "service_color")
   final int? serviceColor;
@@ -40,7 +40,7 @@ class AppointmentEntity {
   AppointmentEntity(
       {required this.id,
       required this.serviceName,
-      this.serviceDuration,
+        required this.serviceDuration,
       required this.masterName,
       this.masterPhoto,
       this.clientFirstname,
@@ -57,6 +57,13 @@ class AppointmentEntity {
 
   Map<String, dynamic> toJson() => _$AppointmentEntityToJson(this);
 
+  String get clientName {
+    return "$clientFirstname $clientLastname";
+  }
+
+  DateTime get date {
+    return DateTime.fromMillisecondsSinceEpoch(startTime);
+  }
 
   AppointmentEntity copy({
     String? serviceName,
@@ -65,7 +72,7 @@ class AppointmentEntity {
     String? masterPhoto,
     String? clientFirstname,
     String? clientLastname,
-    String? startTime,
+    int? startTime,
     int? serviceColor,
     String? salonName,
     double? servicePrice,

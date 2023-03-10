@@ -1,6 +1,4 @@
-
 import 'package:json_annotation/json_annotation.dart';
-
 
 import 'base_entity.dart';
 
@@ -8,24 +6,26 @@ part 'category_entity.g.dart';
 
 @JsonSerializable()
 class Category extends BaseEntity {
-  
+  String name;
+  String description;
+
   double? priceFrom;
-  
+
   double? priceTo;
-  
+
   String? creatorSalon;
-  
+
   int? color;
 
-  Category(id, name, description, this.priceFrom, this.priceTo, this.creatorSalon, this.color)
-      : super(id, name, description);
+  Category(id, this.name, this.description, this.priceFrom, this.priceTo, this.creatorSalon, this.color) : super(id);
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return _$CategoryFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
-    return _$CategoryToJson(this);;
+    return _$CategoryToJson(this);
+    ;
   }
 
   Category copy({String? id, String? name, double? priceFrom, double? priceTo, String? creatorSalon, int? color}) {

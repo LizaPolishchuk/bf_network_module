@@ -6,7 +6,10 @@ part 'salon_entity.g.dart';
 
 @JsonSerializable()
 class Salon extends BaseEntity {
-  
+  String name;
+
+  String description;
+
   @JsonKey(name: "photo_url")
   String? photo;
   
@@ -35,8 +38,8 @@ class Salon extends BaseEntity {
 
   Salon({
     id,
-    name,
-    description,
+    required this.name,
+    required this.description,
     this.photo,
     this.email,
     this.city,
@@ -46,7 +49,7 @@ class Salon extends BaseEntity {
     required this.phoneNumber,
     // this.isTop,
     // this.isFavourite = false
-  }) : super(id, name, description);
+  }) : super(id);
 
   factory Salon.fromJson(Map<String, dynamic> json) {
     return _$SalonFromJson(json);

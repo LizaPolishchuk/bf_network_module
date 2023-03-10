@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
+import 'package:salons_app_flutter_module/src/entities/requests/create_appointment_request.dart';
 import 'package:salons_app_flutter_module/src/utils/constants.dart';
 import 'package:salons_app_flutter_module/src/entities/appointment_entity.dart';
 import 'package:salons_app_flutter_module/src/entities/feedback_entity.dart';
@@ -127,13 +128,13 @@ abstract class APIClient {
   Future<List<FeedbackEntity>> getSalonFeedbacks(@Path("uuid") String uuid);
 
   @POST("/appointment/create")
-  Future<BaseResponse> createAppointment(@Body() AppointmentEntity appointment);
+  Future<AppointmentEntity> createAppointment(@Body() CreateAppointmentRequest request);
 
   @POST("/appointment/delete/{uuid}")
   Future<BaseResponse> deleteAppointment(@Path("uuid") String uuid);
 
   @POST("/appointment/update/{uuid}")
-  Future<BaseResponse> updateAppointment(@Path("uuid") String uuid, @Body() AppointmentEntity appointment);
+  Future<AppointmentEntity> updateAppointment(@Path("uuid") String uuid, @Body() CreateAppointmentRequest request);
 
   @GET("/appointment/{uuid}")
   Future<AppointmentEntity> getAppointment(@Path("uuid") String uuid);

@@ -8,8 +8,8 @@ part of 'category_entity.dart';
 
 Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
       json['id'],
-      json['name'],
-      json['description'],
+      json['name'] as String,
+      json['description'] as String,
       (json['priceFrom'] as num?)?.toDouble(),
       (json['priceTo'] as num?)?.toDouble(),
       json['creatorSalon'] as String?,

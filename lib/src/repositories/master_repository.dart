@@ -78,14 +78,6 @@ class MasterRepository {
     return response;
   }
 
-  Future<List<AppointmentEntity>> getMasterAppointments(String uuid) async {
-    await ConnectivityManager.checkInternetConnection();
-
-    final response = await _apiClient.getMasterAppointments(uuid);
-
-    return response;
-  }
-
   Future<List<Service>> getMasterServices(String uuid) async {
     await ConnectivityManager.checkInternetConnection();
 

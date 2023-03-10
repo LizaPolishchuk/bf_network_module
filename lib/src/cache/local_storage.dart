@@ -20,6 +20,7 @@ class LocalStorage {
   static const _firstLaunch = '_firstLaunch';
   static const currentLanguage = '_currentLanguage';
   static const _salonId = '_salonId';
+  static const _salonName = '_salonName';
   static const _userId = '_userId';
   static const _user = '_user';
   static const accessToken = '_accessToken';
@@ -42,6 +43,10 @@ class LocalStorage {
   getSalonId() => _getValue(_salonId);
 
   Future setSalonId(String salonId) => _setValue(_salonId, salonId);
+
+  getSalonName() => _getValue(_salonName);
+
+  Future setSalonName(String salonName) => _setValue(_salonName, salonName);
 
   getUserId() => _getValue(_userId);
 

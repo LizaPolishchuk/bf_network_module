@@ -9,7 +9,6 @@ part of 'master_entity.dart';
 Master _$MasterFromJson(Map<String, dynamic> json) => Master(
       id: json['id'],
       name: json['name'],
-      description: json['description'],
       avatar: json['photo_url'] as String?,
       position: json['position'] as String?,
       status: json['status'] as String?,
@@ -23,12 +22,13 @@ Master _$MasterFromJson(Map<String, dynamic> json) => Master(
       startWorkTime: json['start_work_time'] as String,
       endWorkTime: json['end_work_time'] as String,
       phoneNumber: json['phone_number'] as String,
+      services: (json['services'] as List<dynamic>?)
+          ?.map((e) => Service.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$MasterToJson(Master instance) => <String, dynamic>{
       'id': instance.id,
-      'name': instance.name,
-      'description': instance.description,
       'firstname': instance.firstname,
       'lastname': instance.lastname,
       'phone_number': instance.phoneNumber,
@@ -42,4 +42,6 @@ Map<String, dynamic> _$MasterToJson(Master instance) => <String, dynamic>{
       'status': instance.status,
       'start_work_time': instance.startWorkTime,
       'end_work_time': instance.endWorkTime,
+      'services': instance.services,
+      'name': instance.name,
     };
