@@ -1,16 +1,13 @@
+import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
 import 'package:salons_app_flutter_module/src/api/api_client.dart';
-import 'package:salons_app_flutter_module/src/utils/connectivity_manager.dart';
-import 'package:salons_app_flutter_module/src/entities/appointment_entity.dart';
 import 'package:salons_app_flutter_module/src/entities/individual_appointment.dart';
-import 'package:salons_app_flutter_module/src/entities/master_entity.dart';
 import 'package:salons_app_flutter_module/src/entities/responses/base_response.dart';
-import 'package:salons_app_flutter_module/src/entities/salon_entity.dart';
-import 'package:salons_app_flutter_module/src/entities/user_entity.dart';
 
 class UserRepository {
   final APIClient _apiClient;
+  final LocalStorage _localStorage;
 
-  UserRepository(this._apiClient);
+  UserRepository(this._apiClient, this._localStorage);
 
   Future<BaseResponse> createUser(UserEntity user) async {
     await ConnectivityManager.checkInternetConnection();
@@ -69,5 +66,17 @@ class UserRepository {
     final response = await _apiClient.getUserFavouriteSalons(userId);
 
     return response;
+  }
+
+  Future<void> switchThemeMode() async {
+    return _localStorage.switchThemeMode();
+  }
+
+  Future<void> setCurrentLanguage(String locale) async {
+    return _localStorage.setLanguage(locale);
+  }
+
+  Future<void> switchMasterMode(bool masterMode) async {
+    return _localStorage.setMasterMode(masterMode);
   }
 }

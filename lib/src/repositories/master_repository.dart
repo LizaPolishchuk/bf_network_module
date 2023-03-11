@@ -94,6 +94,14 @@ class MasterRepository {
     return response;
   }
 
+  Future<List<Master>> getSalonMasters(String uuid) async {
+    await ConnectivityManager.checkInternetConnection();
+
+    final response = await _apiClient.getSalonMasters(uuid);
+
+    return response;
+  }
+
 //todo add response
 // @GET("/master/get_free_slots}")
 // Future<BaseResponse> getMasterFreeSlots(@Body() GetFreeSlotsRequest getFreeSlotsRequest);

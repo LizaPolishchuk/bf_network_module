@@ -47,22 +47,6 @@ class SalonRepository {
     return response;
   }
 
-  Future<List<Master>> getSalonMasters(String uuid) async {
-    await ConnectivityManager.checkInternetConnection();
-
-    final response = await _apiClient.getSalonMasters(uuid);
-
-    return response;
-  }
-
-  Future<List<Service>> getSalonServices(String uuid) async {
-    await ConnectivityManager.checkInternetConnection();
-
-    final response = await _apiClient.getSalonServices(uuid);
-
-    return response;
-  }
-
   Future<List<UserEntity>> getSalonClients(String uuid) async {
     await ConnectivityManager.checkInternetConnection();
 

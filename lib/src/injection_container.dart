@@ -21,7 +21,7 @@ final String webClientId = "883762712602-6i0k9dj1t1mulse24pmgdnkcalsqg2rb.apps.g
 
 Future<void> init() async {
   ///Repositories
-  getIt.registerLazySingleton(() => UserRepository(getIt()));
+  getIt.registerLazySingleton(() => UserRepository(getIt(), getIt()));
   getIt.registerLazySingleton(() => FeedbackRepository(getIt()));
   getIt.registerLazySingleton(() => ServiceRepository(getIt()));
   getIt.registerLazySingleton(() => SalonRepository(getIt()));

@@ -13,7 +13,8 @@ class FeedbackEntity extends BaseEntity {
   @JsonKey(name: "text")
   String feedbackText;
 
-  int date;
+  @JsonKey(name: "date")
+  int timeStamp;
 
   @JsonKey(name: "rate")
   int points;
@@ -23,21 +24,25 @@ class FeedbackEntity extends BaseEntity {
       required this.authorName,
       this.authorAvatar,
       required this.feedbackText,
-      required this.date,
+      required this.timeStamp,
       required this.points})
       : super(id);
 
   factory FeedbackEntity.fromJson(Map<String, dynamic> json) => _$FeedbackEntityFromJson(json);
 
   Map<String, dynamic> toJson() => _$FeedbackEntityToJson(this);
+  
+  DateTime get date {
+    return DateTime.fromMillisecondsSinceEpoch(timeStamp);
+  }
 
-  FeedbackEntity copy({String? authorName, String? authorAvatar, String? feedbackText, int? date, int? points}) {
+  FeedbackEntity copy({String? authorName, String? authorAvatar, String? feedbackText, int? timeStamp, int? points}) {
     return FeedbackEntity(
         id: id,
         authorName: authorName ?? this.authorName,
         authorAvatar: authorAvatar ?? this.authorAvatar,
         feedbackText: feedbackText ?? this.feedbackText,
-        date: date ?? this.date,
+        timeStamp: timeStamp ?? this.timeStamp,
         points: points ?? this.points);
   }
 

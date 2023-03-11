@@ -12,7 +12,7 @@ FeedbackEntity _$FeedbackEntityFromJson(Map<String, dynamic> json) =>
       authorName: json['authorName'] as String,
       authorAvatar: json['authorAvatar'] as String?,
       feedbackText: json['text'] as String,
-      date: DateTime.parse(json['date'] as String),
+      timeStamp: json['date'] as int,
       points: json['rate'] as int,
     );
 
@@ -22,6 +22,6 @@ Map<String, dynamic> _$FeedbackEntityToJson(FeedbackEntity instance) =>
       'authorAvatar': instance.authorAvatar,
       'authorName': instance.authorName,
       'text': instance.feedbackText,
-      'date': instance.date.toIso8601String(),
+      'date': instance.timeStamp,
       'rate': instance.points,
     };

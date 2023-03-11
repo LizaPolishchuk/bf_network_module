@@ -81,6 +81,14 @@ class ServiceRepository {
     return response;
   }
 
+  Future<List<Service>> getSalonServices(String uuid) async {
+    await ConnectivityManager.checkInternetConnection();
+
+    final response = await _apiClient.getSalonServices(uuid);
+
+    return response;
+  }
+
 //todo add response
 // @GET("/service/get_free_slots/{uuid}")
 // Future<BaseResponse> getServiceFreeSlots(@Path("uuid") String uuid);
