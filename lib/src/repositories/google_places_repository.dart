@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart';
-import 'package:salons_app_flutter_module/src/entities/place_entity.dart';
+import 'package:bf_network_module/src/entities/place_entity.dart';
 
 class GooglePlacesRepository {
   final client = Client();

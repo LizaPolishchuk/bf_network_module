@@ -1,7 +1,7 @@
-import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
-import 'package:salons_app_flutter_module/src/api/api_client.dart';
-import 'package:salons_app_flutter_module/src/entities/individual_appointment.dart';
-import 'package:salons_app_flutter_module/src/entities/responses/base_response.dart';
+import 'package:bf_network_module/bf_network_module.dart';
+import 'package:bf_network_module/src/api/api_client.dart';
+import 'package:bf_network_module/src/entities/individual_appointment.dart';
+import 'package:bf_network_module/src/entities/responses/base_response.dart';
 
 class UserRepository {
   final APIClient _apiClient;

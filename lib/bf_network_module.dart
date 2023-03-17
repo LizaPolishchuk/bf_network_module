@@ -1,4 +1,4 @@
-library salons_app_flutter_module;
+library bf_network_module;
 
 export './src/entities/base_entity.dart';
 export './src/entities/category_entity.dart';

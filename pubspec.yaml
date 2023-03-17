@@ -1,4 +1,4 @@
-name: salons_app_flutter_module
+name: bf_network_module
 description: A new Flutter module.
 
 #  flutter packages pub run build_runner build --delete-conflicting-outputs
@@ -159,5 +159,5 @@ flutter:
   # identifiers, which may be completely independent or the same as these.
   module:
     androidX: true
-    androidPackage: com.example.salons_app_flutter_module
+    androidPackage: com.example.bf_network_module
     iosBundleIdentifier: com.example.salonsAppFlutterModule

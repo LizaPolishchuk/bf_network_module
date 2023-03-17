@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:salons_app_flutter_module/src/entities/user_entity.dart';
+import 'package:bf_network_module/src/entities/user_entity.dart';
 
 // const int hiveTypeSalons = 0;
 // const int hiveTypeUsers = 1;

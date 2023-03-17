@@ -1,21 +1,21 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
-import 'package:salons_app_flutter_module/src/entities/requests/create_appointment_request.dart';
-import 'package:salons_app_flutter_module/src/utils/constants.dart';
-import 'package:salons_app_flutter_module/src/entities/appointment_entity.dart';
-import 'package:salons_app_flutter_module/src/entities/feedback_entity.dart';
-import 'package:salons_app_flutter_module/src/entities/individual_appointment.dart';
-import 'package:salons_app_flutter_module/src/entities/master_entity.dart';
-import 'package:salons_app_flutter_module/src/entities/promo_entity.dart';
-import 'package:salons_app_flutter_module/src/entities/requests/add_push_request.dart';
-import 'package:salons_app_flutter_module/src/entities/requests/get_free_slots_request.dart';
-import 'package:salons_app_flutter_module/src/entities/requests/like_salon_request.dart';
-import 'package:salons_app_flutter_module/src/entities/requests/upload_photo_request.dart';
-import 'package:salons_app_flutter_module/src/entities/responses/base_response.dart';
-import 'package:salons_app_flutter_module/src/entities/responses/signed_url_response.dart';
-import 'package:salons_app_flutter_module/src/entities/salon_entity.dart';
-import 'package:salons_app_flutter_module/src/entities/service_entity.dart';
-import 'package:salons_app_flutter_module/src/entities/user_entity.dart';
+import 'package:bf_network_module/src/entities/requests/create_appointment_request.dart';
+import 'package:bf_network_module/src/utils/constants.dart';
+import 'package:bf_network_module/src/entities/appointment_entity.dart';
+import 'package:bf_network_module/src/entities/feedback_entity.dart';
+import 'package:bf_network_module/src/entities/individual_appointment.dart';
+import 'package:bf_network_module/src/entities/master_entity.dart';
+import 'package:bf_network_module/src/entities/promo_entity.dart';
+import 'package:bf_network_module/src/entities/requests/add_push_request.dart';
+import 'package:bf_network_module/src/entities/requests/get_free_slots_request.dart';
+import 'package:bf_network_module/src/entities/requests/like_salon_request.dart';
+import 'package:bf_network_module/src/entities/requests/upload_photo_request.dart';
+import 'package:bf_network_module/src/entities/responses/base_response.dart';
+import 'package:bf_network_module/src/entities/responses/signed_url_response.dart';
+import 'package:bf_network_module/src/entities/salon_entity.dart';
+import 'package:bf_network_module/src/entities/service_entity.dart';
+import 'package:bf_network_module/src/entities/user_entity.dart';
 
 part 'api_client.g.dart';
 

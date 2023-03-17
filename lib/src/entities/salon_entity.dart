@@ -1,6 +1,6 @@
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:salons_app_flutter_module/src/entities/base_entity.dart';
+import 'package:bf_network_module/src/entities/base_entity.dart';
 
 part 'salon_entity.g.dart';
 

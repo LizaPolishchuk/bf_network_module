@@ -1,4 +1,4 @@
-# salons_app_flutter_module
+# bf_network_module
 
 A new Flutter module.
 

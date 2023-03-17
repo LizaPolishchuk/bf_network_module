@@ -37,6 +37,10 @@ class UserEntity {
   // @JsonKey(defaultValue: true)
   // bool? isRegistered;
 
+  String get name {
+    return "$firstname $lastname";
+  }
+
   UserEntity({
     required this.id,
     required this.firstname,
