@@ -12,6 +12,7 @@ export './src/entities/notification_entity.dart';
 export './src/entities/promo_entity.dart';
 export './src/entities/feedback_entity.dart';
 export './src/entities/place_entity.dart';
+export './src/entities/web_admin.dart';
 
 export './src/entities/requests/add_push_request.dart';
 export './src/entities/requests/create_appointment_request.dart';
@@ -30,6 +31,8 @@ export './src/repositories/salon_repository.dart';
 export './src/repositories/service_repository.dart';
 export './src/repositories/user_repository.dart';
 export './src/repositories/google_places_repository.dart';
+export './src/repositories/auth_repository.dart';
+export './src/repositories/admin_repository.dart';
 
 export './src/injection_container.dart';
 export './src/utils/connectivity_manager.dart';

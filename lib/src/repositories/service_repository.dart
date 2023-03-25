@@ -1,11 +1,11 @@
-import 'package:bf_network_module/src/api/api_client.dart';
+import 'package:bf_network_module/src/api/api_client_mobile.dart';
 import 'package:bf_network_module/src/utils/connectivity_manager.dart';
 import 'package:bf_network_module/src/entities/master_entity.dart';
 import 'package:bf_network_module/src/entities/responses/base_response.dart';
 import 'package:bf_network_module/src/entities/service_entity.dart';
 
 class ServiceRepository {
-  final APIClient _apiClient;
+  final MobileApiClient _apiClient;
 
   ServiceRepository(this._apiClient);
 

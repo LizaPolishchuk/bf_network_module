@@ -1,4 +1,4 @@
-import 'package:bf_network_module/src/api/api_client.dart';
+import 'package:bf_network_module/src/api/api_client_mobile.dart';
 import 'package:bf_network_module/src/utils/connectivity_manager.dart';
 import 'package:bf_network_module/src/entities/appointment_entity.dart';
 import 'package:bf_network_module/src/entities/feedback_entity.dart';
@@ -11,7 +11,7 @@ import 'package:bf_network_module/src/entities/service_entity.dart';
 import 'package:bf_network_module/src/entities/user_entity.dart';
 
 class SalonRepository {
-  final APIClient _apiClient;
+  final MobileApiClient _apiClient;
 
   SalonRepository(this._apiClient);
 

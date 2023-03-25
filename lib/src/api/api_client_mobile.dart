@@ -17,18 +17,12 @@ import 'package:bf_network_module/src/entities/salon_entity.dart';
 import 'package:bf_network_module/src/entities/service_entity.dart';
 import 'package:bf_network_module/src/entities/user_entity.dart';
 
-part 'api_client.g.dart';
-
-///prod
-// @RestApi(baseUrl: "https://salonsliza.herokuapp.com/api")
-
-///local
-// @RestApi(baseUrl: "http://localhost:3999/api")
+part 'api_client_mobile.g.dart';
 
 @RestApi(baseUrl: "http://${Constants.API_HOST}:${Constants.API_PORT}/api/v0")
 
-abstract class APIClient {
-  factory APIClient(Dio dio, {String baseUrl}) = _APIClient;
+abstract class MobileApiClient {
+  factory MobileApiClient(Dio dio, {String baseUrl}) = _MobileApiClient;
 
   @POST("/user/create")
   Future<BaseResponse> createUser(@Body() UserEntity user);

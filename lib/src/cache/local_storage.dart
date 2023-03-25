@@ -23,7 +23,7 @@ class LocalStorage {
   static const _salonName = '_salonName';
   static const _userId = '_userId';
   static const _user = '_user';
-  static const accessToken = '_accessToken';
+  static const _accessToken = '_accessToken';
   static const _refreshToken = '_refreshToken';
   static const themeMode = '_themeMode';
   static const masterMode = '_masterMode';
@@ -60,9 +60,9 @@ class LocalStorage {
 
   Future setCurrentUser(UserEntity user) => _setValue(_user, user);
 
-  getAccessToken() => _getValue(accessToken);
+  getAccessToken() => _getValue(_accessToken);
 
-  Future setAccessToken(String token) => _setValue(accessToken, token);
+  Future setAccessToken(String token) => _setValue(_accessToken, token);
 
   getRefreshToken() => _getValue(_refreshToken);
 
