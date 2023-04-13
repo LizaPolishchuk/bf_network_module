@@ -17,13 +17,14 @@ import 'package:bf_network_module/src/repositories/salon_repository.dart';
 import 'package:bf_network_module/src/repositories/service_repository.dart';
 import 'package:bf_network_module/src/repositories/user_repository.dart';
 import 'package:bf_network_module/src/utils/custom_interceptors.dart';
+import 'package:uuid/uuid.dart';
 
 final getIt = GetIt.instance;
 final String webClientId = "883762712602-6i0k9dj1t1mulse24pmgdnkcalsqg2rb.apps.googleusercontent.com";
 
 Future<void> init() async {
   ///Repositories
-  getIt.registerLazySingleton(() => AuthRepository());
+  getIt.registerLazySingleton(() => AuthRepository(getIt()));
   getIt.registerLazySingleton(() => AdminRepository(getIt(), getIt()));
   getIt.registerLazySingleton(() => UserRepository(getIt(), getIt()));
   getIt.registerLazySingleton(() => FeedbackRepository(getIt()));
@@ -35,6 +36,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => MasterRepository(getIt()));
   getIt.registerLazySingleton(() => IndividualAppointmentRepository(getIt()));
   getIt.registerLazySingleton(() => AppointmentRepository(getIt()));
+  getIt.registerLazySingleton(() => GooglePlacesRepository(Uuid().v4()));
 
   ///External
   // final sharedPreferences = await SharedPreferences.getInstance();

@@ -7,20 +7,20 @@ part of 'client_entity.dart';
 // **************************************************************************
 
 Client _$ClientFromJson(Map<String, dynamic> json) => Client(
-      json['id'],
-      json['name'] as String,
-      json['photoUrl'] as String?,
-      json['city'] as String?,
-      json['status'] as String?,
-      json['phone'] as String?,
-      (json['services'] as Map<String, dynamic>?)?.map(
+      id: json['uuid'],
+      name: json['name'] as String,
+      photoUrl: json['photoUrl'] as String?,
+      city: json['city'] as String?,
+      status: json['status'] as String?,
+      phone: json['phone'] as String?,
+      services: (json['services'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as String),
       ),
-      json['creatorSalon'] as String?,
+      creatorSalon: json['creatorSalon'] as String?,
     );
 
 Map<String, dynamic> _$ClientToJson(Client instance) => <String, dynamic>{
-      'id': instance.id,
+      'uuid': instance.id,
       'name': instance.name,
       'photoUrl': instance.photoUrl,
       'city': instance.city,

@@ -20,7 +20,7 @@ class Client extends BaseEntity {
 
   String? creatorSalon;
 
-  Client(id, this.name, this.photoUrl, this.city, this.status, this.phone, this.services, this.creatorSalon)
+  Client({id, required this.name, this.photoUrl, this.city, this.status, this.phone, this.services, this.creatorSalon})
       : super(id);
 
   factory Client.fromJson(Map<String, dynamic> json) {
@@ -39,8 +39,15 @@ class Client extends BaseEntity {
       String? phone,
       Map<String, String>? service,
       String? creatorSalon}) {
-    return Client(id, name ?? this.name, photoUrl ?? this.photoUrl, city ?? this.city,
-        status ?? this.status, phone ?? this.phone, services ?? this.services, creatorSalon ?? this.creatorSalon);
+    return Client(
+        id: id,
+        name: name ?? this.name,
+        photoUrl: photoUrl ?? this.photoUrl,
+        city: city ?? this.city,
+        status: status ?? this.status,
+        phone: phone ?? this.phone,
+        services: services ?? this.services,
+        creatorSalon: creatorSalon ?? this.creatorSalon);
   }
 
   @override

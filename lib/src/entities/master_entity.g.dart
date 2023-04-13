@@ -7,7 +7,7 @@ part of 'master_entity.dart';
 // **************************************************************************
 
 Master _$MasterFromJson(Map<String, dynamic> json) => Master(
-      id: json['id'],
+      id: json['uuid'],
       name: json['name'],
       avatar: json['photo_url'] as String?,
       position: json['position'] as String?,
@@ -28,7 +28,7 @@ Master _$MasterFromJson(Map<String, dynamic> json) => Master(
     );
 
 Map<String, dynamic> _$MasterToJson(Master instance) => <String, dynamic>{
-      'id': instance.id,
+      'uuid': instance.id,
       'firstname': instance.firstname,
       'lastname': instance.lastname,
       'phone_number': instance.phoneNumber,

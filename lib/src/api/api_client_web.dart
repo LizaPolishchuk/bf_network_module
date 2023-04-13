@@ -1,3 +1,5 @@
+import 'package:bf_network_module/src/entities/requests/signed_url_request.dart';
+import 'package:bf_network_module/src/entities/responses/salon_exists_response.dart';
 import 'package:bf_network_module/src/entities/web_admin.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
@@ -106,14 +108,17 @@ abstract class WebApiClient {
   @POST("/salon/create")
   Future<BaseResponse> addSalon(@Body() Salon salon);
 
-  @POST("/salon/delete/{uuid}")
-  Future<BaseResponse> deleteSalon(@Path() String uuid);
+  @POST("/salon/delete")
+  Future<BaseResponse> deleteSalon();
 
-  @POST("/salon/update/{uuid}")
-  Future<BaseResponse> updateSalon(@Path() String uuid, @Body() Salon salon);
+  @POST("/salon/update")
+  Future<BaseResponse> updateSalon(@Body() Salon salon);
 
-  @GET("/salon/{uuid}")
-  Future<Salon> getSalon(@Path("uuid") String uuid);
+  @GET("/salon")
+  Future<Salon> getSalon();
+
+  @GET("/salon/exists")
+  Future<SalonExistsResponse> checkIfSalonExists();
 
   @GET("/salon/services/{uuid}")
   Future<List<Service>> getSalonServices(@Path("uuid") String uuid);
@@ -179,8 +184,8 @@ abstract class WebApiClient {
   @GET("/individual_appointment/{uuid}")
   Future<IndividualAppointment> getIndividualAppointment(@Path("uuid") String uuid);
 
-  @GET("/media/signed_url}")
-  Future<SignedUrlResponse> getSignedUrl();
+  @GET("/media/get_signed_url")
+  Future<SignedUrlResponse> getSignedUrl(@Body() SignedUrlRequest request);
 
   @POST("/media/upload_photo}")
   Future<BaseResponse> uploadPhoto(@Body() UploadPhotoRequest uploadPhotoRequest);

@@ -19,6 +19,7 @@ export './src/entities/requests/create_appointment_request.dart';
 export './src/entities/requests/get_free_slots_request.dart';
 export './src/entities/requests/like_salon_request.dart';
 export './src/entities/requests/upload_photo_request.dart';
+export './src/entities/requests/signed_url_request.dart';
 
 export './src/repositories/appointment_repository.dart';
 export './src/repositories/feedback_repository.dart';

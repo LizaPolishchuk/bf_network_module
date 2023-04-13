@@ -8,7 +8,7 @@ part of 'feedback_entity.dart';
 
 FeedbackEntity _$FeedbackEntityFromJson(Map<String, dynamic> json) =>
     FeedbackEntity(
-      id: json['id'],
+      id: json['uuid'],
       authorName: json['authorName'] as String,
       authorAvatar: json['authorAvatar'] as String?,
       feedbackText: json['text'] as String,
@@ -18,7 +18,7 @@ FeedbackEntity _$FeedbackEntityFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$FeedbackEntityToJson(FeedbackEntity instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'uuid': instance.id,
       'authorAvatar': instance.authorAvatar,
       'authorName': instance.authorName,
       'text': instance.feedbackText,

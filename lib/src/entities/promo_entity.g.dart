@@ -7,7 +7,7 @@ part of 'promo_entity.dart';
 // **************************************************************************
 
 Promo _$PromoFromJson(Map<String, dynamic> json) => Promo(
-      id: json['id'],
+      id: json['uuid'],
       name: json['name'] as String,
       description: json['description'] as String,
       promoType: json['promo_type'] as String,
@@ -21,7 +21,7 @@ Promo _$PromoFromJson(Map<String, dynamic> json) => Promo(
     );
 
 Map<String, dynamic> _$PromoToJson(Promo instance) => <String, dynamic>{
-      'id': instance.id,
+      'uuid': instance.id,
       'name': instance.name,
       'description': instance.description,
       'promo_type': instance.promoType,

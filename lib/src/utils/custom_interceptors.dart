@@ -1,5 +1,4 @@
 import 'package:bf_network_module/bf_network_module.dart';
-import 'package:dio/dio.dart';
 
 class CustomInterceptors extends Interceptor {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;

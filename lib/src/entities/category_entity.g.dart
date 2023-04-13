@@ -7,17 +7,17 @@ part of 'category_entity.dart';
 // **************************************************************************
 
 Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
-      json['id'],
-      json['name'] as String,
-      json['description'] as String,
-      (json['priceFrom'] as num?)?.toDouble(),
-      (json['priceTo'] as num?)?.toDouble(),
-      json['creatorSalon'] as String?,
-      json['color'] as int?,
+      id: json['uuid'],
+      name: json['name'] as String,
+      description: json['description'] as String,
+      priceFrom: (json['priceFrom'] as num?)?.toDouble(),
+      priceTo: (json['priceTo'] as num?)?.toDouble(),
+      creatorSalon: json['creatorSalon'] as String?,
+      color: json['color'] as int?,
     );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
-      'id': instance.id,
+      'uuid': instance.id,
       'name': instance.name,
       'description': instance.description,
       'priceFrom': instance.priceFrom,

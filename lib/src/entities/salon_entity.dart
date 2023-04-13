@@ -1,4 +1,3 @@
-
 import 'package:json_annotation/json_annotation.dart';
 import 'package:bf_network_module/src/entities/base_entity.dart';
 
@@ -8,27 +7,30 @@ part 'salon_entity.g.dart';
 class Salon extends BaseEntity {
   String name;
 
+  @JsonKey(name: "admin_uuid")
+  String? adminId;
+
   String description;
 
   @JsonKey(name: "photo_url")
   String? photo;
-  
+
   String? email;
-  
+
   String? city;
-  
+
   String? country;
-  
-  String locale;
-  
+
+  String? timezone;
+
   String? address;
-  
+
   @JsonKey(name: "phone_number")
   String phoneNumber;
 
-  // 
+  //
   // bool? isTop;
-  // 
+  //
   // bool isFavourite;
   //
   // @JsonKey(ignore: true)
@@ -37,15 +39,16 @@ class Salon extends BaseEntity {
   // List<Service> servicesList = [];
 
   Salon({
-    id,
+    id = "",
     required this.name,
     required this.description,
+    this.adminId,
     this.photo,
     this.email,
     this.city,
     this.country,
     this.address,
-    required this.locale,
+    this.timezone,
     required this.phoneNumber,
     // this.isTop,
     // this.isFavourite = false

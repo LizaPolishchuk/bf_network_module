@@ -17,7 +17,9 @@ class Category extends BaseEntity {
 
   int? color;
 
-  Category(id, this.name, this.description, this.priceFrom, this.priceTo, this.creatorSalon, this.color) : super(id);
+  Category(
+      {id, required this.name, required this.description, this.priceFrom, this.priceTo, this.creatorSalon, this.color})
+      : super(id);
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return _$CategoryFromJson(json);
@@ -28,9 +30,17 @@ class Category extends BaseEntity {
     ;
   }
 
-  Category copy({String? id, String? name, double? priceFrom, double? priceTo, String? creatorSalon, int? color}) {
-    return Category(id ?? this.id, name ?? this.name, description, priceFrom ?? this.priceFrom, priceTo ?? this.priceTo,
-        creatorSalon ?? this.creatorSalon, color ?? this.color);
+  Category copy(
+      {String? name, String? description, double? priceFrom, double? priceTo, String? creatorSalon, int? color}) {
+    return Category(
+      id: this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      priceFrom: priceFrom ?? this.priceFrom,
+      priceTo: priceTo ?? this.priceTo,
+      creatorSalon: creatorSalon ?? this.creatorSalon,
+      color: color ?? this.color,
+    );
   }
 
   @override

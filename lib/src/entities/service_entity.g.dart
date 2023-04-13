@@ -7,7 +7,7 @@ part of 'service_entity.dart';
 // **************************************************************************
 
 Service _$ServiceFromJson(Map<String, dynamic> json) => Service(
-      id: json['id'],
+      id: json['uuid'],
       name: json['name'] as String,
       price: (json['price'] as num).toDouble(),
       categoryName: json['category'] as String?,
@@ -16,7 +16,7 @@ Service _$ServiceFromJson(Map<String, dynamic> json) => Service(
     );
 
 Map<String, dynamic> _$ServiceToJson(Service instance) => <String, dynamic>{
-      'id': instance.id,
+      'uuid': instance.id,
       'name': instance.name,
       'price': instance.price,
       'category': instance.categoryName,

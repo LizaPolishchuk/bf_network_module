@@ -640,7 +640,7 @@ class _WebApiClient implements WebApiClient {
   }
 
   @override
-  Future<BaseResponse> deleteSalon(uuid) async {
+  Future<BaseResponse> deleteSalon() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -653,7 +653,7 @@ class _WebApiClient implements WebApiClient {
     )
             .compose(
               _dio.options,
-              '/salon/delete/${uuid}',
+              '/salon/delete',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -663,10 +663,7 @@ class _WebApiClient implements WebApiClient {
   }
 
   @override
-  Future<BaseResponse> updateSalon(
-    uuid,
-    salon,
-  ) async {
+  Future<BaseResponse> updateSalon(salon) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -680,7 +677,7 @@ class _WebApiClient implements WebApiClient {
     )
             .compose(
               _dio.options,
-              '/salon/update/${uuid}',
+              '/salon/update',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -690,7 +687,7 @@ class _WebApiClient implements WebApiClient {
   }
 
   @override
-  Future<Salon> getSalon(uuid) async {
+  Future<Salon> getSalon() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -703,12 +700,35 @@ class _WebApiClient implements WebApiClient {
     )
             .compose(
               _dio.options,
-              '/salon/${uuid}',
+              '/salon',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Salon.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<SalonExistsResponse> checkIfSalonExists() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<SalonExistsResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/salon/exists',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SalonExistsResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -1233,11 +1253,12 @@ class _WebApiClient implements WebApiClient {
   }
 
   @override
-  Future<SignedUrlResponse> getSignedUrl() async {
+  Future<SignedUrlResponse> getSignedUrl(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<SignedUrlResponse>(Options(
       method: 'GET',
@@ -1246,7 +1267,7 @@ class _WebApiClient implements WebApiClient {
     )
             .compose(
               _dio.options,
-              '/media/signed_url}',
+              '/media/get_signed_url',
               queryParameters: queryParameters,
               data: _data,
             )

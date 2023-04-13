@@ -52,10 +52,6 @@ class LocalStorage {
 
   Future setUserId(String userId) => _setValue(_userId, userId);
 
-  getCurrentUserId() => _getValue(_userId);
-
-  Future setCurrentUserId(String userId) => _setValue(_userId, userId);
-
   getCurrentUser() => _getValue(_user);
 
   Future setCurrentUser(UserEntity user) => _setValue(_user, user);
