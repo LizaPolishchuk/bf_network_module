@@ -1,8 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/responses/salon_response.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/responses/tokens_response.dart';
+import 'package:bf_network_module/src/domain/entities/responses/salon_response.dart';
+import 'package:bf_network_module/src/domain/entities/responses/tokens_response.dart';
 
-import '../../../../salons_app_flutter_module.dart';
+import '../../../../bf_network_module.dart';
 import '../user_entity.dart';
 
 part 'auth_response.g.dart';

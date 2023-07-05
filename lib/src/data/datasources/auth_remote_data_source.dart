@@ -4,10 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
-import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/responses/salon_response.dart';
+import 'package:bf_network_module/bf_network_module.dart';
+import 'package:bf_network_module/src/common/utils/connectivity_manager.dart';
+import 'package:bf_network_module/src/data/datasources/api_client.dart';
+import 'package:bf_network_module/src/domain/entities/responses/salon_response.dart';
 
 abstract class AuthRemoteDataSource {
   // Future<User?> loginWithGoogleWeb();

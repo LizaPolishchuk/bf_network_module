@@ -3,15 +3,15 @@ import 'dart:io';
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
-import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/category_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/filters_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/place_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/service_entity.dart';
+import 'package:bf_network_module/bf_network_module.dart';
+import 'package:bf_network_module/src/common/utils/failure.dart';
+import 'package:bf_network_module/src/domain/entities/category_entity.dart';
+import 'package:bf_network_module/src/domain/entities/filters_entity.dart';
+import 'package:bf_network_module/src/domain/entities/master_entity.dart';
+import 'package:bf_network_module/src/domain/entities/order_entity.dart';
+import 'package:bf_network_module/src/domain/entities/place_entity.dart';
+import 'package:bf_network_module/src/domain/entities/salon_entity.dart';
+import 'package:bf_network_module/src/domain/entities/service_entity.dart';
 
 abstract class Repository {
   ///Login

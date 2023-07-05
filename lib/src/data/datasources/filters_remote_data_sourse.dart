@@ -1,7 +1,7 @@
-import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
-import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/filters_entity.dart';
+import 'package:bf_network_module/src/common/utils/connectivity_manager.dart';
+import 'package:bf_network_module/src/common/utils/failure.dart';
+import 'package:bf_network_module/src/data/datasources/api_client.dart';
+import 'package:bf_network_module/src/domain/entities/filters_entity.dart';
 
 abstract class FiltersRemoteDataSource {
   Future<Filters> getFilters();

@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
-import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
-import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
-import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/responses/salon_response.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
+import 'package:bf_network_module/bf_network_module.dart';
+import 'package:bf_network_module/src/common/utils/connectivity_manager.dart';
+import 'package:bf_network_module/src/common/utils/failure.dart';
+import 'package:bf_network_module/src/data/caches/local_starage.dart';
+import 'package:bf_network_module/src/data/datasources/api_client.dart';
+import 'package:bf_network_module/src/domain/entities/responses/salon_response.dart';
+import 'package:bf_network_module/src/domain/entities/salon_entity.dart';
 // import 'package:universal_html/prefer_universal/html.dart' as html;
 
 abstract class SalonsRemoteDataSource {

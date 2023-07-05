@@ -1,7 +1,7 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
+import 'package:bf_network_module/bf_network_module.dart';
+import 'package:bf_network_module/src/data/datasources/api_client.dart';
 
 abstract class ClientRemoteDataSource {
   Future<List<Client>> getClientList(String salonId);

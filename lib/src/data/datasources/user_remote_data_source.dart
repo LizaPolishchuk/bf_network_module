@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/user_entity.dart';
+import 'package:bf_network_module/src/common/utils/connectivity_manager.dart';
+import 'package:bf_network_module/src/domain/entities/user_entity.dart';
 
-import '../../../salons_app_flutter_module.dart';
+import '../../../bf_network_module.dart';
 import 'api_client.dart';
 
 abstract class UserRemoteDataSource {

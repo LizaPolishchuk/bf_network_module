@@ -1,7 +1,7 @@
-import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
-import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
+import 'package:bf_network_module/bf_network_module.dart';
+import 'package:bf_network_module/src/common/utils/connectivity_manager.dart';
+import 'package:bf_network_module/src/data/datasources/api_client.dart';
+import 'package:bf_network_module/src/domain/entities/order_entity.dart';
 
 abstract class OrdersRemoteDataSource {
   Future<List<OrderEntity>> getOrdersList(

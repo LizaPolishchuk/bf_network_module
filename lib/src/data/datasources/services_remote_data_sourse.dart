@@ -1,8 +1,8 @@
-import 'package:salons_app_flutter_module/src/common/utils/connectivity_manager.dart';
-import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
-import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/service_entity.dart';
+import 'package:bf_network_module/src/common/utils/connectivity_manager.dart';
+import 'package:bf_network_module/src/common/utils/failure.dart';
+import 'package:bf_network_module/src/data/caches/local_starage.dart';
+import 'package:bf_network_module/src/data/datasources/api_client.dart';
+import 'package:bf_network_module/src/domain/entities/service_entity.dart';
 
 abstract class ServiceRemoteDataSource {
   Future<List<Service>> getServicesList(String salonId, String? categoryId);

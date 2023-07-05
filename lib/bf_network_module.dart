@@ -1,4 +1,4 @@
-library salons_app_flutter_module;
+library bf_network_module;
 
 export './src/common/utils/failure.dart';
 export './src/data/caches/local_starage.dart';

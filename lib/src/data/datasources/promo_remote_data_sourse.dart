@@ -1,9 +1,9 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:salons_app_flutter_module/src/common/utils/failure.dart';
-import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/api_client.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/promo_entity.dart';
+import 'package:bf_network_module/src/common/utils/failure.dart';
+import 'package:bf_network_module/src/data/caches/local_starage.dart';
+import 'package:bf_network_module/src/data/datasources/api_client.dart';
+import 'package:bf_network_module/src/domain/entities/promo_entity.dart';
 
 abstract class PromoRemoteDataSource {
   Future<List<Promo>> getPromoList(String salonId);

@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/responses/auth_response.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/responses/base_response.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/responses/base_response2.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/responses/salon_response.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/responses/tokens_response.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/responses/user_response.dart';
-import 'package:salons_app_flutter_module/src/utils/constants.dart';
+import 'package:bf_network_module/src/domain/entities/responses/auth_response.dart';
+import 'package:bf_network_module/src/domain/entities/responses/base_response.dart';
+import 'package:bf_network_module/src/domain/entities/responses/base_response2.dart';
+import 'package:bf_network_module/src/domain/entities/responses/salon_response.dart';
+import 'package:bf_network_module/src/domain/entities/responses/tokens_response.dart';
+import 'package:bf_network_module/src/domain/entities/responses/user_response.dart';
+import 'package:bf_network_module/src/utils/constants.dart';
 
-import '../../../salons_app_flutter_module.dart';
+import '../../../bf_network_module.dart';
 
 part 'api_client.g.dart';
 

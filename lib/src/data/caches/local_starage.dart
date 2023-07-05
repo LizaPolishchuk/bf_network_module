@@ -1,12 +1,12 @@
 import 'dart:ui';
 
 import 'package:hive/hive.dart';
-import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/category_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/master_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/order_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/salon_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/service_entity.dart';
+import 'package:bf_network_module/bf_network_module.dart';
+import 'package:bf_network_module/src/domain/entities/category_entity.dart';
+import 'package:bf_network_module/src/domain/entities/master_entity.dart';
+import 'package:bf_network_module/src/domain/entities/order_entity.dart';
+import 'package:bf_network_module/src/domain/entities/salon_entity.dart';
+import 'package:bf_network_module/src/domain/entities/service_entity.dart';
 
 const int hiveTypeSalons = 0;
 const int hiveTypeUsers = 1;

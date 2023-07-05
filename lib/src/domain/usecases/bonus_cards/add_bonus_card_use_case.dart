@@ -1,5 +1,5 @@
-import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
-import 'package:salons_app_flutter_module/src/domain/repositories/repository.dart';
+import 'package:bf_network_module/bf_network_module.dart';
+import 'package:bf_network_module/src/domain/repositories/repository.dart';
 
 class AddBonusCardUseCase {
   final Repository repository;

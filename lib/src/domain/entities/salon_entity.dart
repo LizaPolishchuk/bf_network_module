@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
-import 'package:salons_app_flutter_module/src/data/caches/local_starage.dart';
+import 'package:bf_network_module/bf_network_module.dart';
+import 'package:bf_network_module/src/data/caches/local_starage.dart';
 
 import 'base_entity.dart';
 import 'master_entity.dart';

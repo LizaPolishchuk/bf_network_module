@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/responses/base_response.dart';
+import 'package:bf_network_module/src/domain/entities/responses/base_response.dart';
 
 part 'tokens_response.g.dart';
 

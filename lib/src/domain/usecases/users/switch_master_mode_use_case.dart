@@ -1,4 +1,4 @@
-import '../../../../salons_app_flutter_module.dart';
+import '../../../../bf_network_module.dart';
 import '../../repositories/repository.dart';
 
 class SwitchMasterModeUseCase {

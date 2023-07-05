@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:salons_app_flutter_module/salons_app_flutter_module.dart';
+import 'package:bf_network_module/bf_network_module.dart';
 
 part 'user_entity.g.dart';
 

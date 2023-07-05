@@ -3,22 +3,22 @@ import 'dart:io';
 import 'package:either_dart/either.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/auth_remote_data_source.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/bonus_card_remote_data_sourse.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/categories_remote_data_sourse.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/client_remote_data_sourse.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/filters_remote_data_sourse.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/masters_remote_data_sourse.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/orders_remote_data_sourse.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/places_remote_data_source.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/promo_remote_data_sourse.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/salons_remote_data_source.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/services_remote_data_sourse.dart';
-import 'package:salons_app_flutter_module/src/data/datasources/user_remote_data_source.dart';
-import 'package:salons_app_flutter_module/src/domain/entities/place_entity.dart';
-import 'package:salons_app_flutter_module/src/domain/repositories/repository.dart';
+import 'package:bf_network_module/src/data/datasources/auth_remote_data_source.dart';
+import 'package:bf_network_module/src/data/datasources/bonus_card_remote_data_sourse.dart';
+import 'package:bf_network_module/src/data/datasources/categories_remote_data_sourse.dart';
+import 'package:bf_network_module/src/data/datasources/client_remote_data_sourse.dart';
+import 'package:bf_network_module/src/data/datasources/filters_remote_data_sourse.dart';
+import 'package:bf_network_module/src/data/datasources/masters_remote_data_sourse.dart';
+import 'package:bf_network_module/src/data/datasources/orders_remote_data_sourse.dart';
+import 'package:bf_network_module/src/data/datasources/places_remote_data_source.dart';
+import 'package:bf_network_module/src/data/datasources/promo_remote_data_sourse.dart';
+import 'package:bf_network_module/src/data/datasources/salons_remote_data_source.dart';
+import 'package:bf_network_module/src/data/datasources/services_remote_data_sourse.dart';
+import 'package:bf_network_module/src/data/datasources/user_remote_data_source.dart';
+import 'package:bf_network_module/src/domain/entities/place_entity.dart';
+import 'package:bf_network_module/src/domain/repositories/repository.dart';
 
-import '../../../salons_app_flutter_module.dart';
+import '../../../bf_network_module.dart';
 
 class RepositoryImpl implements Repository {
   SalonsRemoteDataSource salonsRemoteDataSource;
